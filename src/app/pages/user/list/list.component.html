@@ -32,6 +32,12 @@
                     }}
                   </a>
                 </td>
+                <td class="text-center">
+                  <a class="edit" title="Edit" data-toggle="tooltip" routerLink="{{ user.id }}/edit"
+                    routerLinkActive="active"><i class="material-icons">&#xE254;</i></a>
+                  <a class="delete" title="Delete" data-toggle="tooltip" (click)="deleteUser(user.id!)"
+                    routerLinkActive="active"><i class="material-icons">&#xE872;</i></a>
+                </td>
               </tr>
             </tbody>
           </table>
