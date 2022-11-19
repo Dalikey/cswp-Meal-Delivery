@@ -24,3 +24,7 @@ ul {
   margin-top: 10px;
   margin-bottom: 12px;
 }
+
+.minHe800 {
+  min-height: 800px;
+}
