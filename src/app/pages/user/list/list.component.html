@@ -16,6 +16,7 @@
                 <th scope=" col">id</th>
                 <th scope="col">Naam</th>
                 <th scope="col">E-mailadres</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -33,9 +34,9 @@
                   </a>
                 </td>
                 <td class="text-center">
-                  <a class="edit" title="Edit" data-toggle="tooltip" routerLink="{{ user.id }}/edit"
+                  <a class="edit" title="Bewerken" data-toggle="tooltip" routerLink="{{ user.id }}/edit"
                     routerLinkActive="active"><i class="material-icons">&#xE254;</i></a>
-                  <a class="delete" title="Delete" data-toggle="tooltip" (click)="deleteUser(user.id!)"
+                  <a class="delete" title="Verwijderen" data-toggle="tooltip" (click)="deleteUser(user.id!)"
                     routerLinkActive="active"><i class="material-icons">&#xE872;</i></a>
                 </td>
               </tr>

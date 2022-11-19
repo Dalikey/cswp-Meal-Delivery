@@ -22,6 +22,7 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(id: string) {
+    console.log('how? ' + id);
     this.userService.deleteUser(id);
   }
 }
