@@ -10,14 +10,18 @@ import { UserService } from '../user.service';
 export class ListComponent implements OnInit, OnDestroy {
   users: User[] | undefined;
 
-  constructor(private aService: UserService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.users = this.aService.getAllUsers();
+    this.users = this.userService.getAllUsers();
     console.log(this.users.length + ' users found.');
   }
 
   ngOnDestroy(): void {
     console.log('ListComponent.ngOnDestroy');
+  }
+
+  deleteUser(id: string) {
+    this.userService.deleteUser(id);
   }
 }
