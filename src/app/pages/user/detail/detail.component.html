@@ -10,7 +10,8 @@
       <ul>
         <li>E-mailadres: {{ user?.emailAddress }}</li>
         <li>Geboortedatum: {{ user?.birthDate }}</li>
-        <li>Is afgestudeerd: {{ user?.isGraduated }}</li>
+        <li *ngIf="user?.isGraduated">Is al afgestudeerd.</li>
+        <li *ngIf="!user?.isGraduated">Is nog niet afgestudeerd.</li>
         <li>Telefoonnummer: {{ user?.phoneNumber }}</li>
       </ul>
     </div>
