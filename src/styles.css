@@ -155,10 +155,6 @@ a:visited:hover {
   background-color: #940020;
 }
 
-.minHe800 {
-  min-height: 800px;
-}
-
 .invalid-feedback {
   background: linear-gradient(
     90deg,
