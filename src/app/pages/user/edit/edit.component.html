@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="col-7">
+        <div class="col-5">
           <!-- lastname -->
           <div class="form-group">
             <label for="lastname">Achternaam</label>
@@ -49,6 +49,67 @@
           </div>
         </div>
       </div>
+      <br>
+      <div class="row">
+        <div class="col-5">
+          <!-- emailaddress -->
+          <div class="row-5">
+            <div class="form-group">
+              <label for="emailaddress">E-mailadres</label>
+              <input type="text" name="emailaddress" class="form-control" [(ngModel)]="user!.emailAddress"
+                #emailaddress="ngModel" minlength="3" required [ngClass]="{
+                        'is-invalid': emailaddress.invalid && emailaddress.touched
+                    }" />
+              <div *ngIf="emailaddress.invalid && emailaddress.touched" class="invalid-feedback">
+                <div *ngIf="emailaddress.errors!['required']">
+                  E-mailadres is verplicht
+                </div>
+                <div *ngIf="emailaddress.errors!['minlength']">
+                  De E-mailadres moet 3 karakters lang zijn.
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row-5">
+            <!-- isgraduated -->
+            <div class="form-check">
+              <input class="form-check-input " type="checkbox" name="isgraduated" [(ngModel)]="user!.isGraduated"
+                #isgraduated="ngModel" />
+              <label for="isgraduated">Is afgestudeerd</label>
+            </div>
+          </div>
+          <div class="row-5 move5down">
+            <!-- phonenumber -->
+            <div class="form-group">
+              <label for="phonenumber">Telefoonnummer</label>
+              <input type="text" name="phonenumber" class="form-control" [(ngModel)]="user!.phoneNumber"
+                #phonenumber="ngModel" minlength="10" maxlength="10" required [ngClass]="{
+                          'is-invalid': phonenumber.invalid && phonenumber.touched
+                      }" />
+              <div *ngIf="phonenumber.invalid && phonenumber.touched" class="invalid-feedback">
+                <div *ngIf="phonenumber.errors!['required']">
+                  Telefoonnummer is verplicht
+                </div>
+                <div *ngIf="phonenumber.errors!['minlength']">
+                  De Telefoonnummer moet 10 karakters lang zijn.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-5">
+          //birthdate 
+          <div class="form-group">
+            <label for="birthdate">Geboortedatum</label>
+            <input type="date" name="birthdate" class="form-control" />
+          </div>
+        </div> -->
+        <div class="col-5">
+          <pre>{{ user | json }}</pre>
+        </div>
+      </div>
+
 
       <!-- Submit en Cancel buttons -->
       <div class="row py-3">
@@ -60,9 +121,5 @@
         </div>
       </div>
     </form>
-
-    <pre>{{ user | json }}
-</pre>
-
   </div>
 </div>
