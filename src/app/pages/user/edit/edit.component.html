@@ -121,7 +121,12 @@
       <div class="row py-4">
         <div class="col minHe300">
           <button type="submit" class="btn btn-primary mx-2" [disabled]="!userEditForm.valid">
-            Gebruiker toevoegen
+            <div *ngIf="componentExists && user">
+              Gebruiker bewerken
+            </div>
+            <div *ngIf="!componentExists">
+              Gebruiker toevoegen
+            </div>
           </button>
           <button class="btn btn-warning mx-2" routerLink="/user">Annuleren</button>
         </div>
