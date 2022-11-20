@@ -75,7 +75,12 @@
       <div class="row py-3">
         <div class="col">
           <button type="submit" class="btn btn-primary mx-2" [disabled]="!mealEditForm.valid">
-            Gebruiker bewerken
+            <div *ngIf="componentExists && meal">
+              Maaltijd bewerken
+            </div>
+            <div *ngIf="!componentExists">
+              Maaltijd toevoegen
+            </div>
           </button>
           <button class="btn btn-warning mx-2" routerLink="/meal">Annuleren</button>
         </div>
