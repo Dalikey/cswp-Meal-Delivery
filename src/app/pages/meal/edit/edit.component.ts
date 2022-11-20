@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../user.model';
-import { UserService } from '../user.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Meal} from '../meal.model';
+import {
+  MealService
+} from '../meal.service';
 
 @Component({
   selector: 'user-edit',
@@ -11,14 +13,15 @@ import { UserService } from '../user.service';
 export class EditComponent implements OnInit {
   componentId: string | null | undefined;
   componentExists: boolean = false;
-  user: User | undefined;
-  userName: string | undefined;
+  meal: Meal | undefined;
+  mealName: string | undefined;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
-  ) {}
+    private mealService: MealService
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -26,21 +29,19 @@ export class EditComponent implements OnInit {
       if (this.componentId) {
         console.log('Bestaande component');
         this.componentExists = true;
-        this.user = {
-          ...this.userService.getUserById(this.componentId),
+        this.meal = {
+          ...this.mealService.getMealById(this.componentId),
         };
-        this.userName = this.user.firstName + ' ' + this.user.lastName;
+        this.mealName = this.meal.name;
       } else {
         console.log('Nieuwe component');
         this.componentExists = false;
-        this.user = {
+        this.meal = {
           id: undefined,
-          firstName: '',
-          lastName: '',
-          emailAddress: '',
-          birthDate: new Date(),
-          isGraduated: false,
-          phoneNumber: '',
+          name: '',
+          price: 0,
+          deliveryDate: new Date(),
+          deliveryTime: new Date(),
         };
       }
     });
@@ -49,12 +50,12 @@ export class EditComponent implements OnInit {
   onSubmit() {
     console.log('Submitting the form');
     if (this.componentExists) {
-      this.userService.updateUser(this.user!);
-      this.router.navigate(['user']);
+      this.mealService.updateMeal(this.meal!);
+      this.router.navigate(['meal']);
     } else {
-      this.user!.id = this.uuid();
-      this.userService.addUser(this.user!);
-      this.router.navigate(['user']);
+      this.meal!.id = this.uuid();
+      this.mealService.addMeal(this.meal!);
+      this.router.navigate(['meal']);
     }
   }
 

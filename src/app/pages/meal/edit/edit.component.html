@@ -1,0 +1,111 @@
+<div class="container-fluid move100right move30down">
+  <div *ngIf="componentExists && meal">
+    <h3>Bewerken van {{ mealName }}</h3>
+  </div>
+  <div *ngIf="!componentExists">
+    <h3>Nieuwe maaltijd toevoegen</h3>
+  </div>
+  <div class="max-width77">
+
+
+    <!-- Edit form voor meal model -->
+
+    <form #mealEditForm="ngForm" name="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="row">
+        <div class="col-5">
+          <!-- name -->
+          <div class="form-group">
+            <label for="name">Naam</label>
+            <input type="text" name="name" class="form-control" [(ngModel)]="meal!.name" #name="ngModel"
+                   minlength="3" required [ngClass]="{
+                        'is-invalid': name.invalid && name.touched
+                    }"/>
+            <div *ngIf="name.invalid && name.touched" class="invalid-feedback">
+              <div *ngIf="name.errors!['required']">
+                Voornaam is verplicht
+              </div>
+              <div *ngIf="name.errors!['minlength']">
+                De voornaam moet 3 karakters lang zijn.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <!-- price -->
+          <div class="form-group">
+            <label for="price">Prijs</label>
+            <input type="nu" name="price" class="form-control" [(ngModel)]="meal!.price" #price="ngModel" required
+                   [ngClass]="{'is-invalid': price.invalid && price.touched}"/>
+            <div *ngIf="price.invalid && price.touched" class="invalid-feedback">
+              <div *ngIf="price.errors!['required']">
+                Prijs is verplicht
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-5">
+          <!-- deliverytime-->
+          <div class="row-5">
+            <div class="form-group">
+              <label for="deliverytime">Bezorgtijd</label>
+              <input type="time" name="deliverytime" class="form-control"
+                     [ngModel]="meal!.deliveryTime | date:'shortTime'" (ngModelChange)="meal!.deliveryTime = $event"
+                     name="Bezorgtijd"/>
+            </div>
+          </div>
+          <br>
+          <div class="row-5">
+            <div class="form-group">
+              <label for="deliverydate">Bezorgdatum</label>
+              <input type="date" name="deliverydate" class="form-control"
+                     [ngModel]="meal!.deliveryDate | date:'yyyy-MM-dd'" (ngModelChange)="meal!.deliveryDate = $event"
+                     name="Bezorgdatum"/>
+            </div>
+          </div>
+          <!--          <div class="row-5 move5down">-->
+          <!--            &lt;!&ndash; phonenumber &ndash;&gt;-->
+          <!--            <div class="form-group">-->
+          <!--              <label for="phonenumber">Telefoonnummer</label>-->
+          <!--              <input type="text" name="phonenumber" class="form-control" [(ngModel)]="meal!.phoneNumber"-->
+          <!--                     #phonenumber="ngModel" minlength="10" maxlength="10" required [ngClass]="{-->
+          <!--                          'is-invalid': phonenumber.invalid && phonenumber.touched-->
+          <!--                      }"/>-->
+          <!--              <div *ngIf="phonenumber.invalid && phonenumber.touched" class="invalid-feedback">-->
+          <!--                <div *ngIf="phonenumber.errors!['required']">-->
+          <!--                  Telefoonnummer is verplicht-->
+          <!--                </div>-->
+          <!--                <div *ngIf="phonenumber.errors!['minlength']">-->
+          <!--                  De Telefoonnummer moet 10 karakters lang zijn.-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
+        </div>
+        <!-- <div class="col-5">
+          //birthdate
+          <div class="form-group">
+            <label for="birthdate">Geboortedatum</label>
+            <input type="date" name="birthdate" class="form-control" />
+          </div>
+        </div> -->
+        <div class="col-5">
+          <pre>{{ meal | json }}</pre>
+        </div>
+      </div>
+
+
+      <!-- Submit en Cancel buttons -->
+      <div class="row py-3">
+        <div class="col">
+          <button type="submit" class="btn btn-primary mx-2" [disabled]="!mealEditForm.valid">
+            Submit
+          </button>
+          <button class="btn btn-warning mx-2" routerLink="..">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
