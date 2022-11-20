@@ -1,31 +1,35 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {User} from "../user.model";
-import {UserService} from "../user.service";
+import {Meal} from "../meal.model";
+import {MealService} from "../meal.service";
 
 @Component({
-  selector: 'user-detail',
+  selector: 'meal-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.css'],
 })
 export class DetailComponent implements OnInit {
   componentId: string | null | undefined;
-  user: User | undefined;
+  meal: Meal | undefined;
 
-  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private router: Router, private mealService: MealService) {
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.componentId = params.get("id");
       if (this.componentId) {
-        // Bestaande user
+        // Bestaande meal
         console.log("Bestaande component");
-        this.user = this.userService.getUserById(this.componentId);
+        this.meal = this.mealService.getMealById(this.componentId);
       } else {
-        // Nieuwe user
+        // Nieuwe meal
         console.log("Nieuwe component");
       }
     });
+  }
+
+  toDecimal(price: number | undefined) {
+    return price?.toLocaleString("es-ES", {minimumFractionDigits: 2});
   }
 }

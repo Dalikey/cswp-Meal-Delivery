@@ -15,28 +15,27 @@
             <tr>
               <th scope=" col">id</th>
               <th scope="col">Naam</th>
-              <th scope="col">E-mailadres</th>
+              <th scope="col">Prijs</th>
               <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let user of users; let i = index">
-              <td>{{ user.id }}</td>
+            <tr *ngFor="let meal of meals; let i = index">
+              <td>{{ meal.id }}</td>
               <td>
-                <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ user.firstName
-                  }}
-                  {{ user.lastName }}</a>
+                <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ meal.name
+                  }}</a>
               </td>
               <td>
-                <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{
-                  user.emailAddress
+                <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">€ {{
+                  toDecimal(meal?.price)
                   }}
                 </a>
               </td>
               <td class="text-center">
-                <a class="edit" title="Bewerken" data-toggle="tooltip" routerLink="{{ user.id }}/edit"
+                <a class="edit" title="Bewerken" data-toggle="tooltip" routerLink="{{ meal.id }}/edit"
                    routerLinkActive="active"><i class="material-icons">&#xE254;</i></a>
-                <a class="delete" title="Verwijderen" data-toggle="tooltip" (click)="deleteUser(user.id!)"
+                <a class="delete" title="Verwijderen" data-toggle="tooltip" (click)="deleteMeal(meal.id!)"
                    routerLinkActive="active"><i class="material-icons">&#xE872;</i></a>
               </td>
             </tr>
