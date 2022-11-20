@@ -1,9 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Meal} from '../meal.model';
-import {
-  MealService
-} from '../meal.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Meal } from '../meal.model';
+import { MealService } from '../meal.service';
 
 @Component({
   selector: 'user-edit',
@@ -20,8 +18,7 @@ export class EditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private mealService: MealService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
