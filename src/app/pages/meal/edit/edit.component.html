@@ -16,16 +16,16 @@
           <!-- name -->
           <div class="form-group">
             <label for="name">Naam</label>
-            <input type="text" name="name" class="form-control" [(ngModel)]="meal!.name" #name="ngModel"
-                   minlength="3" required [ngClass]="{
+            <input type="text" name="name" class="form-control" [(ngModel)]="meal!.name" #name="ngModel" minlength="3"
+              required [ngClass]="{
                         'is-invalid': name.invalid && name.touched
-                    }"/>
+                    }" />
             <div *ngIf="name.invalid && name.touched" class="invalid-feedback">
               <div *ngIf="name.errors!['required']">
-                Voornaam is verplicht
+                Naam is verplicht
               </div>
               <div *ngIf="name.errors!['minlength']">
-                De voornaam moet 3 karakters lang zijn.
+                De naam moet 3 karakters lang zijn.
               </div>
             </div>
           </div>
@@ -35,7 +35,7 @@
           <div class="form-group">
             <label for="price">Prijs</label>
             <input type="nu" name="price" class="form-control" [(ngModel)]="meal!.price" #price="ngModel" required
-                   [ngClass]="{'is-invalid': price.invalid && price.touched}"/>
+              [ngClass]="{'is-invalid': price.invalid && price.touched}" />
             <div *ngIf="price.invalid && price.touched" class="invalid-feedback">
               <div *ngIf="price.errors!['required']">
                 Prijs is verplicht
@@ -52,8 +52,8 @@
             <div class="form-group">
               <label for="deliverytime">Bezorgtijd</label>
               <input type="time" name="deliverytime" class="form-control"
-                     [ngModel]="meal!.deliveryTime | date:'shortTime'" (ngModelChange)="meal!.deliveryTime = $event"
-                     name="Bezorgtijd"/>
+                [ngModel]="meal!.deliveryTime | date:'shortTime'" (ngModelChange)="meal!.deliveryTime = $event"
+                name="Bezorgtijd" />
             </div>
           </div>
           <br>
@@ -61,8 +61,8 @@
             <div class="form-group">
               <label for="deliverydate">Bezorgdatum</label>
               <input type="date" name="deliverydate" class="form-control"
-                     [ngModel]="meal!.deliveryDate | date:'yyyy-MM-dd'" (ngModelChange)="meal!.deliveryDate = $event"
-                     name="Bezorgdatum"/>
+                [ngModel]="meal!.deliveryDate | date:'yyyy-MM-dd'" (ngModelChange)="meal!.deliveryDate = $event"
+                name="Bezorgdatum" />
             </div>
           </div>
           <!--          <div class="row-5 move5down">-->

@@ -9,9 +9,9 @@
       </div>
       <ul>
         <li>Prijs: € {{ toDecimal(meal?.price) }}</li>
-        <li *ngIf="meal?.deliveryTime">Bezorgtijd: {{meal?.deliveryTime?.toLocaleTimeString()}}</li>
+        <li *ngIf="meal?.deliveryTime">Bezorgtijd: {{ meal?.deliveryTime | date:"HH:mm" }}</li>
         <li *ngIf="!meal?.deliveryTime">Bezorgtijd: maaltijd nog niet gereserveerd.</li>
-        <li *ngIf="meal?.deliveryDate">Bezorgdatum: {{meal?.deliveryDate?.toDateString()}}</li>
+        <li *ngIf="meal?.deliveryDate">Bezorgdatum: {{meal?.deliveryDate?.toLocaleDateString('nl-NL')}}</li>
         <li *ngIf="!meal?.deliveryDate">Bezorgdatum: maaltijd nog niet gereserveerd.</li>
       </ul>
     </div>

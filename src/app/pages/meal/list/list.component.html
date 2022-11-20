@@ -12,33 +12,33 @@
         <div class="genius-move-by-me">
           <table class="table table-bordered table-dark minWi103">
             <thead>
-            <tr>
-              <th scope=" col">id</th>
-              <th scope="col">Naam</th>
-              <th scope="col">Prijs</th>
-              <th scope="col"></th>
-            </tr>
+              <tr>
+                <th scope="col" width="21%">id</th>
+                <th scope="col">Naam</th>
+                <th scope="col" width="10%">Prijs</th>
+                <th scope="col"></th>
+              </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let meal of meals; let i = index">
-              <td>{{ meal.id }}</td>
-              <td>
-                <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ meal.name
-                  }}</a>
-              </td>
-              <td>
-                <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">€ {{
-                  toDecimal(meal?.price)
-                  }}
-                </a>
-              </td>
-              <td class="text-center">
-                <a class="edit" title="Bewerken" data-toggle="tooltip" routerLink="{{ meal.id }}/edit"
-                   routerLinkActive="active"><i class="material-icons">&#xE254;</i></a>
-                <a class="delete" title="Verwijderen" data-toggle="tooltip" (click)="deleteMeal(meal.id!)"
-                   routerLinkActive="active"><i class="material-icons">&#xE872;</i></a>
-              </td>
-            </tr>
+              <tr *ngFor="let meal of meals; let i = index">
+                <td>{{ meal.id }}</td>
+                <td>
+                  <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ meal.name
+                    }}</a>
+                </td>
+                <td>
+                  <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">€ {{
+                    toDecimal(meal?.price)
+                    }}
+                  </a>
+                </td>
+                <td class="text-center">
+                  <a class="edit" title="Bewerken" data-toggle="tooltip" routerLink="{{ meal.id }}/edit"
+                    routerLinkActive="active"><i class="material-icons">&#xE254;</i></a>
+                  <a class="delete" title="Verwijderen" data-toggle="tooltip" (click)="deleteMeal(meal.id!)"
+                    routerLinkActive="active"><i class="material-icons">&#xE872;</i></a>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
