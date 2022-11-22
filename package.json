@@ -2,11 +2,12 @@
   "name": "meal-delivery",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "ng": "nx",
+    "start": "nx serve",
+    "build": "nx build",
+    "watch": "nx build --watch --configuration development",
+    "test": "nx test",
+    "postinstall": "node ./decorate-angular-cli.js"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
+    "@nrwl/angular": "^15.2.1",
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.1.3",
     "rxjs": "~7.5.0",
@@ -38,6 +40,9 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "typescript": "~4.6.2"
+    "typescript": "~4.6.2",
+    "@nrwl/workspace": "15.2.1",
+    "nx": "15.2.1",
+    "prettier": "^2.6.2"
   }
 }
