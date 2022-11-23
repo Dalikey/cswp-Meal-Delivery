@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
-    "meal-delivery": "apps/meal-delivery"
+    "meal-delivery": "apps/meal-delivery",
+    "meal-delivery-api": "apps/meal-delivery-api"
   }
 }

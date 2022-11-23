@@ -71,7 +71,10 @@
           "browserTarget": "meal-delivery:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "options": {
+        "proxyConfig": "apps/meal-delivery/proxy.conf.json"
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -91,9 +94,7 @@
           "apps/meal-delivery/src/assets",
           "apps/meal-delivery/src/_redirects"
         ],
-        "styles": [
-          "apps/meal-delivery/src/styles.css"
-        ],
+        "styles": ["apps/meal-delivery/src/styles.css"],
         "scripts": []
       }
     }
