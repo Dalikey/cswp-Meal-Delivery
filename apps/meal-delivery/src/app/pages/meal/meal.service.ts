@@ -80,13 +80,14 @@ export class MealService {
   }
 
   addMeal(newMeal: Meal): void {
-    if (newMeal.deliveryTime!.toString().match('\\d{2}:\\d{2}')) {
-      var time = newMeal!.deliveryTime!.toString().split(':');
-      newMeal.deliveryTime = new Date();
-      newMeal.deliveryTime.setHours(+time[0]);
-      newMeal.deliveryTime.setMinutes(+time[1]);
+    if (newMeal.deliveryTime !== undefined) {
+      if (newMeal.deliveryTime.toString().match('\\d{2}:\\d{2}')) {
+        var time = newMeal!.deliveryTime.toString().split(':');
+        newMeal.deliveryTime = new Date();
+        newMeal.deliveryTime.setHours(+time[0]);
+        newMeal.deliveryTime.setMinutes(+time[1]);
+      }
     }
-
     newMeal.deliveryDate = new Date(newMeal!.deliveryDate!);
     this.meals.push(newMeal);
   }
@@ -96,13 +97,14 @@ export class MealService {
 
     let updatedMeals = this.meals.filter((meal) => meal.id !== updatedMeal.id);
 
-    if (updatedMeal.deliveryTime!.toString().match('\\d{2}:\\d{2}')) {
-      var time = updatedMeal!.deliveryTime!.toString().split(':');
-      updatedMeal.deliveryTime = new Date();
-      updatedMeal.deliveryTime.setHours(+time[0]);
-      updatedMeal.deliveryTime.setMinutes(+time[1]);
+    if (updatedMeal.deliveryTime !== undefined) {
+      if (updatedMeal.deliveryTime.toString().match('\\d{2}:\\d{2}')) {
+        var time = updatedMeal!.deliveryTime.toString().split(':');
+        updatedMeal.deliveryTime = new Date();
+        updatedMeal.deliveryTime.setHours(+time[0]);
+        updatedMeal.deliveryTime.setMinutes(+time[1]);
+      }
     }
-
     updatedMeal.deliveryDate = new Date(updatedMeal!.deliveryDate!);
     updatedMeals.push(updatedMeal);
     this.meals = updatedMeals;
