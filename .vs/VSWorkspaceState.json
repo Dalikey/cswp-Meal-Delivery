@@ -4,9 +4,7 @@
     "\\apps",
     "\\apps\\meal-delivery-api",
     "\\apps\\meal-delivery-api\\src",
-    "\\apps\\meal-delivery-api\\src\\app",
-    "\\apps\\meal-delivery-api\\src\\app\\user"
+    "\\apps\\meal-delivery-api\\src\\app"
   ],
-  "SelectedNode": "\\apps\\meal-delivery-api\\src\\app\\user",
   "PreviewInSolutionExplorer": false
 }
