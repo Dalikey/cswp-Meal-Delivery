@@ -71,7 +71,10 @@
           "browserTarget": "meal-delivery:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "options": {
+        "proxyConfig": "apps/meal-delivery/proxy.conf.json"
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -80,21 +83,11 @@
       }
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "main": "apps/meal-delivery/src/test.ts",
-        "polyfills": "apps/meal-delivery/src/polyfills.ts",
-        "tsConfig": "apps/meal-delivery/tsconfig.spec.json",
-        "karmaConfig": "apps/meal-delivery/karma.conf.js",
-        "assets": [
-          "apps/meal-delivery/src/favicon.ico",
-          "apps/meal-delivery/src/assets",
-          "apps/meal-delivery/src/_redirects"
-        ],
-        "styles": [
-          "apps/meal-delivery/src/styles.css"
-        ],
-        "scripts": []
+        "jestConfig": "apps/meal-delivery/jest.config.ts",
+        "passWithNoTests": true
       }
     }
   }
