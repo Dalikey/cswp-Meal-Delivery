@@ -7,8 +7,10 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noImplicitReturns": false,
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
@@ -19,7 +21,7 @@
     "target": "es2017",
     "module": "es2020",
     "lib": ["es2020", "dom"],
-    "paths": {},
+    "paths": { "@meal-delivery/data": ["libs/data/src/index.ts"] },
     "rootDir": "."
   },
   "angularCompilerOptions": {
