@@ -10,37 +10,28 @@
       <div class="col">
         <br>
         <div class="genius-move-by-me">
-          <table class="table table-bordered table-dark minWi103">
-            <thead>
-              <tr>
-                <th scope="col" width="21%">id</th>
-                <th scope="col">Naam</th>
-                <th scope="col" width="10%">Prijs</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let meal of meals; let i = index">
-                <td>{{ meal.id }}</td>
-                <td>
-                  <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ meal.name
-                    }}</a>
-                </td>
-                <td>
-                  <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">€ {{
-                    toDecimal(meal?.price)
-                    }}
-                  </a>
-                </td>
-                <td class="text-center">
-                  <a class="edit" title="Bewerken" data-toggle="tooltip" routerLink="{{ meal.id }}/edit"
-                    routerLinkActive="active"><i class="material-icons">&#xE254;</i></a>
-                  <a class="delete" title="Verwijderen" data-toggle="tooltip" (click)="deleteMeal(meal.id!)"
-                    routerLinkActive="active"><i class="material-icons">&#xE872;</i></a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="row">
+            <div class="col-sm-12 col-md-auto col-lg-6" *ngFor="let meal of meals; let i = index">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{meal.name}}</h5>
+                  <ul class="noBullets">
+                    <li>Prijs: € {{ toDecimal(meal?.price) }}</li>
+                    <li>Bezorgtijd: {{ meal?.deliveryTime | date:"HH:mm" }}</li>
+                    <li>Bezorgdatum: {{meal?.deliveryDate?.toLocaleDateString('nl-NL')}}</li>
+                    <li> <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">Klik hier
+                        voor meer details.</a></li>
+                  </ul>
+                  <div align="end"> <a class="edit" title="Bewerken" data-toggle="tooltip"
+                      routerLink="{{ meal.id }}/edit" routerLinkActive="active"><i
+                        class="material-icons">&#xE254;</i></a>
+                    <a class="delete" title="Verwijderen" data-toggle="tooltip" (click)="deleteMeal(meal.id!)"
+                      routerLinkActive="active"><i class="material-icons">&#xE872;</i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
