@@ -10,9 +10,18 @@
   margin-bottom: 240px;
 }
 
-table.table td a.edit {
-  color: #ffc107;
+.card {
+  width: 95.5%;
+  min-height: 158px;
+  padding-top: 7px;
 }
-table.table td a.delete {
-  color: #e34724;
+
+.card-body {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.noBullets {
+  list-style-type: none;
+  padding: 0;
 }
