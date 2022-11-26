@@ -49,4 +49,50 @@ describe('MealService', () => {
     expect(meals[0].id).toEqual(expectedMeals[0].id);
     done();
   });
+
+  it('should return Kipburger met friet', (done: DoneFn) => {
+    const meal = service.getMealById('12345-123-16');
+    console.log(meal);
+    expect(meal.name).toEqual('Kipburger met friet');
+    done();
+  });
+
+  it('should add a meal', (done: DoneFn) => {
+    const newMeal = {
+      id: '69420-123-12',
+      name: 'Kipburger met friet',
+      price: 10.2,
+      deliveryTime: new Date(),
+      deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
+    };
+    service.addMeal(newMeal);
+    expect(service.getAllMeals().length).toEqual(9);
+    done();
+  });
+
+  it('should update a meal', (done: DoneFn) => {
+    const newMeal = {
+      id: '12345-123-12',
+      name: 'Pasta Bolognese met spekjes',
+      price: 10.2,
+      deliveryTime: new Date(),
+      deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
+    };
+    service.updateMeal(newMeal);
+    expect(service.getMealById('12345-123-12').name).toEqual(
+      'Pasta Bolognese met spekjes'
+    );
+    expect(service.getMealById('12345-123-12').name).not.toEqual(
+      'Pasta Bolognese met tomaat, spekjes en kaas'
+    );
+    done();
+  });
+
+  it('should delete a meal', (done: DoneFn) => {
+    service.deleteMeal('12345-123-13');
+    expect(service.getMealById('12345-123-13')).toBeUndefined();
+    done();
+  });
 });
