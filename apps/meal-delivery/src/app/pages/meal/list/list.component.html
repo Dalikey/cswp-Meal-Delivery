@@ -16,7 +16,7 @@
                 <div class="card-body">
                   <h5 class="card-title">{{meal.name}}</h5>
                   <ul class="noBullets">
-                    <li>Prijs: € {{ toDecimal(meal?.price) }}</li>
+                    <li>Restaurant: {{meal.restaurant}}</li>
                     <li>Bezorgtijd: {{ meal?.deliveryTime | date:"HH:mm" }}</li>
                     <li>Bezorgdatum: {{meal?.deliveryDate?.toLocaleDateString('nl-NL')}}</li>
                     <li> <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">Klik hier

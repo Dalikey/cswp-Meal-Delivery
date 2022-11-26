@@ -14,6 +14,7 @@ export class UserService {
       birthDate: new Date(),
       isGraduated: false,
       phoneNumber: '0614442417',
+      token: 'some.dummy.token',
     },
     {
       id: '12345-123-23',
@@ -23,6 +24,7 @@ export class UserService {
       birthDate: new Date(),
       isGraduated: false,
       phoneNumber: '0614442417',
+      token: 'some.dummy.token',
     },
     {
       id: '12345-123-56',
@@ -32,6 +34,7 @@ export class UserService {
       birthDate: new Date(),
       isGraduated: false,
       phoneNumber: '0614442417',
+      token: 'some.dummy.token',
     },
     {
       id: '12345-123-13',
@@ -41,6 +44,7 @@ export class UserService {
       birthDate: new Date(),
       isGraduated: false,
       phoneNumber: '0614442417',
+      token: 'some.dummy.token',
     },
     {
       id: '12345-123-14',
@@ -50,6 +54,7 @@ export class UserService {
       birthDate: new Date(),
       isGraduated: false,
       phoneNumber: '0614442417',
+      token: 'some.dummy.token',
     },
     {
       id: '12345-123-15',
@@ -59,6 +64,7 @@ export class UserService {
       birthDate: new Date(),
       isGraduated: false,
       phoneNumber: '0614442417',
+      token: 'some.dummy.token',
     },
     {
       id: '12345-123-16',
@@ -68,6 +74,7 @@ export class UserService {
       birthDate: new Date(),
       isGraduated: false,
       phoneNumber: '0614442417',
+      token: 'some.dummy.token',
     },
     {
       id: '12345-123-17',
@@ -77,6 +84,7 @@ export class UserService {
       birthDate: new Date(),
       isGraduated: false,
       phoneNumber: '0614442417',
+      token: 'some.dummy.token',
     },
   ];
 

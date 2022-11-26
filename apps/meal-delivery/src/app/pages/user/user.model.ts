@@ -6,4 +6,5 @@ export class User {
   birthDate: Date | undefined;
   isGraduated: boolean | undefined;
   phoneNumber: string | undefined;
+  token: string | undefined;
 }
