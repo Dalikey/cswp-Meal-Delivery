@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
-import { time } from 'console';
-import { timestamp } from 'rxjs';
 import { Meal } from './meal.model';
 
 @Injectable({
@@ -15,6 +12,7 @@ export class MealService {
       price: 9.0,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
     },
     {
       id: '12345-123-23',
@@ -22,6 +20,7 @@ export class MealService {
       price: 8.0,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
     },
     {
       id: '12345-123-56',
@@ -29,6 +28,7 @@ export class MealService {
       price: 9.0,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
     },
     {
       id: '12345-123-13',
@@ -36,6 +36,7 @@ export class MealService {
       price: 3.0,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
     },
     {
       id: '12345-123-14',
@@ -43,6 +44,7 @@ export class MealService {
       price: 6.0,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
     },
     {
       id: '12345-123-15',
@@ -50,6 +52,7 @@ export class MealService {
       price: 5.0,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
     },
     {
       id: '12345-123-16',
@@ -57,6 +60,7 @@ export class MealService {
       price: 5.0,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
     },
     {
       id: '12345-123-17',
@@ -64,6 +68,7 @@ export class MealService {
       price: 3.0,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
     },
   ];
 

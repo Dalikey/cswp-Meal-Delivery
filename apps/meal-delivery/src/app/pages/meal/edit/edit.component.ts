@@ -37,8 +37,9 @@ export class EditComponent implements OnInit {
           id: undefined,
           name: '',
           price: 0,
-          deliveryDate: new Date(),
           deliveryTime: new Date(),
+          deliveryDate: new Date(),
+          restaurant: 'Avans restaurant',
         };
       }
     });
