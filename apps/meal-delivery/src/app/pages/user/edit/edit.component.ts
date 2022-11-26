@@ -41,6 +41,7 @@ export class EditComponent implements OnInit {
           birthDate: new Date(),
           isGraduated: false,
           phoneNumber: '',
+          token: '',
         };
       }
     });
