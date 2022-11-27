@@ -7,8 +7,8 @@ import { MealService } from './meal.service';
 // Global mock objects
 const expectedUserData: User = {
   id: 'mongo_id',
-  firstName: 'Firstname',
-  lastName: 'Lastname',
+  firstName: 'Voornaam',
+  lastName: 'Achternaam',
   emailAddress: 'user@host.com',
   birthDate: new Date(),
   isGraduated: false,
@@ -19,7 +19,7 @@ const expectedUserData: User = {
 const expectedMeals: Meal[] = [
   {
     id: '12345-123-12',
-    name: 'mealname',
+    name: 'Maaltijd naam',
     price: 10.2,
     deliveryTime: new Date(),
     deliveryDate: new Date(),
