@@ -35,10 +35,10 @@ export class User {
   // we don't use hooks to ensure the topics exist, as nestjs does not play nice
   // https://github.com/nestjs/mongoose/issues/7
   @Prop({ default: [] })
-  tutorTopics: string[];
+  meals: string[];
 
   @Prop({ default: [] })
-  pupilTopics: string[];
+  friends: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

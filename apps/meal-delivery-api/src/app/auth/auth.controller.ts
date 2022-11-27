@@ -35,7 +35,10 @@ export class AuthController {
         ),
       };
     } catch (e) {
-      throw new HttpException('Username invalid', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Username or emailAddress invalid because user already exists',
+        HttpStatus.BAD_REQUEST
+      );
     }
   }
 
