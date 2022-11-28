@@ -6,10 +6,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User as UserModel, UserDocument } from './user.schema';
 
 import { User, UserInfo } from '@meal-delivery/data';
+// import { Identity, IdentityDocument } from '../auth/identity.schema';
 
 @Injectable()
 export class UserService {
   constructor(
+    // @InjectModel(Identity.name) private identityModel: Model<IdentityDocument>,
     @InjectModel(UserModel.name) private userModel: Model<UserDocument>
   ) {}
 
@@ -27,5 +29,24 @@ export class UserService {
     ]);
 
     return users[0];
+  }
+
+  async deleteOne(userId: string) {
+    await this.userModel
+      .deleteOne({ id: userId })
+      .then(function () {
+        console.log('Data deleted');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    // await this.identityModel
+    //   .deleteOne({ id: userId })
+    //   .then(function () {
+    //     console.log('Data deleted in identityModel');
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   }
 }
