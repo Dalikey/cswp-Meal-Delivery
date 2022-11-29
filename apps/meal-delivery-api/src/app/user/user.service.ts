@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -6,12 +6,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User as UserModel, UserDocument } from './user.schema';
 
 import { User, UserInfo } from '@meal-delivery/data';
-// import { Identity, IdentityDocument } from '../auth/identity.schema';
+import { Identity, IdentityDocument } from '../auth/identity.schema';
 
 @Injectable()
 export class UserService {
   constructor(
-    // @InjectModel(Identity.name) private identityModel: Model<IdentityDocument>,
+    @InjectModel(Identity.name) private identityModel: Model<IdentityDocument>,
     @InjectModel(UserModel.name) private userModel: Model<UserDocument>
   ) {}
 
@@ -32,21 +32,27 @@ export class UserService {
   }
 
   async deleteOne(userId: string) {
-    await this.userModel
-      .deleteOne({ id: userId })
-      .then(function () {
-        console.log('Data deleted');
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    // await this.identityModel
-    //   .deleteOne({ id: userId })
-    //   .then(function () {
-    //     console.log('Data deleted in identityModel');
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    const user = await this.getOne(userId);
+    if (user) {
+      const userName = user.name;
+      await this.identityModel
+        .deleteOne({ username: userName })
+        .then(() => {
+          console.log('Data deleted in identityModel');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      await this.userModel
+        .deleteOne({ id: userId })
+        .then(() => {
+          console.log('Data deleted');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      throw new HttpException('User not exist', HttpStatus.BAD_REQUEST);
+    }
   }
 }

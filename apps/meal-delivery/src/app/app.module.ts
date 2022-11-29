@@ -23,7 +23,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@nestjs/core';
 
 @NgModule({
   declarations: [
