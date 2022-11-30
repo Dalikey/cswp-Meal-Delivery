@@ -44,7 +44,6 @@ describe('MealService', () => {
 
   it('should return a list of meals', (done: DoneFn) => {
     const meals = service.getAllMeals();
-    console.log(meals);
     expect(meals.length).toBe(8);
     expect(meals[0].id).toEqual(expectedMeals[0].id);
     done();
@@ -52,7 +51,6 @@ describe('MealService', () => {
 
   it('should return Kipburger met friet', (done: DoneFn) => {
     const meal = service.getMealById('12345-123-16');
-    console.log(meal);
     expect(meal.name).toEqual('Kipburger met friet');
     done();
   });
