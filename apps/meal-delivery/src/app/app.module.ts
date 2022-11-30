@@ -4,8 +4,10 @@ import {
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './shared/nav/nav.component';
 import { MealComponent } from './pages/meal/meal.component';
 import { ListComponent as ListComponentMeal } from './pages/meal/list/list.component';
@@ -41,7 +43,7 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     MealComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent],

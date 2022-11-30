@@ -53,14 +53,7 @@
             <div class="form-group">
               <label for="deliverytime">Bezorgtijd</label>
               <input type="time" id="deliverytime" name="deliverytime" class="form-control"
-                [ngModel]="meal!.deliveryTime | date:'shortTime'" #deliveryTime="ngModel"
-                (ngModelChange)="meal!.deliveryTime = $event" required
-                [ngClass]="{'is-invalid': deliveryTime.invalid && deliveryTime.touched}" />
-              <div *ngIf="deliveryTime.invalid && deliveryTime.touched" class="invalid-feedback">
-                <div *ngIf="deliveryTime.errors!['required']">
-                  Bezorgtijd is verplicht
-                </div>
-              </div>
+                [ngModel]="meal!.deliveryTime | date:'shortTime'" (ngModelChange)="meal!.deliveryTime = $event" />
             </div>
           </div>
           <br>
