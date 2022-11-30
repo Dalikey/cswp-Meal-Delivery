@@ -93,6 +93,9 @@ export class MealService {
         newMeal.deliveryTime.setMinutes(+time[1]);
       }
     }
+    if (newMeal.deliveryTime?.toString() == 'Invalid Date') {
+      newMeal.deliveryTime = new Date();
+    }
     newMeal.deliveryDate = new Date(newMeal!.deliveryDate!);
     this.meals.push(newMeal);
   }
