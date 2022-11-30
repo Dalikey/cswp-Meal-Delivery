@@ -110,8 +110,6 @@ export class UserService {
     let updatedUsers = this.users.filter((user) => user.id !== updatedUser.id);
     updatedUsers.push(updatedUser);
     this.users = updatedUsers;
-
-    console.log(this.users);
   }
 
   deleteUser(id: string) {
