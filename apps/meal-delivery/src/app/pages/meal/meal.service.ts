@@ -116,8 +116,6 @@ export class MealService {
     updatedMeal.deliveryDate = new Date(updatedMeal!.deliveryDate!);
     updatedMeals.push(updatedMeal);
     this.meals = updatedMeals;
-
-    console.log(this.meals);
   }
 
   deleteMeal(id: string) {
