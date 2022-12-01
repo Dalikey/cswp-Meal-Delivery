@@ -73,7 +73,7 @@ export class MealService {
   ];
 
   constructor() {
-    console.log('MealService created');
+    console.log('ProductService created');
   }
 
   getAllMeals(): Meal[] {

@@ -10,6 +10,9 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ListComponent as ListComponentUser } from './pages/user/list/list.component';
 import { DetailComponent as DetailComponentUser } from './pages/user/detail/detail.component';
 import { EditComponent as EditComponentUser } from './pages/user/edit/edit.component';
+import { ListComponent as ListComponentProduct } from './pages/product/list/list.component';
+import { DetailComponent as DetailComponentProduct } from './pages/product/detail/detail.component';
+import { EditComponent as EditComponentProduct } from './pages/product/edit/edit.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
@@ -26,6 +29,11 @@ const routes: Routes = [
   { path: 'user/new', pathMatch: 'full', component: EditComponentUser },
   { path: 'user/:id', pathMatch: 'full', component: DetailComponentUser },
   { path: 'user/:id/edit', pathMatch: 'full', component: EditComponentUser },
+
+  { path: 'product', pathMatch: 'full', component: ListComponentProduct },
+  { path: 'product/new', pathMatch: 'full', component: EditComponentProduct },
+  { path: 'product/:id', pathMatch: 'full', component: DetailComponentProduct },
+  { path: 'product/:id/edit', pathMatch: 'full', component: EditComponentProduct },
 
   { path: 'register', pathMatch: 'full', component: RegisterComponent },
   { path: 'login', pathMatch: 'full', component: LoginComponent },
