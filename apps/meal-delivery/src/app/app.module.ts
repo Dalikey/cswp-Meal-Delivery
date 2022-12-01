@@ -16,6 +16,10 @@ import { UserComponent } from './pages/user/user.component';
 import { ListComponent as ListComponentUser } from './pages/user/list/list.component';
 import { DetailComponent as DetailComponentUser } from './pages/user/detail/detail.component';
 import { EditComponent as EditComponentUser } from './pages/user/edit/edit.component';
+import { ProductComponent } from './pages/product/product.component';
+import { ListComponent as ListComponentProduct } from './pages/product/list/list.component';
+import { DetailComponent as DetailComponentProduct } from './pages/product/detail/detail.component';
+import { EditComponent as EditComponentProduct } from './pages/product/edit/edit.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -35,6 +39,10 @@ import { FormsModule } from '@angular/forms';
     ListComponentUser,
     DetailComponentUser,
     EditComponentUser,
+    ProductComponent,
+    ListComponentProduct,
+    DetailComponentProduct,
+    EditComponentProduct,
     DashboardComponent,
     LoginComponent,
     RegisterComponent,
