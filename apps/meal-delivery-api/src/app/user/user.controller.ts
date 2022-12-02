@@ -2,7 +2,7 @@ import { Controller, Delete, Get, Param } from '@nestjs/common';
 
 import { UserService } from './user.service';
 
-import { UserInfo, User } from '@meal-delivery/data';
+import { UserInfo, User } from '@md/data';
 import { InjectToken, Token } from '../auth/token.decorator';
 
 @Controller('user')

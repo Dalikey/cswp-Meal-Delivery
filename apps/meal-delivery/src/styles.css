@@ -52,6 +52,10 @@ p {
   margin-left: -10px;
 }
 
+.mb240 {
+  margin-bottom: 240px;
+}
+
 .card {
   all: unset;
   border-radius: 4px;

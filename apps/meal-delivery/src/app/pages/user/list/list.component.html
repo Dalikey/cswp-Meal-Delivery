@@ -9,37 +9,37 @@
     <div class="row container">
       <div class="col">
         <br>
-        <div class="genius-move-by-me">
+        <div class="mb240">
           <table class="table table-bordered table-dark minWi103">
             <thead>
-            <tr>
-              <th scope=" col">id</th>
-              <th scope="col">Naam</th>
-              <th scope="col">E-mailadres</th>
-              <th scope="col"></th>
-            </tr>
+              <tr>
+                <th scope=" col">id</th>
+                <th scope="col">Naam</th>
+                <th scope="col">E-mailadres</th>
+                <th scope="col"></th>
+              </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let user of users; let i = index">
-              <td>{{ user.id }}</td>
-              <td>
-                <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ user.firstName
-                  }}
-                  {{ user.lastName }}</a>
-              </td>
-              <td>
-                <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{
-                  user.emailAddress
-                  }}
-                </a>
-              </td>
-              <td class="text-center">
-                <a class="edit" title="Bewerken" data-toggle="tooltip" routerLink="{{ user.id }}/edit"
-                   routerLinkActive="active"><i class="material-icons">&#xE254;</i></a>
-                <a class="delete" title="Verwijderen" data-toggle="tooltip" (click)="deleteUser(user.id!)"
-                   routerLinkActive="active"><i class="material-icons">&#xE872;</i></a>
-              </td>
-            </tr>
+              <tr *ngFor="let user of users; let i = index">
+                <td>{{ user.id }}</td>
+                <td>
+                  <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ user.firstName
+                    }}
+                    {{ user.lastName }}</a>
+                </td>
+                <td>
+                  <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{
+                    user.emailAddress
+                    }}
+                  </a>
+                </td>
+                <td class="text-center">
+                  <a class="edit" title="Bewerken" data-toggle="tooltip" routerLink="{{ user.id }}/edit"
+                    routerLinkActive="active"><i class="material-icons">&#xE254;</i></a>
+                  <a class="delete" title="Verwijderen" data-toggle="tooltip" (click)="deleteUser(user.id!)"
+                    routerLinkActive="active"><i class="material-icons">&#xE872;</i></a>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

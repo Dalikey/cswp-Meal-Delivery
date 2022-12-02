@@ -1,4 +1,4 @@
-import { ApiResponse } from '@meal-delivery/data';
+import { ApiResponse } from '@md/data';
 import {
   Injectable,
   NestInterceptor,
@@ -20,16 +20,14 @@ export class ApiResponseInterceptor implements NestInterceptor {
           return {
             results,
             info: {
-              version: '1.0',
               type: results instanceof Array ? 'list' : 'object',
               count: results instanceof Array ? results.length : 1,
             },
           };
         } else {
           return {
-            results: undefined,
+            results: 'No results available.',
             info: {
-              version: '1.0',
               type: 'none',
               count: 0,
             },
