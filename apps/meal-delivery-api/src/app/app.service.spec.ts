@@ -29,6 +29,11 @@ describe('AppService', () => {
           'GET, /api/user',
           'GET, /api/user/self',
           'GET, /api/user/:id',
+          '',
+          'meal-delivery-api meal:',
+          'GET, /api/meal',
+          'GET, /api/meal/:id',
+          'DELETE, /api/meal/:id',
         ],
       });
     });

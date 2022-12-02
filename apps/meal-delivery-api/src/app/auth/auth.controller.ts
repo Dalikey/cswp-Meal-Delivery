@@ -10,7 +10,7 @@ import { ResourceId, Token, UserCredentials, UserRegistration } from '@md/data';
 
 import { AuthService } from './auth.service';
 
-@Controller()
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 

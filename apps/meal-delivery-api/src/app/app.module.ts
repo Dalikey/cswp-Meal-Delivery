@@ -5,10 +5,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { AuthModule } from './auth/auth.module';
 import { TokenMiddleware } from './auth/token.middleware';
-import { DataModule } from './data.module';
+import { UserModule } from './user/user.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { MealModule } from './meal/meal.module';
 
 @Module({
   imports: [
@@ -17,16 +18,12 @@ import { AppService } from './app.service';
       'mongodb://127.0.0.1:27017/api'
     ),
     AuthModule,
-    DataModule,
+    UserModule,
+    MealModule,
     RouterModule.register([
-      {
-        path: 'api/auth',
-        module: AuthModule,
-      },
-      {
-        path: 'api',
-        module: DataModule,
-      },
+      { path: 'api', module: AuthModule },
+      { path: 'api', module: UserModule },
+      { path: 'api', module: MealModule },
     ]),
   ],
   controllers: [AppController],
