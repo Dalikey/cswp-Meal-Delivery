@@ -6,12 +6,7 @@ import {
   Post,
 } from '@nestjs/common';
 
-import {
-  ResourceId,
-  Token,
-  UserCredentials,
-  UserRegistration,
-} from '@meal-delivery/data';
+import { ResourceId, Token, UserCredentials, UserRegistration } from '@md/data';
 
 import { AuthService } from './auth.service';
 

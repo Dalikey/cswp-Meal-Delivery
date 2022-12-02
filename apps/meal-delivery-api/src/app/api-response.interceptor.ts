@@ -1,4 +1,4 @@
-import { ApiResponse } from '@meal-delivery/data';
+import { ApiResponse } from '@md/data';
 import {
   Injectable,
   NestInterceptor,

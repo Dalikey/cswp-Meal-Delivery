@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { User as UserModel, UserDocument } from './user.schema';
 
-import { User, UserInfo } from '@meal-delivery/data';
+import { User, UserInfo } from '@md/data';
 import { Identity, IdentityDocument } from '../auth/identity.schema';
 
 @Injectable()
