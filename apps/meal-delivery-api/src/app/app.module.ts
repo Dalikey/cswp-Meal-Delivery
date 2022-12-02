@@ -14,17 +14,17 @@ import { AppService } from './app.service';
   imports: [
     MongooseModule.forRoot(
       // `mongodb+srv://${process.env.MONGO_USR}:${process.env.MONGO_PWD}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`
-      'mongodb://127.0.0.1:27017/meal-delivery-api'
+      'mongodb://127.0.0.1:27017/api'
     ),
     AuthModule,
     DataModule,
     RouterModule.register([
       {
-        path: 'auth-api',
+        path: 'api/auth',
         module: AuthModule,
       },
       {
-        path: 'meal-delivery-api',
+        path: 'api',
         module: DataModule,
       },
     ]),
@@ -34,6 +34,6 @@ import { AppService } from './app.service';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(TokenMiddleware).forRoutes('meal-delivery-api');
+    consumer.apply(TokenMiddleware).forRoutes('api');
   }
 }
