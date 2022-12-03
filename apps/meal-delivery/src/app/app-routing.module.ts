@@ -13,30 +13,58 @@ import { EditComponent as EditComponentUser } from './pages/user/edit/edit.compo
 import { ListComponent as ListComponentProduct } from './pages/product/list/list.component';
 import { DetailComponent as DetailComponentProduct } from './pages/product/detail/detail.component';
 import { EditComponent as EditComponentProduct } from './pages/product/edit/edit.component';
+import { MealComponent } from './pages/meal/meal.component';
+import { UserComponent } from './pages/user/user.component';
+import { ProductComponent } from './pages/product/product.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
   { path: 'dashboard', pathMatch: 'full', component: DashboardComponent },
-
-  { path: 'meal', pathMatch: 'full', component: ListComponentMeal },
-  { path: 'meal/new', pathMatch: 'full', component: EditComponentMeal },
-  { path: 'meal/:id', pathMatch: 'full', component: DetailComponentMeal },
-  { path: 'meal/:id/edit', pathMatch: 'full', component: EditComponentMeal },
-
   { path: 'about-us', pathMatch: 'full', component: AboutComponent },
-
-  { path: 'user', pathMatch: 'full', component: ListComponentUser },
-  { path: 'user/new', pathMatch: 'full', component: EditComponentUser },
-  { path: 'user/:id', pathMatch: 'full', component: DetailComponentUser },
-  { path: 'user/:id/edit', pathMatch: 'full', component: EditComponentUser },
-
-  { path: 'product', pathMatch: 'full', component: ListComponentProduct },
-  { path: 'product/new', pathMatch: 'full', component: EditComponentProduct },
-  { path: 'product/:id', pathMatch: 'full', component: DetailComponentProduct },
-  { path: 'product/:id/edit', pathMatch: 'full', component: EditComponentProduct },
-
   { path: 'register', pathMatch: 'full', component: RegisterComponent },
   { path: 'login', pathMatch: 'full', component: LoginComponent },
+  {
+    path: 'meal',
+    component: MealComponent,
+    children: [
+      { path: '', pathMatch: 'full', component: ListComponentMeal },
+      { path: 'new', pathMatch: 'full', component: EditComponentMeal },
+      { path: ':id', pathMatch: 'full', component: DetailComponentMeal },
+      {
+        path: ':id/edit',
+        pathMatch: 'full',
+        component: EditComponentMeal,
+      },
+    ],
+  },
+  {
+    path: 'user',
+    component: UserComponent,
+    children: [
+      { path: '', pathMatch: 'full', component: ListComponentUser },
+      { path: 'new', pathMatch: 'full', component: EditComponentUser },
+      { path: ':id', pathMatch: 'full', component: DetailComponentUser },
+      {
+        path: ':id/edit',
+        pathMatch: 'full',
+        component: EditComponentUser,
+      },
+    ],
+  },
+  {
+    path: 'product',
+    component: ProductComponent,
+    children: [
+      { path: '', pathMatch: 'full', component: ListComponentProduct },
+      { path: 'new', pathMatch: 'full', component: EditComponentProduct },
+      { path: ':id', pathMatch: 'full', component: DetailComponentProduct },
+      {
+        path: ':id/edit',
+        pathMatch: 'full',
+        component: EditComponentProduct,
+      },
+    ],
+  },
   { path: '**', redirectTo: 'dashboard' },
 ];
 
