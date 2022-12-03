@@ -1,14 +1,15 @@
 <p class="h3"> Log in </p>
 <div class="cardBorder text-white text-opacity-75 text">
-  <form>
+  <form #loginForm="ngForm" name="form" (ngSubmit)="onSubmit()" novalidate>
     <div class="container move30down">
       <div class="row row-cols-2">
         <div class="col">
           <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="email" id="form2Example1" class="form-control" />
-              <label class="form-label" for="form2Example1">E-mailadres</label>
+              <input type="text" id="username" name="username" class="form-control" [(ngModel)]="formData.username"
+                #name="ngModel" />
+              <label class="form-label" for="username">Gebruikersnaam</label>
             </div>
           </div>
         </div>
@@ -17,8 +18,9 @@
           <div class="d-flex flex-row align-items-center mb-2">
             <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="password" id="form2Example2" class="form-control" />
-              <label class="form-label" for="form2Example2">Wachtwoord</label>
+              <input type="password" id="password" name="password" class="form-control" [(ngModel)]="formData!.password"
+                #name="ngModel" />
+              <label class="form-label" for="password">Wachtwoord</label>
             </div>
           </div>
         </div>

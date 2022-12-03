@@ -9,7 +9,7 @@ export interface UserInfo extends UserIdentity {
   emailAddress: string;
 }
 
-export interface UserLogin extends UserIdentity {
+export interface UserLogin {
   username: string;
   password: string;
 }
