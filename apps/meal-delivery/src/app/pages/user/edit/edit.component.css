@@ -1,3 +1,11 @@
 .minHe300 {
   min-height: 300px;
 }
+
+.move30up {
+  margin-top: -30px;
+}
+
+.move34down {
+  margin-top: 34px;
+}
