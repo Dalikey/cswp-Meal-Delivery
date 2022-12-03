@@ -79,7 +79,18 @@
 
     <!-- Submit en Cancel buttons -->
     <div class="row">
-      <div class="col move20up">
+      <div *ngIf="!componentExists" class="col py-3">
+        <button type="submit" class="btn btn-primary mx-2" [disabled]="!mealEditForm.valid">
+          <div *ngIf="componentExists && meal">
+            Maaltijd bewerken
+          </div>
+          <div *ngIf="!componentExists">
+            Maaltijd toevoegen
+          </div>
+        </button>
+        <button class="btn btn-warning mx-2" routerLink="/meal">Annuleren</button>
+      </div>
+      <div *ngIf="componentExists && meal" class="col move20up">
         <button type="submit" class="btn btn-primary mx-2" [disabled]="!mealEditForm.valid">
           <div *ngIf="componentExists && meal">
             Maaltijd bewerken
