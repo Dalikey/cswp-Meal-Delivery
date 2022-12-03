@@ -10,10 +10,8 @@ export interface UserInfo extends UserIdentity {
 }
 
 export interface UserLogin extends UserIdentity {
- username: string;
- password: string;
+  username: string;
+  password: string;
 }
 
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface User extends UserInfo {}

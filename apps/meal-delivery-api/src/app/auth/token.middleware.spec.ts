@@ -4,7 +4,6 @@ describe('Token middelware', () => {
   let middleware, authService;
   let request, response;
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const next = () => {};
 
   beforeEach(() => {
