@@ -25,6 +25,7 @@
     "@nestjs/mongoose": "^9.2.1",
     "@nestjs/platform-express": "^9.0.0",
     "@nrwl/angular": "^15.2.1",
+    "@nrwl/nx-cloud": "^15.0.2",
     "@popperjs/core": "^2.10.2",
     "bcrypt": "^5.1.0",
     "bootstrap": "^5.1.3",
