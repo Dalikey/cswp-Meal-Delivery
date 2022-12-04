@@ -21,13 +21,13 @@ export class AuthService {
   });
 
   constructor(
-    private configService: ConfigService,
+    // private configService: ConfigService,
     private http: HttpClient,
     private router: Router
   ) {
-    console.log(
-      'AuthService constructor ' + configService.getConfig().apiEndpoint
-    );
+    // console.log(
+    //   'AuthService constructor ' + configService.getConfig().apiEndpoint
+    // );
     // Check of we al een ingelogde user hebben
     // Zo ja, check dan op de backend of het token nog valid is.
     // Het token kan namelijk verlopen zijn. Indien verlopen
@@ -51,13 +51,15 @@ export class AuthService {
   }
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
-    console.log(
-      `login at ${this.configService.getConfig().apiEndpoint}auth/login`
-    );
+    console
+      .log
+      // `login at ${this.configService.getConfig().apiEndpoint}auth/login`
+      ();
 
     return this.http
       .post<UserIdentity>(
-        `${this.configService.getConfig().apiEndpoint}auth/login`,
+        // `${this.configService.getConfig().apiEndpoint}auth/login`,
+        'auth/login',
         formData,
         {
           headers: this.headers,
@@ -80,13 +82,15 @@ export class AuthService {
   }
 
   register(userData: UserInfo): Observable<UserInfo | undefined> {
-    console.log(
-      `register at ${this.configService.getConfig().apiEndpoint}user`
-    );
+    console
+      .log
+      // `register at ${this.configService.getConfig().apiEndpoint}user`
+      ();
     console.log(userData);
     return this.http
       .post<UserInfo>(
-        `${this.configService.getConfig().apiEndpoint}user`,
+        // `${this.configService.getConfig().apiEndpoint}user`,
+        'user',
         userData,
         {
           headers: this.headers,
