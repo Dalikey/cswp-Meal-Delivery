@@ -2,6 +2,7 @@ import {
   NgModule,
   CUSTOM_ELEMENTS_SCHEMA,
   NO_ERRORS_SCHEMA,
+  LOCALE_ID,
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,8 +29,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AlertComponent, ConfigModule } from '../../../../libs/data/src';
 import { environment } from '../environments/environment';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import localeNl from '@angular/common/locales/nl';
+
+registerLocaleData(localeNl, 'nl');
 
 @NgModule({
   declarations: [
@@ -66,7 +70,7 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'nl' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
