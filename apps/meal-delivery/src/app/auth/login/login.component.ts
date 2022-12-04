@@ -48,9 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  // onSubmit(formData: UserLogin): void {
   onSubmit(): void {
-    // formData: UserLogin
     console.log('-----------------formsubmit--------------------');
     console.log(this.formData);
     console.log(this.subs);
