@@ -21,6 +21,10 @@ import { ProductComponent } from './pages/product/product.component';
 import { ListComponent as ListComponentProduct } from './pages/product/list/list.component';
 import { DetailComponent as DetailComponentProduct } from './pages/product/detail/detail.component';
 import { EditComponent as EditComponentProduct } from './pages/product/edit/edit.component';
+import { StudentHouseComponent } from './pages/studentHouse/studentHouse.component';
+import { ListComponent as ListComponentStudentHouse } from './pages/studentHouse/list/list.component';
+import { DetailComponent as DetailComponentStudentHouse } from './pages/studentHouse/detail/detail.component';
+import { EditComponent as EditComponentStudentHouse } from './pages/studentHouse/edit/edit.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -52,6 +56,10 @@ registerLocaleData(localeNl, 'nl');
     ListComponentProduct,
     DetailComponentProduct,
     EditComponentProduct,
+    StudentHouseComponent,
+    ListComponentStudentHouse,
+    DetailComponentStudentHouse,
+    EditComponentStudentHouse,
     DashboardComponent,
     LoginComponent,
     RegisterComponent,

@@ -14,7 +14,7 @@ export enum AllergyTypesEnum {
 }
 
 @Component({
-  selector: 'user-edit',
+  selector: 'product-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
 })
