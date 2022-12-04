@@ -19,10 +19,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   // BECAUSE THIS USER LOGIN OR REGISTER WONT RELOAD :?/ I dont understand a single thing about this part.
   // private authService: AuthService,
-  // constructor(private authService: AuthService, private router: Router) {console.log('---------------constructor----------------------');}
-  constructor(private router: Router) {
+  constructor(public authService: AuthService, private router: Router) {
     console.log('---------------constructor----------------------');
   }
+  // constructor(private router: Router) {
+  //   console.log('---------------constructor----------------------');
+  // }
 
   ngOnInit(): void {
     // this.subs = this.authService
