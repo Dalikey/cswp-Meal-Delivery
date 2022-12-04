@@ -19,7 +19,6 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('ListComponent.ngOnDestroy');
   }
 
   deleteMeal(id: string) {

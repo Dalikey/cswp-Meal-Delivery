@@ -17,13 +17,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   subs!: Subscription;
   formData: UserLogin;
 
-  constructor(public authService: AuthService, private router: Router) {
-    console.log('---------------constructor----------------------');
-    console.log(this.formData);
-  }
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    console.log('-----------------local--------------------');
     this.subs = this.authService
       .getUserFromLocalStorage()
       .subscribe((user: UserInfo | undefined) => {
@@ -36,25 +32,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       username: '',
       password: '',
     };
-    console.log('-----------------login--------------------');
-    console.log(this.formData);
   }
 
   ngOnDestroy(): void {
-    console.log('-----------------ondestroy--------------------');
-    console.log(this.formData);
     if (this.subs) {
       this.subs.unsubscribe();
     }
   }
 
   onSubmit(): void {
-    console.log('-----------------formsubmit--------------------');
-    console.log(this.formData);
-    console.log(this.subs);
     if (this.formData.username != '' && this.formData.password != '') {
-      console.log('-----------------if--------------------');
-      console.log(this.formData.username, this.formData.password);
       this.authService
         .login(this.formData)
         .subscribe((user: UserIdentity | undefined) => {

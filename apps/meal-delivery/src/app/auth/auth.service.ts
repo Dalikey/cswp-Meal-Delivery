@@ -75,15 +75,10 @@ export class AuthService {
   }
 
   register(userData: UserInfo): Observable<UserInfo | undefined> {
-    console
-      .log
-      // `register at ${this.configService.getConfig().apiEndpoint}user`
-      ();
     console.log(userData);
     return this.http
       .post<UserInfo>(
-        // `${this.configService.getConfig().apiEndpoint}user`,
-        'user',
+        `${this.configService.getConfig().apiEndpoint}user`,
         userData,
         {
           headers: this.headers,
@@ -91,8 +86,8 @@ export class AuthService {
       )
       .pipe(
         map((user) => {
-          // this.saveUserToLocalStorage(user)
-          // this.currentUser$.next(user)
+          this.saveUserToLocalStorage(user);
+          this.currentUser$.next(user);
           this.alertService.success('Je bent geregistreerd');
           return user;
         }),

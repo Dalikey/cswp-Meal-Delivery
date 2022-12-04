@@ -35,14 +35,12 @@ export class EditComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.componentId = params.get('id');
       if (this.componentId) {
-        console.log('Bestaande component');
         this.componentExists = true;
         this.product = {
           ...this.productService.getProductById(this.componentId),
         };
         this.productName = this.product.name;
       } else {
-        console.log('Nieuwe component');
         this.componentExists = false;
         this.product = {
           id: undefined,
@@ -59,7 +57,6 @@ export class EditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Submitting the form');
     if (this.componentExists) {
       const noEmptyStringAllergies = this.product?.allergies!.filter(
         (allergy) => {
