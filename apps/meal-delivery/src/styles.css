@@ -155,6 +155,10 @@ a:visited:hover {
   margin-left: 100px;
 }
 
+.minWidthButton {
+  width: 154.21px;
+}
+
 .bg-main {
   background-color: #940020;
 }

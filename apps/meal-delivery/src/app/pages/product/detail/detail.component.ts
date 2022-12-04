@@ -23,8 +23,6 @@ export class DetailComponent implements OnInit {
       this.componentId = params.get('id');
       if (this.componentId) {
         this.product = this.productService.getProductById(this.componentId);
-      } else {
-        console.log('Nieuwe component');
       }
     });
   }
