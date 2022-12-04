@@ -26,19 +26,15 @@
         </div>
       </div>
 
-      <div class="ms-4 mb-3">
-        <label>
+      <div class=" mx-4 mb-3 mb-lg-4">
+        <button type="submit" class="btn btn-primary btn-medium minWidthButton" [disabled]="!loginForm.valid">
+          Inloggen
+        </button>
+        <label class="move20right">
           <a
             href="https://accounts.google.com/signin/v2/recoveryidentifier?flowName=GlifWebSignIn&flowEntry=AccountRecovery">Wachtwoord
             vergeten?</a>
         </label>
-      </div>
-
-      <div class=" mx-4 mb-3 mb-lg-4">
-        <!-- routerLink="/dashboard" This is why it dont go to form submitted -->
-        <button type="submit" class="btn btn-primary btn-medium" [disabled]="!loginForm.valid">
-          Inloggen
-        </button>
       </div>
     </div>
   </form>
