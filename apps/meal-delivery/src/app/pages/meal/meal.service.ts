@@ -72,9 +72,7 @@ export class MealService {
     },
   ];
 
-  constructor() {
-    console.log('ProductService created');
-  }
+  constructor() {}
 
   getAllMeals(): Meal[] {
     return this.meals;
@@ -101,8 +99,6 @@ export class MealService {
   }
 
   updateMeal(updatedMeal: Meal) {
-    console.log('Updating meal ' + updatedMeal.name);
-
     let updatedMeals = this.meals.filter((meal) => meal.id !== updatedMeal.id);
 
     if (updatedMeal.deliveryTime !== undefined) {

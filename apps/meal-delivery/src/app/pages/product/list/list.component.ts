@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Product} from '../product.model';
-import {ProductService} from '../product.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Product } from '../product.model';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'product-list',
@@ -10,17 +10,13 @@ import {ProductService} from '../product.service';
 export class ListComponent implements OnInit, OnDestroy {
   products: Product[] | undefined;
 
-  constructor(private productService: ProductService) {
-  }
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     this.products = this.productService.getAllProducts();
-    console.log(this.products.length + ' products found.');
   }
 
-  ngOnDestroy(): void {
-    console.log('ListComponent.ngOnDestroy');
-  }
+  ngOnDestroy(): void {}
 
   deleteProduct(id: string) {
     this.productService.deleteProduct(id);

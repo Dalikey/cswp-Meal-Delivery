@@ -61,6 +61,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           if (user) {
             console.log('Logged in');
             this.router.navigate(['/']);
+          } else {
+            console.error('Invalid data');
           }
         });
     }
