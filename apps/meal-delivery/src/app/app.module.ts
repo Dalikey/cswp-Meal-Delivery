@@ -53,6 +53,7 @@ import { RouterModule } from '@angular/router';
     RegisterComponent,
     FooterComponent,
     MealComponent,
+    // AlertComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@
           <div class="d-flex flex-row align-items-center mb-2">
             <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="password" id="password" name="password" class="form-control" [(ngModel)]="formData!.password"
+              <input type="password" id="password" name="password" class="form-control" [(ngModel)]="formData.password"
                 #name="ngModel" />
               <label class="form-label" for="password">Wachtwoord</label>
             </div>
@@ -35,7 +35,8 @@
       </div>
 
       <div class=" mx-4 mb-3 mb-lg-4">
-        <button type="button" class="btn btn-primary btn-medium" routerLink="/dashboard">
+        <!-- routerLink="/dashboard" This is why it dont go to form submitted -->
+        <button type="submit" class="btn btn-primary btn-medium" [disabled]="!loginForm.valid">
           Inloggen
         </button>
       </div>
