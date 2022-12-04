@@ -1,7 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// Module config options
 export class CustomConfig {
   apiEndpoint!: string;
 }
@@ -13,7 +12,6 @@ export class CustomConfig {
   exports: [],
 })
 export class ConfigModule {
-  // implement forRoot so we can inject config options
   static forRoot(config: CustomConfig): ModuleWithProviders<ConfigModule> {
     console.log('ConfigModule.forRoot ' + config.apiEndpoint);
     return {

@@ -26,7 +26,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ConfigModule } from '../../../../libs/data/src';
+import { AlertComponent, ConfigModule } from '../../../../libs/data/src';
 import { environment } from '../environments/environment';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -53,7 +53,7 @@ import { RouterModule } from '@angular/router';
     RegisterComponent,
     FooterComponent,
     MealComponent,
-    // AlertComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
