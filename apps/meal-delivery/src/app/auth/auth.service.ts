@@ -7,7 +7,10 @@ import {
 } from '../../../../../libs/data/src/index';
 import { Router } from '@angular/router';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { ConfigService } from '../../../../../libs/data/src/index';
+import {
+  AlertService,
+  ConfigService,
+} from '../../../../../libs/data/src/index';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -21,17 +24,11 @@ export class AuthService {
   });
 
   constructor(
-    // private configService: ConfigService,
+    private configService: ConfigService,
+    private alertService: AlertService,
     private http: HttpClient,
     private router: Router
   ) {
-    // console.log(
-    //   'AuthService constructor ' + configService.getConfig().apiEndpoint
-    // );
-    // Check of we al een ingelogde user hebben
-    // Zo ja, check dan op de backend of het token nog valid is.
-    // Het token kan namelijk verlopen zijn. Indien verlopen
-    // retourneren we meteen een nieuw token.
     this.getUserFromLocalStorage()
       .pipe(
         // switchMap is overbodig als we validateToken() niet gebruiken...
@@ -51,15 +48,15 @@ export class AuthService {
   }
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
-    console
-      .log
-      // `login at ${this.configService.getConfig().apiEndpoint}auth/login`
-      ();
+    console.log(
+      `login at ${this.configService.getConfig().apiEndpoint}auth/login`
+    );
+    console.log('-----------------login in auth--------------------');
+    console.log(formData);
 
     return this.http
       .post<UserIdentity>(
-        // `${this.configService.getConfig().apiEndpoint}auth/login`,
-        'auth/login',
+        `${this.configService.getConfig().apiEndpoint}auth/login`,
         formData,
         {
           headers: this.headers,
@@ -70,12 +67,14 @@ export class AuthService {
         map((user: UserInfo) => {
           this.saveUserToLocalStorage(user);
           this.currentUser$.next(user);
+          this.alertService.success('Je bent ingelogd');
           return user;
         }),
         catchError((error) => {
           console.log('error:', error);
           console.log('error.message:', error.message);
           console.log('error.error.message:', error.error.message);
+          this.alertService.error(error.error.message || error.message);
           return of(undefined);
         })
       );
@@ -100,12 +99,14 @@ export class AuthService {
         map((user) => {
           // this.saveUserToLocalStorage(user)
           // this.currentUser$.next(user)
+          this.alertService.success('Je bent geregistreerd');
           return user;
         }),
         catchError((error) => {
           console.log('error:', error);
           console.log('error.message:', error.message);
           console.log('error.error.message:', error.error.message);
+          this.alertService.error(error.error.message || error.message);
           return of(undefined);
         })
       );
@@ -115,11 +116,11 @@ export class AuthService {
     this.router
       .navigate(['/'])
       .then((success) => {
-        // true when canDeactivate allows us to leave the page.
         if (success) {
           console.log('logout - removing local user info');
           localStorage.removeItem(this.CURRENT_USER);
           this.currentUser$.next(undefined);
+          this.alertService.success('Je bent uitgelogd');
         } else {
           console.log('navigate result:', success);
         }

@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "meal-delivery",
   "version": "0.0.0",
   "scripts": {

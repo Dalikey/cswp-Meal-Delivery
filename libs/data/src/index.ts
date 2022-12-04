@@ -5,3 +5,5 @@ export * from './lib/api-response.interface';
 export * from './lib/auth.interface';
 export * from './lib/moduleconfig/config.module';
 export * from './lib/moduleconfig/config.service';
+export * from './lib/alert/alert.component';
+export * from './lib/alert/alert.service';
