@@ -57,7 +57,6 @@ export class ProductService {
   ];
 
   constructor() {
-    console.log('ProductService created');
   }
 
   getAllProducts(): Product[] {
@@ -73,7 +72,6 @@ export class ProductService {
   }
 
   updateProduct(updatedProduct: Product) {
-    console.log('Updating product ' + updatedProduct.name);
     let updatedProducts = this.products.filter((product) => product.id !== updatedProduct.id);
     updatedProducts.push(updatedProduct);
     this.products = updatedProducts;

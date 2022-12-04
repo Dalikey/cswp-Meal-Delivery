@@ -48,12 +48,6 @@ export class AuthService {
   }
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
-    console.log(
-      `login at ${this.configService.getConfig().apiEndpoint}auth/login`
-    );
-    console.log('-----------------login in auth--------------------');
-    console.log(formData);
-
     return this.http
       .post<UserIdentity>(
         `${this.configService.getConfig().apiEndpoint}auth/login`,

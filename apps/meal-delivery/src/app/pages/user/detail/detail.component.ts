@@ -22,12 +22,7 @@ export class DetailComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.componentId = params.get('id');
       if (this.componentId) {
-        // Bestaande user
-        console.log('Bestaande component');
         this.user = this.userService.getUserById(this.componentId);
-      } else {
-        // Nieuwe user
-        console.log('Nieuwe component');
       }
     });
   }

@@ -105,8 +105,6 @@ export class UserService {
   }
 
   updateUser(updatedUser: User) {
-    console.log('Updating user ' + updatedUser.firstName);
-
     let updatedUsers = this.users.filter((user) => user.id !== updatedUser.id);
     updatedUsers.push(updatedUser);
     this.users = updatedUsers;

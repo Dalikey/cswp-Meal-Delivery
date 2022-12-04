@@ -22,11 +22,8 @@ export class DetailComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.componentId = params.get('id');
       if (this.componentId) {
-        // Bestaande product
-        console.log('Bestaande component');
         this.product = this.productService.getProductById(this.componentId);
       } else {
-        // Nieuwe product
         console.log('Nieuwe component');
       }
     });
