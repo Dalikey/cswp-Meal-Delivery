@@ -24,14 +24,12 @@ export class EditComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.componentId = params.get('id');
       if (this.componentId) {
-        console.log('Bestaande component');
         this.componentExists = true;
         this.user = {
           ...this.userService.getUserById(this.componentId),
         };
         this.userName = this.user.firstName + ' ' + this.user.lastName;
       } else {
-        console.log('Nieuwe component');
         this.componentExists = false;
         this.user = {
           id: undefined,
@@ -48,7 +46,6 @@ export class EditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Submitting the form');
     if (this.componentExists) {
       this.userService.updateUser(this.user!);
       this.router.navigate(['user']);

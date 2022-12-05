@@ -9,5 +9,9 @@ export interface UserInfo extends UserIdentity {
   emailAddress: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface UserLogin {
+  username: string;
+  password: string;
+}
+
 export interface User extends UserInfo {}

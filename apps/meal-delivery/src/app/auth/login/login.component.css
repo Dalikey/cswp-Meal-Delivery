@@ -1,3 +1,7 @@
-.cardBorder{
+.cardBorder {
   display: block;
+}
+
+.move20right {
+  margin-left: 20px;
 }

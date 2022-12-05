@@ -14,5 +14,4 @@ export interface MealInfo extends MealIdentity {
   user?: User | undefined;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Meal extends MealInfo {}

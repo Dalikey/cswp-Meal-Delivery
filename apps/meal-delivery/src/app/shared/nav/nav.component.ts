@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserInfo } from '../../../../../../libs/data/src';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -6,7 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css'],
 })
 export class NavComponent implements OnInit {
-  constructor() {}
+  @Input() title!: string;
+  isNavbarCollapsed = true;
+  loggedInUser$!: Observable<UserInfo | undefined>;
 
-  ngOnInit(): void {}
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.loggedInUser$ = this.authService.currentUser$;
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
 }
