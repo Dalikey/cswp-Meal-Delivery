@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { ApiResponse } from '../../../../../../libs/data/src';
+import { ApiResponse } from '@md/data';
 import { Meal } from './meal.model';
 
 @Injectable({
