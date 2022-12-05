@@ -1,10 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  UserIdentity,
-  UserInfo,
-  UserLogin,
-} from '../../../../../../libs/data/src/index';
+import { UserIdentity, UserInfo, UserLogin } from '@md/data';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 
