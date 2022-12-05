@@ -23,7 +23,7 @@
     "lib": ["es2020", "dom"],
     "baseUrl": ".",
     "paths": {
-      "@meal-delivery/data": ["libs/data/src/index.ts"]
+      "@md/data": ["libs/data/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

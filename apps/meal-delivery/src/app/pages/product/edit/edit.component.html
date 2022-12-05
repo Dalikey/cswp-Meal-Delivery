@@ -5,45 +5,46 @@
   <div *ngIf="!componentExists">
     <h3>Nieuwe maaltijd toevoegen</h3>
   </div>
-  <div class="max-width77">
+  <div class="max-width77 mb240">
     <!-- Edit form voor product model -->
     <form #productEditForm="ngForm" name="form" (ngSubmit)="onSubmit()" novalidate>
       <div class="row">
-        <!-- name -->
-        <div class="col-5">
-          <div class="form-group">
-            <label for="name">Naam</label>
-            <input type="text" id="name" name="name" class="form-control" [(ngModel)]="product!.name" #name="ngModel"
-                   minlength="3" required [ngClass]="{
-                        'is-invalid': name.invalid && name.touched
-                    }"/>
-            <div *ngIf="name.invalid && name.touched" class="invalid-feedback">
-              <div *ngIf="name.errors!['required']">
-                Naam is verplicht
-              </div>
-              <div *ngIf="name.errors!['minlength']">
-                De naam moet 3 karakters lang zijn.
-              </div>
-            </div>
-          </div>
-        </div>
         <!-- allergies -->
         <div class="col-5">
           <div class="form-group">
             <label for="allergies">Allergieën</label>
-            <input type="text" id="allergies" name="allergies[]" class="form-control"
-                   [(ngModel)]="product!.allergies" #allergies="ngModel"/>
+            <input type="text" id="allergies" name="allergies[]" class="form-control" [(ngModel)]="product!.allergies"
+              #allergies="ngModel" />
+          </div>
+        </div>
+        <div class="col">
+          <!-- name -->
+          <div class="col-8">
+            <div class="form-group">
+              <label for="name">Naam</label>
+              <input type="text" id="name" name="name" class="form-control" [(ngModel)]="product!.name" #name="ngModel"
+                minlength="3" required [ngClass]="{
+                          'is-invalid': name.invalid && name.touched
+                      }" />
+              <div *ngIf="name.invalid && name.touched" class="invalid-feedback">
+                <div *ngIf="name.errors!['required']">
+                  Naam is verplicht
+                </div>
+                <div *ngIf="name.errors!['minlength']">
+                  De naam moet 3 karakters lang zijn.
+                </div>
+              </div>
+            </div>
+          </div><br>
+          <div class="col-8">
+            <pre>{{ product | json }}</pre>
           </div>
         </div>
       </div>
       <br>
-      <div class="row">
-        <div class="col-5">
-        </div>
-        <div class="col-5">
-          <pre>{{ product | json }}</pre>
-        </div>
-      </div>
+      <!-- <div class="row">
+
+      </div> -->
 
       <!-- Submit en Cancel buttons -->
       <div class="row py-3">
