@@ -79,9 +79,9 @@ export class MealService {
 
   getAllMeals(): Observable<Meal[]> {
     // return this.meals;
-
+    // ../../../../../../../../../../../../../../../../../../../../../../../../../
     return this.http
-      .get<ApiResponse<Meal[]>>('http://localhost:3333')
+      .get<ApiResponse<Meal[]>>('http://localhost:3333/api/meal')
       .pipe(tap(console.log));
   }
 
