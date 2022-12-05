@@ -8,9 +8,7 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-
 import { MealService } from './meal.service';
-
 import { MealInfo, Meal, ResourceId } from '@md/data';
 
 @Controller('meal')
@@ -18,7 +16,7 @@ export class MealController {
   constructor(private readonly mealService: MealService) {}
 
   @Post()
-  async register(@Body() meal: MealInfo): Promise<ResourceId> {
+  async createMeal(@Body() meal: MealInfo): Promise<ResourceId> {
     try {
       return {
         id: await this.mealService.createMeal(meal),

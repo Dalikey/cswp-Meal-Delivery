@@ -21,7 +21,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe((user: UserInfo | undefined) => {
         if (user) {
           console.log('User already logged in > to dashboard');
-          this.router.navigate(['/']);
+          // this.router.navigate(['/']);
+          this.router.navigate(['user']);
         }
       });
     this.formData = {
@@ -43,7 +44,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         .subscribe((user: UserIdentity | undefined) => {
           if (user) {
             console.log('Logged in');
-            this.router.navigate(['/']);
+            // this.router.navigate(['/']);
+            this.router.navigate(['user']);
           } else {
             console.error('Invalid data');
           }

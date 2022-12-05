@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import {
-  ApiResponse,
-  UserIdentity,
-  UserInfo,
-  UserLogin,
-} from '@md/data';
+import { UserIdentity, UserInfo, UserLogin } from '@md/data';
 import { Router } from '@angular/router';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -41,8 +36,8 @@ export class AuthService {
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
     return this.http
-      .post<ApiResponse<UserIdentity>>(
-        `http://localhost:3333/api/auth/login`,
+      .post<UserIdentity>(
+        `http://localhost:3333/auth-api/auth/login`,
         formData,
         {
           headers: this.headers,
@@ -112,7 +107,9 @@ export class AuthService {
   }
 
   private saveUserToLocalStorage(user: UserInfo): void {
-    localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
+    if (user) {
+      localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
+    }
   }
 
   userMayEdit(itemUserId: string): Observable<boolean> {
