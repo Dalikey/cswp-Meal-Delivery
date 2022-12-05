@@ -35,6 +35,7 @@ import { environment } from '../environments/environment';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import localeNl from '@angular/common/locales/nl';
+import { LoggedInAuthGuard } from './auth/auth.guards';
 
 registerLocaleData(localeNl, 'nl');
 
@@ -75,7 +76,7 @@ registerLocaleData(localeNl, 'nl');
     HttpClientModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-  providers: [{ provide: LOCALE_ID, useValue: 'nl' }],
+  providers: [{ provide: LOCALE_ID, useValue: 'nl' }, LoggedInAuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
