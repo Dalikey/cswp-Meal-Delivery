@@ -1,5 +1,4 @@
 export interface ApiMetaInfo {
-  version: string;
   type: 'object' | 'list' | 'none';
   count: number;
 }

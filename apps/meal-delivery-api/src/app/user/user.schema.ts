@@ -9,27 +9,16 @@ export class User {
   @Prop({ default: uuid, index: true })
   id: string;
 
-  @Prop({
-    required: true,
-    unique: true,
-  })
+  @Prop({ required: true, unique: true })
   name: string;
 
-  @Prop({
-    required: true,
-    default: [],
-  })
+  @Prop({ required: true, default: [] })
   roles: string[];
 
-  @Prop({
-    required: true,
-    default: true,
-  })
+  @Prop({ required: true, default: true })
   isActive: boolean;
 
-  @Prop({
-    required: true,
-  })
+  @Prop({ required: true })
   emailAddress: string;
 
   // we don't use hooks to ensure the topics exist, as nestjs does not play nice
