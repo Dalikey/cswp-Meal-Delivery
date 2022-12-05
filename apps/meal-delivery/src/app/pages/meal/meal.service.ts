@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, tap } from 'rxjs';
+import { ApiResponse } from '../../../../../../libs/data/src';
 import { Meal } from './meal.model';
 
 @Injectable({
@@ -72,10 +75,14 @@ export class MealService {
     },
   ];
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  getAllMeals(): Meal[] {
-    return this.meals;
+  getAllMeals(): Observable<Meal[]> {
+    // return this.meals;
+
+    return this.http
+      .get<ApiResponse<Meal[]>>('http://localhost:3333')
+      .pipe(tap(console.log));
   }
 
   getMealById(id: string): Meal {

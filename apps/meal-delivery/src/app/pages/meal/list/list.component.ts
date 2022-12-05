@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Meal} from '../meal.model';
-import {MealService} from '../meal.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Meal } from '../meal.model';
+import { MealService } from '../meal.service';
 
 @Component({
   selector: 'meal-list',
@@ -10,22 +10,22 @@ import {MealService} from '../meal.service';
 export class ListComponent implements OnInit, OnDestroy {
   meals: Meal[] | undefined;
 
-  constructor(private mealService: MealService) {
-  }
+  constructor(private mealService: MealService) {}
 
   ngOnInit(): void {
-    this.meals = this.mealService.getAllMeals();
-    console.log(this.meals.length + ' meals found.');
+    this.mealService.getAllMeals().subscribe((meals) => {
+      this.meals = meals;
+      console.log(this.meals.length + ' meals found.');
+    });
   }
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 
   deleteMeal(id: string) {
     this.mealService.deleteMeal(id);
   }
 
   toDecimal(price: number | undefined) {
-    return price?.toLocaleString("es-ES", {minimumFractionDigits: 2});
+    return price?.toLocaleString('es-ES', { minimumFractionDigits: 2 });
   }
 }
