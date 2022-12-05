@@ -7,10 +7,7 @@ import {
 } from '../../../../../libs/data/src/index';
 import { Router } from '@angular/router';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import {
-  AlertService,
-  ConfigService,
-} from '../../../../../libs/data/src/index';
+import { AlertService } from '../../../../../libs/data/src/index';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -24,7 +21,6 @@ export class AuthService {
   });
 
   constructor(
-    private configService: ConfigService,
     private alertService: AlertService,
     private http: HttpClient,
     private router: Router
@@ -49,13 +45,9 @@ export class AuthService {
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
     return this.http
-      .post<UserIdentity>(
-        `${this.configService.getConfig().apiEndpoint}auth/login`,
-        formData,
-        {
-          headers: this.headers,
-        }
-      )
+      .post<UserIdentity>(`auth/login`, formData, {
+        headers: this.headers,
+      })
       .pipe(
         map((data: any) => data.result),
         map((user: UserInfo) => {
@@ -77,13 +69,9 @@ export class AuthService {
   register(userData: UserInfo): Observable<UserInfo | undefined> {
     console.log(userData);
     return this.http
-      .post<UserInfo>(
-        `${this.configService.getConfig().apiEndpoint}user`,
-        userData,
-        {
-          headers: this.headers,
-        }
-      )
+      .post<UserInfo>(`user`, userData, {
+        headers: this.headers,
+      })
       .pipe(
         map((user) => {
           this.saveUserToLocalStorage(user);
