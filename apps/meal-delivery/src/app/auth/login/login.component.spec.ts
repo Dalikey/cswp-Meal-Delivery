@@ -15,11 +15,7 @@ describe('LoginComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [
-        RouterTestingModule,
-        FormsModule,
-        HttpClientModule,
-      ],
+      imports: [RouterTestingModule, FormsModule, HttpClientModule],
     }).compileComponents();
   });
 

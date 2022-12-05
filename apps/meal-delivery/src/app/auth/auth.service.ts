@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import {
+  ApiResponse,
   UserIdentity,
   UserInfo,
   UserLogin,
-} from '../../../../../libs/data/src/index';
+} from '@md/data';
 import { Router } from '@angular/router';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -40,10 +41,15 @@ export class AuthService {
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
     return this.http
-      .post<UserIdentity>(`auth/login`, formData, {
-        headers: this.headers,
-      })
+      .post<ApiResponse<UserIdentity>>(
+        `http://localhost:3333/api/auth/login`,
+        formData,
+        {
+          headers: this.headers,
+        }
+      )
       .pipe(
+        tap(console.log),
         map((data: any) => data.result),
         map((user: UserInfo) => {
           this.saveUserToLocalStorage(user);

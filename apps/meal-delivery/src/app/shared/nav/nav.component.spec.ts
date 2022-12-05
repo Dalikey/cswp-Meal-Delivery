@@ -12,9 +12,7 @@ describe('NavComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [NavComponent],
-      imports: [
-        HttpClientModule,
-      ],
+      imports: [HttpClientModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
     }).compileComponents();
   });
