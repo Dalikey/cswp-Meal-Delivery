@@ -7,10 +7,6 @@ import {
 } from '../../../../../libs/data/src/index';
 import { Router } from '@angular/router';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import {
-  AlertService,
-  ConfigService,
-} from '../../../../../libs/data/src/index';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -23,12 +19,7 @@ export class AuthService {
     'Content-Type': 'application/json',
   });
 
-  constructor(
-    private configService: ConfigService,
-    private alertService: AlertService,
-    private http: HttpClient,
-    private router: Router
-  ) {
+  constructor(private http: HttpClient, private router: Router) {
     this.getUserFromLocalStorage()
       .pipe(
         // switchMap is overbodig als we validateToken() niet gebruiken...
@@ -49,26 +40,20 @@ export class AuthService {
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
     return this.http
-      .post<UserIdentity>(
-        `${this.configService.getConfig().apiEndpoint}auth/login`,
-        formData,
-        {
-          headers: this.headers,
-        }
-      )
+      .post<UserIdentity>(`auth/login`, formData, {
+        headers: this.headers,
+      })
       .pipe(
         map((data: any) => data.result),
         map((user: UserInfo) => {
           this.saveUserToLocalStorage(user);
           this.currentUser$.next(user);
-          this.alertService.success('Je bent ingelogd');
           return user;
         }),
         catchError((error) => {
           console.log('error:', error);
           console.log('error.message:', error.message);
           console.log('error.error.message:', error.error.message);
-          this.alertService.error(error.error.message || error.message);
           return of(undefined);
         })
       );
@@ -77,25 +62,19 @@ export class AuthService {
   register(userData: UserInfo): Observable<UserInfo | undefined> {
     console.log(userData);
     return this.http
-      .post<UserInfo>(
-        `${this.configService.getConfig().apiEndpoint}user`,
-        userData,
-        {
-          headers: this.headers,
-        }
-      )
+      .post<UserInfo>(`user`, userData, {
+        headers: this.headers,
+      })
       .pipe(
         map((user) => {
           this.saveUserToLocalStorage(user);
           this.currentUser$.next(user);
-          this.alertService.success('Je bent geregistreerd');
           return user;
         }),
         catchError((error) => {
           console.log('error:', error);
           console.log('error.message:', error.message);
           console.log('error.error.message:', error.error.message);
-          this.alertService.error(error.error.message || error.message);
           return of(undefined);
         })
       );
@@ -109,7 +88,6 @@ export class AuthService {
           console.log('logout - removing local user info');
           localStorage.removeItem(this.CURRENT_USER);
           this.currentUser$.next(undefined);
-          this.alertService.success('Je bent uitgelogd');
         } else {
           console.log('navigate result:', success);
         }
