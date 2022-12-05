@@ -3,7 +3,7 @@ import { CanActivate, CanActivateChild, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserInfo } from '../../../../../libs/data/src/index';
+import { UserInfo } from '@md/data';
 import { AuthService } from './auth.service';
 import { ModalLeaveYesNoComponent } from './modal/modal.leave-yes-no.component';
 

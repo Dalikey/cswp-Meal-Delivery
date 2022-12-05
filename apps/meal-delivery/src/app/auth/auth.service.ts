@@ -5,7 +5,7 @@ import {
   UserIdentity,
   UserInfo,
   UserLogin,
-} from '../../../../../libs/data/src/index';
+} from '@md/data';
 import { Router } from '@angular/router';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
