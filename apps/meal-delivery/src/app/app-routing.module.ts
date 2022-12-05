@@ -20,6 +20,7 @@ import { StudentHouseComponent } from './pages/studentHouse/studentHouse.compone
 import { ListComponent as ListComponentStudentHouse } from './pages/studentHouse/list/list.component';
 import { DetailComponent as DetailComponentStudentHouse } from './pages/studentHouse/detail/detail.component';
 import { EditComponent as EditComponentStudentHouse } from './pages/studentHouse/edit/edit.component';
+import { LoggedInAuthGuard, SaveEditedWorkGuard } from './auth/auth.guards';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
@@ -32,11 +33,19 @@ const routes: Routes = [
     component: MealComponent,
     children: [
       { path: '', pathMatch: 'full', component: ListComponentMeal },
-      { path: 'new', pathMatch: 'full', component: EditComponentMeal },
+      {
+        path: 'new',
+        pathMatch: 'full',
+        canActivate: [LoggedInAuthGuard],
+        canDeactivate: [SaveEditedWorkGuard],
+        component: EditComponentMeal,
+      },
       { path: ':id', pathMatch: 'full', component: DetailComponentMeal },
       {
         path: ':id/edit',
         pathMatch: 'full',
+        canActivate: [LoggedInAuthGuard],
+        canDeactivate: [SaveEditedWorkGuard],
         component: EditComponentMeal,
       },
     ],
@@ -46,11 +55,19 @@ const routes: Routes = [
     component: UserComponent,
     children: [
       { path: '', pathMatch: 'full', component: ListComponentUser },
-      { path: 'new', pathMatch: 'full', component: EditComponentUser },
+      {
+        path: 'new',
+        pathMatch: 'full',
+        canActivate: [LoggedInAuthGuard],
+        canDeactivate: [SaveEditedWorkGuard],
+        component: EditComponentUser,
+      },
       { path: ':id', pathMatch: 'full', component: DetailComponentUser },
       {
         path: ':id/edit',
         pathMatch: 'full',
+        canActivate: [LoggedInAuthGuard],
+        canDeactivate: [SaveEditedWorkGuard],
         component: EditComponentUser,
       },
     ],
@@ -60,11 +77,19 @@ const routes: Routes = [
     component: ProductComponent,
     children: [
       { path: '', pathMatch: 'full', component: ListComponentProduct },
-      { path: 'new', pathMatch: 'full', component: EditComponentProduct },
+      {
+        path: 'new',
+        pathMatch: 'full',
+        canActivate: [LoggedInAuthGuard],
+        canDeactivate: [SaveEditedWorkGuard],
+        component: EditComponentProduct,
+      },
       { path: ':id', pathMatch: 'full', component: DetailComponentProduct },
       {
         path: ':id/edit',
         pathMatch: 'full',
+        canActivate: [LoggedInAuthGuard],
+        canDeactivate: [SaveEditedWorkGuard],
         component: EditComponentProduct,
       },
     ],
@@ -74,11 +99,23 @@ const routes: Routes = [
     component: StudentHouseComponent,
     children: [
       { path: '', pathMatch: 'full', component: ListComponentStudentHouse },
-      { path: 'new', pathMatch: 'full', component: EditComponentStudentHouse },
-      { path: ':id', pathMatch: 'full', component: DetailComponentStudentHouse },
+      {
+        path: 'new',
+        pathMatch: 'full',
+        canActivate: [LoggedInAuthGuard],
+        canDeactivate: [SaveEditedWorkGuard],
+        component: EditComponentStudentHouse,
+      },
+      {
+        path: ':id',
+        pathMatch: 'full',
+        component: DetailComponentStudentHouse,
+      },
       {
         path: ':id/edit',
         pathMatch: 'full',
+        canActivate: [LoggedInAuthGuard],
+        canDeactivate: [SaveEditedWorkGuard],
         component: EditComponentStudentHouse,
       },
     ],
