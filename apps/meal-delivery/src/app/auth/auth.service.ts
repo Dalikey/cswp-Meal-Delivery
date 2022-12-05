@@ -40,7 +40,7 @@ export class AuthService {
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
     return this.http
-      .post<UserIdentity>(`auth/login`, formData, {
+      .post<UserIdentity>(`localhost:3333/auth/login`, formData, {
         headers: this.headers,
       })
       .pipe(
