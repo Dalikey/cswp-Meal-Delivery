@@ -7,7 +7,6 @@ import {
 } from '../../../../../libs/data/src/index';
 import { Router } from '@angular/router';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { AlertService } from '../../../../../libs/data/src/index';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -20,11 +19,7 @@ export class AuthService {
     'Content-Type': 'application/json',
   });
 
-  constructor(
-    private alertService: AlertService,
-    private http: HttpClient,
-    private router: Router
-  ) {
+  constructor(private http: HttpClient, private router: Router) {
     this.getUserFromLocalStorage()
       .pipe(
         // switchMap is overbodig als we validateToken() niet gebruiken...
@@ -53,14 +48,12 @@ export class AuthService {
         map((user: UserInfo) => {
           this.saveUserToLocalStorage(user);
           this.currentUser$.next(user);
-          this.alertService.success('Je bent ingelogd');
           return user;
         }),
         catchError((error) => {
           console.log('error:', error);
           console.log('error.message:', error.message);
           console.log('error.error.message:', error.error.message);
-          this.alertService.error(error.error.message || error.message);
           return of(undefined);
         })
       );
@@ -76,14 +69,12 @@ export class AuthService {
         map((user) => {
           this.saveUserToLocalStorage(user);
           this.currentUser$.next(user);
-          this.alertService.success('Je bent geregistreerd');
           return user;
         }),
         catchError((error) => {
           console.log('error:', error);
           console.log('error.message:', error.message);
           console.log('error.error.message:', error.error.message);
-          this.alertService.error(error.error.message || error.message);
           return of(undefined);
         })
       );
@@ -97,7 +88,6 @@ export class AuthService {
           console.log('logout - removing local user info');
           localStorage.removeItem(this.CURRENT_USER);
           this.currentUser$.next(undefined);
-          this.alertService.success('Je bent uitgelogd');
         } else {
           console.log('navigate result:', success);
         }
