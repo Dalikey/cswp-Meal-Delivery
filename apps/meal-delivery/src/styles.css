@@ -135,6 +135,10 @@ a:visited:hover {
   margin-top: 5px;
 }
 
+.move8down {
+  margin-top: 8px;
+}
+
 .move30down {
   margin-top: 30px;
 }
@@ -149,6 +153,10 @@ a:visited:hover {
 
 .move150down {
   margin-top: 150px;
+}
+
+.move20right {
+  margin-left: 20px;
 }
 
 .move100right {

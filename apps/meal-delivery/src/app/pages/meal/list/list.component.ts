@@ -13,9 +13,8 @@ export class ListComponent implements OnInit, OnDestroy {
   constructor(private mealService: MealService) {}
 
   ngOnInit(): void {
-    this.mealService.getAllMeals().subscribe((meals) => {
-      this.meals = meals;
-      console.log(this.meals.length + ' meals found.');
+    this.mealService.getAllMeals().subscribe((meals: any) => {
+      this.meals = meals.results;
     });
   }
 
