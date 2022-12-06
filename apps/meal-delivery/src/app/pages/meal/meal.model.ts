@@ -1,6 +1,7 @@
+import { IEntity } from '../entity/i.entity';
 import { User } from '../user/user.model';
 
-export class Meal {
+export class Meal implements IEntity {
   id: string | undefined;
   name: string | undefined;
   price: number | undefined;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Observable, switchMap } from 'rxjs';
 import { StudentHouse } from '../studentHouse.model';
 import { StudentHouseService } from '../studentHouse.service';
 
@@ -11,6 +12,7 @@ import { StudentHouseService } from '../studentHouse.service';
 export class DetailComponent implements OnInit {
   componentId: string | null | undefined;
   studentHouse: StudentHouse | undefined;
+  studentHouse$!: Observable<StudentHouse>;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,11 +21,10 @@ export class DetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.componentId = params.get('id');
-      if (this.componentId) {
-        this.studentHouse = this.studentHouseService.getStudentHouseById(this.componentId);
-      }
-    });
+    this.studentHouse$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.studentHouseService.read(params.get('id'))
+      )
+    );
   }
 }

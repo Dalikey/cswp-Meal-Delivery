@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable, switchMap } from 'rxjs';
 import { Meal } from '../meal.model';
 import { MealService } from '../meal.service';
 
@@ -11,6 +12,7 @@ import { MealService } from '../meal.service';
 export class DetailComponent implements OnInit {
   componentId: string | null | undefined;
   meal: Meal | undefined;
+  meal$!: Observable<Meal>;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,12 +20,9 @@ export class DetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.componentId = params.get('id');
-      if (this.componentId) {
-        this.meal = this.mealService.getMealById(this.componentId);
-      }
-    });
+    this.meal$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => this.mealService.read(params.get('id')))
+    );
   }
 
   toDecimal(price: number | undefined) {
