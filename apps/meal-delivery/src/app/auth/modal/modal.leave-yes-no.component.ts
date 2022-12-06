@@ -10,8 +10,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
       </div>
       <div class="modal-body">
         <p>
-          U heeft op deze pagina wijzigingen aangebracht die niet zijn
-          opgeslagen.
+          Wijzigingen die u eventueel hebt aangebracht worden niet opgeslagen.
         </p>
         <p>Weet je zeker dat je deze pagina wilt verlaten?</p>
       </div>

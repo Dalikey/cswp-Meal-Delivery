@@ -23,9 +23,6 @@ export class AuthService {
     private http: HttpClient,
     private router: Router
   ) {
-    console.log(
-      'AuthService constructor ' + configService.getConfig().apiEndpoint
-    );
     this.getUserFromLocalStorage()
       .pipe(
         // switchMap is overbodig als we validateToken() niet gebruiken...
@@ -36,12 +33,11 @@ export class AuthService {
             // return this.validateToken(user);
             return of(user);
           } else {
-            console.log(`No current user found`);
             return of(undefined);
           }
         })
       )
-      .subscribe(() => console.log('Startup auth done'));
+      .subscribe();
   }
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
