@@ -78,8 +78,9 @@ export class MealService {
   constructor(private http: HttpClient) {}
 
   getAllMeals(): Observable<Meal[]> {
-    // return this.meals;
-    // ../../../../../../../../../../../../../../../../../../../../../../../../../
+    console.log(this.http
+      .get<ApiResponse<Meal[]>>('http://localhost:3333/api/meal')
+      .pipe(tap(console.log)));
     return this.http
       .get<ApiResponse<Meal[]>>('http://localhost:3333/api/meal')
       .pipe(tap(console.log));
