@@ -148,12 +148,9 @@ export class AuthService {
   }
 
   getAuthorizationToken(): string | undefined {
-    const userData = localStorage.getItem(this.CURRENT_USER);
-    if (userData) {
-      const user: UserInfo = JSON.parse(userData);
-
-      console.log('LET OP, TO DO!');
-      return user.name; // user.token;
+    const token = localStorage.getItem(this.CURRENT_USER);
+    if (token) {
+      return token!.replace(/['"]+/g, '');
     }
     return undefined;
   }
