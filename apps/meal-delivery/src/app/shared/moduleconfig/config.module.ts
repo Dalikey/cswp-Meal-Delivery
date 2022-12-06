@@ -13,7 +13,6 @@ export class CustomConfig {
 })
 export class ConfigModule {
   static forRoot(config: CustomConfig): ModuleWithProviders<ConfigModule> {
-    console.log('ConfigModule.forRoot ' + config.apiEndpoint);
     return {
       ngModule: ConfigModule,
       providers: [{ provide: CustomConfig, useValue: config }],

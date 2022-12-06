@@ -88,9 +88,7 @@ export class UserService {
     },
   ];
 
-  constructor() {
-    console.log('UserService created');
-  }
+  constructor() {}
 
   getAllUsers(): User[] {
     return this.users;
