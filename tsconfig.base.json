@@ -1,5 +1,4 @@
 {
-  // "type": "module", // IT DOESNT WORK GDMD
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",

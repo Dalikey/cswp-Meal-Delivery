@@ -1,5 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { environment } from '../../../environments/environment';
+import { ConfigModule } from '../../shared/moduleconfig/config.module';
 import { User } from '../user/user.model';
 import { Meal } from './meal.model';
 import { MealService } from './meal.service';
@@ -34,7 +36,8 @@ describe('MealService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [{ provide: HttpClient }],
-      imports: [HttpClientModule],
+      imports: [HttpClientModule,
+        ConfigModule.forRoot({ apiEndpoint: environment.SERVER_API_URL }),],
     });
     service = TestBed.inject(MealService);
   });

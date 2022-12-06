@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { ApiResponse } from '@md/data';
 import { Meal } from './meal.model';
+import { AuthService } from '../../auth/auth.service';
+import { ConfigService } from '../../shared/moduleconfig/config.service';
 
 @Injectable({
   providedIn: 'root',
@@ -75,14 +77,26 @@ export class MealService {
     },
   ];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private configService: ConfigService
+  ) {}
 
   getAllMeals(): Observable<Meal[]> {
-    console.log(this.http
-      .get<ApiResponse<Meal[]>>('http://localhost:3333/api/meal')
-      .pipe(tap(console.log)));
+    const token = this.authService.getAuthorizationToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    httpOptions.headers = httpOptions.headers.set('Authorization', token!);
+
     return this.http
-      .get<ApiResponse<Meal[]>>('http://localhost:3333/api/meal')
+      .get<ApiResponse<Meal[]>>(
+        `${this.configService.getConfig().apiEndpoint}api/meal`,
+        httpOptions
+      )
       .pipe(tap(console.log));
   }
 
