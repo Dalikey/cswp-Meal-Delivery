@@ -4,6 +4,8 @@ import { UserIdentity, UserInfo, UserLogin } from '@md/data';
 import { Router } from '@angular/router';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ConfigService } from './../shared/moduleconfig/config.service';
+import { AlertService } from './../shared/alert/alert.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,15 @@ export class AuthService {
     'Content-Type': 'application/json',
   });
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private configService: ConfigService,
+    private alertService: AlertService,
+    private http: HttpClient,
+    private router: Router
+  ) {
+    console.log(
+      'AuthService constructor ' + configService.getConfig().apiEndpoint
+    );
     this.getUserFromLocalStorage()
       .pipe(
         // switchMap is overbodig als we validateToken() niet gebruiken...
@@ -35,9 +45,12 @@ export class AuthService {
   }
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
+    console.log(
+      `login at ${this.configService.getConfig().apiEndpoint}auth/login`
+    );
     return this.http
       .post<UserIdentity>(
-        `http://localhost:3333/auth-api/auth/login`,
+        `${this.configService.getConfig().apiEndpoint}auth-api/auth/login`,
         formData,
         {
           headers: this.headers,
@@ -45,37 +58,51 @@ export class AuthService {
       )
       .pipe(
         tap(console.log),
-        map((data: any) => data.result),
-        map((user: UserInfo) => {
-          this.saveUserToLocalStorage(user);
-          this.currentUser$.next(user);
-          return user;
+        map((data: any) => {
+          const token = data.results.token;
+          console.log('Authorization token: ' + token);
+          this.saveUserToLocalStorage(token);
+          this.currentUser$.next(token);
+          this.alertService.success('Je bent ingelogd');
+          return data;
         }),
         catchError((error) => {
           console.log('error:', error);
           console.log('error.message:', error.message);
           console.log('error.error.message:', error.error.message);
+          this.alertService.error(error.error.message || error.message);
           return of(undefined);
         })
       );
   }
 
   register(userData: UserInfo): Observable<UserInfo | undefined> {
+    console.log(
+      `register at ${
+        this.configService.getConfig().apiEndpoint
+      }auth-api/auth/register`
+    );
     console.log(userData);
     return this.http
-      .post<UserInfo>(`user`, userData, {
-        headers: this.headers,
-      })
+      .post<UserInfo>(
+        `${this.configService.getConfig().apiEndpoint}auth-api/auth/register`,
+        userData,
+        {
+          headers: this.headers,
+        }
+      )
       .pipe(
         map((user) => {
-          this.saveUserToLocalStorage(user);
-          this.currentUser$.next(user);
+          // this.saveUserToLocalStorage(user);
+          // this.currentUser$.next(user);
+          this.alertService.success('Je bent geregistreerd');
           return user;
         }),
         catchError((error) => {
           console.log('error:', error);
           console.log('error.message:', error.message);
           console.log('error.error.message:', error.error.message);
+          this.alertService.error(error.error.message || error.message);
           return of(undefined);
         })
       );
@@ -89,6 +116,7 @@ export class AuthService {
           console.log('logout - removing local user info');
           localStorage.removeItem(this.CURRENT_USER);
           this.currentUser$.next(undefined);
+          this.alertService.success('Je bent uitgelogd.');
         } else {
           console.log('navigate result:', success);
         }
@@ -107,9 +135,7 @@ export class AuthService {
   }
 
   private saveUserToLocalStorage(user: UserInfo): void {
-    if (user) {
-      localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
-    }
+    localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
   }
 
   userMayEdit(itemUserId: string): Observable<boolean> {

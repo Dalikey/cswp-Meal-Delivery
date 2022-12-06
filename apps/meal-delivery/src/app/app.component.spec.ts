@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { ConfigModule } from './shared/moduleconfig/config.module';
 import { NavComponent } from './shared/nav/nav.component';
 
 describe('AppComponent', () => {
@@ -13,6 +14,7 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientModule,
+        ConfigModule.forRoot({ apiEndpoint: environment.SERVER_API_URL }),
       ],
     }).compileComponents();
   });
