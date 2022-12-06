@@ -155,6 +155,10 @@ a:visited:hover {
   margin-top: 150px;
 }
 
+.move20right {
+  margin-left: 20px;
+}
+
 .move100right {
   margin-left: 100px;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { UserIdentity, UserInfo, UserLogin } from '@md/data';
+import { UserIdentity, UserInfo, UserLogin, UserRegister } from '@md/data';
 import { Router } from '@angular/router';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -76,7 +76,7 @@ export class AuthService {
       );
   }
 
-  register(userData: UserInfo): Observable<UserInfo | undefined> {
+  register(userData: UserRegister): Observable<UserInfo | undefined> {
     console.log(
       `register at ${
         this.configService.getConfig().apiEndpoint
@@ -93,8 +93,8 @@ export class AuthService {
       )
       .pipe(
         map((user) => {
-          // this.saveUserToLocalStorage(user);
-          // this.currentUser$.next(user);
+          this.saveUserToLocalStorage(user);
+          this.currentUser$.next(user);
           this.alertService.success('Je bent geregistreerd');
           return user;
         }),

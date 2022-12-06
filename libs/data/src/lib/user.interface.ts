@@ -15,4 +15,10 @@ export interface UserLogin {
   password: string;
 }
 
+export interface UserRegister {
+  username: string;
+  password: string;
+  emailAddress: string;
+}
+
 export interface User extends UserInfo {}
