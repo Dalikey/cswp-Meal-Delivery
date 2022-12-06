@@ -7,7 +7,7 @@ export const environment = {
   production: false,
 
   SERVER_DOCS_URL: 'http://localhost:3333/',
-  SERVER_API_URL: 'http://localhost:3333/api/',
+  SERVER_API_URL: 'http://localhost:3333/',
 
   appVersion: '1.2.3',
 };

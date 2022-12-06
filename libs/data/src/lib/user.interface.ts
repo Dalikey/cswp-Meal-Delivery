@@ -7,7 +7,7 @@ export interface UserIdentity {
 
 export interface UserInfo extends UserIdentity {
   emailAddress: string;
-  token: string; // Bruh why is there left and right missing stuff like I hate find-a-buddy
+  token: string;
 }
 
 export interface UserLogin {
