@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "nx",
-    "start": "npx nx serve",
-    "build": "npx nx build",
-    "watch": "npx nx build --watch --configuration development",
-    "test": "npx nx test",
+    "start": "nx serve",
+    "build": "nx build",
+    "watch": "nx build --watch --configuration development",
+    "test": "nx test",
     "postinstall": "node ./decorate-angular-cli.js"
   },
   "private": true,
