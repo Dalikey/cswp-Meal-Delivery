@@ -27,7 +27,7 @@ export class UserService {
   getAllUsers(): Observable<User[] | null | undefined> {
     this.httpOptions.headers = this.httpOptions.headers.set(
       'Authorization',
-      this.token!
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
     );
 
     return this.http
@@ -51,7 +51,7 @@ export class UserService {
   getUserById(id: string): Observable<User | null | undefined> {
     this.httpOptions.headers = this.httpOptions.headers.set(
       'Authorization',
-      this.token!
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
     );
 
     return this.http
