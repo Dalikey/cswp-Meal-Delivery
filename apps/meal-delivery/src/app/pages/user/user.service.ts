@@ -5,6 +5,7 @@ import { ApiResponse } from '@md/data';
 import { User } from './user.model';
 import { AuthService } from '../../auth/auth.service';
 import { ConfigService } from '../../shared/moduleconfig/config.service';
+import { AlertService } from '../../shared/alert/alert.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,8 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private alertService: AlertService
   ) {}
   private httpOptions = {
     headers: new HttpHeaders({
@@ -40,6 +42,7 @@ export class UserService {
         }),
         catchError(() => {
           console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
       );
@@ -63,6 +66,7 @@ export class UserService {
         }),
         catchError(() => {
           console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
       );
@@ -87,6 +91,7 @@ export class UserService {
         }),
         catchError(() => {
           console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
       );
@@ -113,6 +118,7 @@ export class UserService {
         }),
         catchError(() => {
           console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
       );
@@ -136,6 +142,7 @@ export class UserService {
         }),
         catchError(() => {
           console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
       );
