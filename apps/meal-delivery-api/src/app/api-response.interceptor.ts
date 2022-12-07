@@ -26,7 +26,7 @@ export class ApiResponseInterceptor implements NestInterceptor {
           };
         } else {
           return {
-            results: 'No results available.',
+            results: 'Operation successful or no results available.',
             info: {
               type: 'none',
               count: 0,
