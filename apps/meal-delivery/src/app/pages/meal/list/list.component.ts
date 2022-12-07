@@ -1,24 +1,20 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Meal} from '../meal.model';
-import {MealService} from '../meal.service';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Meal } from '../meal.model';
+import { MealService } from '../meal.service';
 
 @Component({
   selector: 'meal-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent implements OnInit, OnDestroy {
-  meals: Meal[] | undefined;
+export class ListComponent implements OnInit {
+  meals$!: Observable<Meal[] | null | undefined>;
 
-  constructor(private mealService: MealService) {
-  }
+  constructor(private mealService: MealService) {}
 
   ngOnInit(): void {
-    this.meals = this.mealService.getAllMeals();
-    console.log(this.meals.length + ' meals found.');
-  }
-
-  ngOnDestroy(): void {
+    this.meals$ = this.mealService.getAllMeals();
   }
 
   deleteMeal(id: string) {
@@ -26,6 +22,6 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   toDecimal(price: number | undefined) {
-    return price?.toLocaleString("es-ES", {minimumFractionDigits: 2});
+    return price?.toLocaleString('es-ES', { minimumFractionDigits: 2 });
   }
 }

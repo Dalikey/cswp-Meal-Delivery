@@ -35,12 +35,20 @@ import { environment } from '../environments/environment';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import localeNl from '@angular/common/locales/nl';
+import { LoggedInAuthGuard, SaveEditedWorkGuard } from './auth/auth.guards';
+import { ConfigModule } from './shared/moduleconfig/config.module';
+import { ModalConfirmYesNoComponent } from './auth/modal/modal.confirm-yes-no.component';
+import { ModalLeaveYesNoComponent } from './auth/modal/modal.leave-yes-no.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AlertComponent } from './shared/alert/alert.component';
 
 registerLocaleData(localeNl, 'nl');
 
 @NgModule({
   declarations: [
     AppComponent,
+    ModalConfirmYesNoComponent,
+    ModalLeaveYesNoComponent,
     NavComponent,
     MealComponent,
     ListComponentMeal,
@@ -64,6 +72,7 @@ registerLocaleData(localeNl, 'nl');
     RegisterComponent,
     FooterComponent,
     MealComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,10 +81,16 @@ registerLocaleData(localeNl, 'nl');
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    ConfigModule.forRoot({ apiEndpoint: environment.SERVER_API_URL }),
+    NgbModule,
     HttpClientModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-  providers: [{ provide: LOCALE_ID, useValue: 'nl' }],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'nl' },
+    LoggedInAuthGuard,
+    SaveEditedWorkGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

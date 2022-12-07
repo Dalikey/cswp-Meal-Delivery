@@ -31,7 +31,7 @@ export class AuthController {
       };
     } catch (e) {
       throw new HttpException(
-        'Username or emailAddress invalid because user already exists',
+        'Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.',
         HttpStatus.BAD_REQUEST
       );
     }
@@ -47,7 +47,10 @@ export class AuthController {
         ),
       };
     } catch (e) {
-      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        'Ongeldige inloggegevens',
+        HttpStatus.UNAUTHORIZED
+      );
     }
   }
 }

@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
 
@@ -7,17 +8,13 @@ import { UserService } from '../user.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent implements OnInit, OnDestroy {
-  users: User[] | undefined;
+export class ListComponent implements OnInit {
+  users$!: Observable<User[] | null | undefined>;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.users = this.userService.getAllUsers();
-    console.log(this.users.length + ' users found.');
-  }
-
-  ngOnDestroy(): void {
+    this.users$ = this.userService.getAllUsers();
   }
 
   deleteUser(id: string) {

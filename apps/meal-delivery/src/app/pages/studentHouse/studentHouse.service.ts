@@ -1,85 +1,150 @@
-import {Injectable} from '@angular/core';
-import {StudentHouse} from './studentHouse.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, map, Observable, of, tap } from 'rxjs';
+import { ApiResponse } from '@md/data';
+import { StudentHouse } from './studentHouse.model';
+import { AuthService } from '../../auth/auth.service';
+import { ConfigService } from '../../shared/moduleconfig/config.service';
+import { AlertService } from '../../shared/alert/alert.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentHouseService {
-  studentHouses: StudentHouse[] = [
-    {
-      id: '12345-123-11',
-      streetAndNmr: 'Lovensdijkstraat 61',
-      city: "Breda",
-      postcode: "4818 AJ"
-    },
-    {
-      id: '12345-123-12',
-      streetAndNmr: 'Lovensdijkstraat 62',
-      city: "Breda",
-      postcode: "4818 AJ"
-    },
-    {
-      id: '12345-123-13',
-      streetAndNmr: 'Lovensdijkstraat 63',
-      city: "Breda",
-      postcode: "4818 AJ"
-    },
-    {
-      id: '12345-123-14',
-      streetAndNmr: 'Lovensdijkstraat 64',
-      city: "Breda",
-      postcode: "4818 AJ"
-    },
-    {
-      id: '12345-123-15',
-      streetAndNmr: 'Lovensdijkstraat 65',
-      city: "Breda",
-      postcode: "4818 AJ"
-    },
-    {
-      id: '12345-123-16',
-      streetAndNmr: 'Lovensdijkstraat 66',
-      city: "Breda",
-      postcode: "4818 AJ"
-    },
-    {
-      id: '12345-123-17',
-      streetAndNmr: 'Lovensdijkstraat 67',
-      city: "Breda",
-      postcode: "4818 AJ"
-    },
-    {
-      id: '12345-123-18',
-      streetAndNmr: 'Lovensdijkstraat 68',
-      city: "Breda",
-      postcode: "4818 AJ"
-    },
-  ];
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private configService: ConfigService,
+    private alertService: AlertService
+  ) {}
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
+  private token = this.authService.getAuthorizationToken();
 
-  constructor() {
+  getAllStudentHouses(): Observable<StudentHouse[] | null | undefined> {
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
+
+    return this.http
+      .get<ApiResponse<StudentHouse[]>>(
+        `${this.configService.getConfig().apiEndpoint}api/studentHouse`,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 
-  getAllStudentHouses(): StudentHouse[] {
-    return this.studentHouses;
+  getStudentHouseById(id: string): Observable<StudentHouse | null | undefined> {
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
+
+    return this.http
+      .get<StudentHouse>(
+        `${this.configService.getConfig().apiEndpoint}api/studentHouse/${id}`,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 
-  getStudentHouseById(id: string): StudentHouse {
-    return this.studentHouses.filter((studentHouse: StudentHouse) => studentHouse.id === id)[0];
-  }
+  addStudentHouse(newStudentHouse: StudentHouse) {
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
 
-  addStudentHouse(newStudentHouse: StudentHouse): void {
-    this.studentHouses.push(newStudentHouse);
+    return this.http
+      .post<StudentHouse>(
+        `${this.configService.getConfig().apiEndpoint}api/studentHouse`,
+        newStudentHouse,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 
   updateStudentHouse(updatedStudentHouse: StudentHouse) {
-    let updatedStudentHouses = this.studentHouses.filter((studentHouse) => studentHouse.id !== updatedStudentHouse.id);
-    updatedStudentHouses.push(updatedStudentHouse);
-    this.studentHouses = updatedStudentHouses;
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
+
+    return this.http
+      .put<StudentHouse>(
+        `${this.configService.getConfig().apiEndpoint}api/studentHouse/${
+          updatedStudentHouse.id
+        }`,
+        updatedStudentHouse,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 
   deleteStudentHouse(id: string) {
-    let studentHouse = this.studentHouses.find((studentHouse) => studentHouse.id == id);
-    let index = this.studentHouses.indexOf(studentHouse!);
-    this.studentHouses.splice(index, 1);
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
+
+    return this.http
+      .delete<StudentHouse>(
+        `${this.configService.getConfig().apiEndpoint}api/studentHouse/${id}`,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 }

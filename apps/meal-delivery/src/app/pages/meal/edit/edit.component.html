@@ -1,5 +1,5 @@
 <div *ngIf="componentExists && meal">
-  <h3>Bewerken van {{ mealName }}</h3>
+  <h3>Bewerken van {{ meal!.name }}</h3>
 </div>
 <div *ngIf="!componentExists">
   <h3>Nieuwe maaltijd toevoegen</h3>
@@ -88,10 +88,11 @@
             Maaltijd toevoegen
           </div>
         </button>
-        <button class="btn btn-warning mx-2" routerLink="/meal">Annuleren</button>
+        <button class="btn btn-warning mx-2">Annuleren</button>
       </div>
       <div *ngIf="componentExists && meal" class="col move20up">
         <button type="submit" class="btn btn-primary mx-2" [disabled]="!mealEditForm.valid">
+          <!-- <div *ngIf="componentExists && meal && authService.userMayEdit(meal.restaurantId) | async"> -->
           <div *ngIf="componentExists && meal">
             Maaltijd bewerken
           </div>
@@ -99,7 +100,7 @@
             Maaltijd toevoegen
           </div>
         </button>
-        <button class="btn btn-warning mx-2" routerLink="/meal">Annuleren</button>
+        <button class="btn btn-warning mx-2">Annuleren</button>
       </div>
     </div>
   </form>

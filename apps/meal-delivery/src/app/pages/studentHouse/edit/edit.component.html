@@ -1,5 +1,5 @@
 <div *ngIf="componentExists && studentHouse">
-  <h3>Bewerken van {{ studentHouseName }}</h3>
+  <h3>Bewerken van {{ studentHouse.name }}</h3>
 </div>
 <div *ngIf="!componentExists">
   <h3>Nieuwe studentenhuis toevoegen</h3>
@@ -13,8 +13,8 @@
         <div class="col-8">
           <div class="form-group">
             <label for="streetAndNmr">Straat en huisnummer</label>
-            <input type="text" id="streetAndNmr" name="streetAndNmr" class="form-control" [(ngModel)]="studentHouse!.streetAndNmr" #streetAndNmr="ngModel"
-              minlength="3" required [ngClass]="{
+            <input type="text" id="streetAndNmr" name="streetAndNmr" class="form-control"
+              [(ngModel)]="studentHouse!.streetAndNmr" #streetAndNmr="ngModel" minlength="3" required [ngClass]="{
                           'is-invalid': streetAndNmr.invalid && streetAndNmr.touched
                       }" />
             <div *ngIf="streetAndNmr.invalid && streetAndNmr.touched" class="invalid-feedback">
@@ -45,7 +45,7 @@
             Studentenhuis toevoegen
           </div>
         </button>
-        <button class="btn btn-warning mx-2" routerLink="/studentHouse">Annuleren</button>
+        <button class="btn btn-warning mx-2">Annuleren</button>
       </div>
     </div>
   </form>

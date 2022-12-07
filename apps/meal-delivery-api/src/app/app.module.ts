@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 
 import { MongooseModule } from '@nestjs/mongoose';
@@ -14,14 +14,14 @@ import { MealModule } from './meal/meal.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      // `mongodb+srv://${process.env.MONGO_USR}:${process.env.MONGO_PWD}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`
-      'mongodb://127.0.0.1:27017/api'
+      `mongodb+srv://${process.env.MONGO_USR}:${process.env.MONGO_PWD}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`
+      // 'mongodb://127.0.0.1:27017/api' // LocalDb
     ),
     AuthModule,
     UserModule,
     MealModule,
     RouterModule.register([
-      { path: 'api', module: AuthModule },
+      { path: 'auth-api', module: AuthModule },
       { path: 'api', module: UserModule },
       { path: 'api', module: MealModule },
     ]),
@@ -31,6 +31,9 @@ import { MealModule } from './meal/meal.module';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(TokenMiddleware).forRoutes('api');
+    consumer
+      .apply(TokenMiddleware)
+      .exclude({ path: 'api', method: RequestMethod.GET })
+      .forRoutes('api');
   }
 }

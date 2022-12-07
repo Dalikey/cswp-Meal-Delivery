@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of users; let i = index">
+            <tr *ngFor="let user of users$ | async; let i = index">
               <td>{{ user.id }}</td>
               <td>
                 <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ user.firstName

@@ -1,85 +1,150 @@
-import {Injectable} from '@angular/core';
-import {Product} from './product.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, map, Observable, of, tap } from 'rxjs';
+import { ApiResponse } from '@md/data';
+import { Product } from './product.model';
+import { AuthService } from '../../auth/auth.service';
+import { ConfigService } from '../../shared/moduleconfig/config.service';
+import { AlertService } from '../../shared/alert/alert.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  products: Product[] = [
-    {
-      id: '12345-123-11',
-      name: 'Banaan',
-      allergies: [],
-      containsAlcohol: false,
-    },
-    {
-      id: '12345-123-12',
-      name: 'Brood',
-      allergies: ["gluten"],
-      containsAlcohol: false,
-    },
-    {
-      id: '12345-123-13',
-      name: 'Panini',
-      allergies: ["gluten"],
-      containsAlcohol: false,
-    },
-    {
-      id: '12345-123-14',
-      name: 'Shake',
-      allergies: [],
-      containsAlcohol: false,
-    },
-    {
-      id: '12345-123-15',
-      name: 'Coffee',
-      allergies: [],
-      containsAlcohol: false,
-    },
-    {
-      id: '12345-123-16',
-      name: 'Snoep',
-      allergies: [],
-      containsAlcohol: false,
-    },
-    {
-      id: '12345-123-17',
-      name: 'Bier',
-      allergies: ["gluten"],
-      containsAlcohol: true,
-    },
-    {
-      id: '12345-123-18',
-      name: 'Kroket',
-      allergies: ['Gerst', 'gluten', 'mais', 'peulvruchten', 'soja', 'tarwe', 'wortel'],
-      containsAlcohol: false,
-    },
-  ];
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private configService: ConfigService,
+    private alertService: AlertService
+  ) {}
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
+  private token = this.authService.getAuthorizationToken();
 
-  constructor() {
+  getAllProducts(): Observable<Product[] | null | undefined> {
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
+
+    return this.http
+      .get<ApiResponse<Product[]>>(
+        `${this.configService.getConfig().apiEndpoint}api/product`,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 
-  getAllProducts(): Product[] {
-    return this.products;
+  getProductById(id: string): Observable<Product | null | undefined> {
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
+
+    return this.http
+      .get<Product>(
+        `${this.configService.getConfig().apiEndpoint}api/product/${id}`,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 
-  getProductById(id: string): Product {
-    return this.products.filter((product: Product) => product.id === id)[0];
-  }
+  addProduct(newProduct: Product) {
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
 
-  addProduct(newProduct: Product): void {
-    this.products.push(newProduct);
+    return this.http
+      .post<Product>(
+        `${this.configService.getConfig().apiEndpoint}api/product`,
+        newProduct,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 
   updateProduct(updatedProduct: Product) {
-    let updatedProducts = this.products.filter((product) => product.id !== updatedProduct.id);
-    updatedProducts.push(updatedProduct);
-    this.products = updatedProducts;
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
+
+    return this.http
+      .put<Product>(
+        `${this.configService.getConfig().apiEndpoint}api/product/${
+          updatedProduct.id
+        }`,
+        updatedProduct,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 
   deleteProduct(id: string) {
-    let product = this.products.find((product) => product.id == id);
-    let index = this.products.indexOf(product!);
-    this.products.splice(index, 1);
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
+
+    return this.http
+      .delete<Product>(
+        `${this.configService.getConfig().apiEndpoint}api/product/${id}`,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 }

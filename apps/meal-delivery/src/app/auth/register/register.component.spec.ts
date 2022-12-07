@@ -1,6 +1,8 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
+import { environment } from 'apps/meal-delivery/src/environments/environment';
+import { ConfigModule } from '../../shared/moduleconfig/config.module';
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {
@@ -10,7 +12,11 @@ describe('RegisterComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RegisterComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      imports: [
+        FormsModule,
+        HttpClientModule,
+        ConfigModule.forRoot({ apiEndpoint: environment.SERVER_API_URL }),
+      ],
     }).compileComponents();
   });
 
