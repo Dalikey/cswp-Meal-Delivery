@@ -29,7 +29,7 @@ export class Meal {
   })
   restaurantRef: User;
 
-  @Prop({required: true, type: {id: String, name: String}})
+  @Prop({ required: true, type: { id: String, name: String } })
   restaurant: UserIdentity;
 
   @Prop({ default: [] })

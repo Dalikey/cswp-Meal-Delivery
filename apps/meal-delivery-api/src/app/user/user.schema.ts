@@ -30,7 +30,7 @@ export class User {
   meals: Meal[];
 
   @Prop({ default: [] })
-  friends: string[];
+  friends: User[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
