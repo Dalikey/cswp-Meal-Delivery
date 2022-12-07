@@ -38,10 +38,8 @@ export class UserService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((error) => {
-          console.log('error:', error);
-          console.log('error.message:', error.message);
-          console.log('error.error.message:', error.error.message);
+        catchError(() => {
+          console.log('Unable to connect to database.');
           return of(undefined);
         })
       );
@@ -63,10 +61,8 @@ export class UserService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((error) => {
-          console.log('error:', error);
-          console.log('error.message:', error.message);
-          console.log('error.error.message:', error.error.message);
+        catchError(() => {
+          console.log('Unable to connect to database.');
           return of(undefined);
         })
       );
@@ -89,10 +85,8 @@ export class UserService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((error) => {
-          console.log('error:', error);
-          console.log('error.message:', error.message);
-          console.log('error.error.message:', error.error.message);
+        catchError(() => {
+          console.log('Unable to connect to database.');
           return of(undefined);
         })
       );
@@ -117,10 +111,8 @@ export class UserService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((error) => {
-          console.log('error:', error);
-          console.log('error.message:', error.message);
-          console.log('error.error.message:', error.error.message);
+        catchError(() => {
+          console.log('Unable to connect to database.');
           return of(undefined);
         })
       );
@@ -142,10 +134,8 @@ export class UserService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((error) => {
-          console.log('error:', error);
-          console.log('error.message:', error.message);
-          console.log('error.error.message:', error.error.message);
+        catchError(() => {
+          console.log('Unable to connect to database.');
           return of(undefined);
         })
       );
