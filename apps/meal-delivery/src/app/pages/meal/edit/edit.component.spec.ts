@@ -33,6 +33,5 @@ describe('EditComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(component.meal?.restaurant).toEqual('Avans restaurant');
   });
 });

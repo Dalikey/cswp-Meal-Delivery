@@ -10,7 +10,8 @@
       <br>
       <div class="mb240">
         <div class="row">
-          <div class="col-sm-12 col-md-auto col-lg-6" *ngFor="let studentHouse of studentHouses; let i = index">
+          <div class="col-sm-12 col-md-auto col-lg-6"
+            *ngFor="let studentHouse of studentHouses$ | async; let i = index">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">{{studentHouse.streetAndNmr}}</h5>
@@ -18,14 +19,14 @@
                   <li>Stad: {{studentHouse.city}}</li>
                   <li>Postcode: {{studentHouse.postcode}}</li>
                   <li><a routerLink="{{ studentHouse.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">Klik
-                    hier voor meer details.</a></li>
+                      hier voor meer details.</a></li>
                 </ul>
                 <div align="end"><a class="edit" title="Bewerken" data-toggle="tooltip"
-                                    routerLink="{{ studentHouse.id }}/edit" routerLinkActive="active"><i
-                  class="material-icons">&#xE254;</i></a>
+                    routerLink="{{ studentHouse.id }}/edit" routerLinkActive="active"><i
+                      class="material-icons">&#xE254;</i></a>
                   <a class="delete" title="Verwijderen" data-toggle="tooltip"
-                     (click)="deleteStudentHouse(studentHouse.id!)"
-                     routerLinkActive="active"><i class="material-icons">&#xE872;</i></a>
+                    (click)="deleteStudentHouse(studentHouse.id!)" routerLinkActive="active"><i
+                      class="material-icons">&#xE872;</i></a>
                 </div>
               </div>
             </div>

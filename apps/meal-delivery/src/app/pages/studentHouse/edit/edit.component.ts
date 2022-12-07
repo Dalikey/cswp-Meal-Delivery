@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {StudentHouse} from '../studentHouse.model';
-import {StudentHouseService} from '../studentHouse.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { catchError, of, Subscription, switchMap, tap } from 'rxjs';
+import { Alert, AlertService } from '../../../shared/alert/alert.service';
+import { StudentHouse } from '../studentHouse.model';
+import { StudentHouseService } from '../studentHouse.service';
 
 export enum AllergyTypesEnum {
   gerst = 'gerst',
@@ -18,57 +20,99 @@ export enum AllergyTypesEnum {
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnDestroy {
   componentId: string | null | undefined;
   componentExists: boolean = false;
   studentHouse: StudentHouse | undefined;
-  studentHouseName: string | undefined;
+  studentHouseid!: number | undefined;
+  debug = false;
   public allergyTypes = Object.values(AllergyTypesEnum);
 
+  subscriptionOptions!: Subscription;
+  subscriptionParams!: Subscription;
+  subscriptionStudios!: Subscription;
+
   constructor(
+    private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
     private studentHouseService: StudentHouseService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.componentId = params.get('id');
-      if (this.componentId) {
-        this.componentExists = true;
-        this.studentHouse = {
-          ...this.studentHouseService.getStudentHouseById(this.componentId),
-        };
-        this.studentHouseName = this.studentHouse.streetAndNmr;
-      } else {
-        this.componentExists = false;
-        this.studentHouse = {
-          id: undefined,
-          streetAndNmr: '',
-          city: '',
-          postcode: '',
-        };
-      }
-    });
+    this.subscriptionParams = this.route.paramMap
+      .pipe(
+        tap(console.log),
+        switchMap((params: ParamMap) => {
+          this.componentId = params.get('id');
+          if (!params.get('id')) {
+            this.componentExists = false;
+            return of({} as StudentHouse);
+          } else {
+            this.componentExists = true;
+            return this.studentHouseService.getStudentHouseById(
+              params.get('id')!
+            );
+          }
+        }),
+        tap(console.log)
+      )
+      .subscribe((studentHouse: StudentHouse) => {
+        this.studentHouse = studentHouse;
+      });
   }
 
   onSubmit() {
-    if (this.componentExists) {
-      this.studentHouseService.updateStudentHouse(this.studentHouse!);
-      this.router.navigate(['studentHouse']);
+    console.log('onSubmit', this.studentHouse);
+
+    if (this.studentHouse!.id) {
+      // A studentHouse with id must have been saved before, so it must be an update.
+      console.log('update studentHouse');
+      this.studentHouseService
+        .updateStudentHouse(this.studentHouse!)
+        .pipe(
+          catchError((error: Alert) => {
+            console.log(error);
+            this.alertService.error(error.message);
+            return of(false);
+          })
+        )
+        .subscribe((success) => {
+          console.log(success);
+          if (success) {
+            this.router.navigate(['..'], { relativeTo: this.route });
+          }
+        });
     } else {
-      this.studentHouse!.id = this.uuid();
-      this.studentHouseService.addStudentHouse(this.studentHouse!);
-      this.router.navigate(['studentHouse']);
+      // A studentHouse without id has not been saved to the database before.
+      console.log('create studentHouse');
+      this.studentHouseService
+        .addStudentHouse(this.studentHouse!)
+        .pipe(
+          catchError((error: Alert) => {
+            console.log(error);
+            this.alertService.error(error.message);
+            return of(false);
+          })
+        )
+        .subscribe((success) => {
+          console.log(success);
+          if (success) {
+            this.router.navigate(['..'], { relativeTo: this.route });
+          }
+        });
     }
   }
 
-  uuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      var r = (Math.random() * 16) | 0,
-        v = c == 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
+  ngOnDestroy(): void {
+    if (
+      this.subscriptionOptions &&
+      this.subscriptionParams &&
+      this.subscriptionStudios
+    ) {
+      this.subscriptionOptions.unsubscribe();
+      this.subscriptionParams.unsubscribe();
+      this.subscriptionStudios.unsubscribe();
+    }
   }
 }

@@ -35,9 +35,11 @@ describe('MealService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        HttpClientModule,
+        ConfigModule.forRoot({ apiEndpoint: environment.SERVER_API_URL }),
+      ],
       providers: [{ provide: HttpClient }],
-      imports: [HttpClientModule,
-        ConfigModule.forRoot({ apiEndpoint: environment.SERVER_API_URL }),],
     });
     service = TestBed.inject(MealService);
   });
@@ -48,8 +50,6 @@ describe('MealService', () => {
 
   it('should return a list of meals', (done: DoneFn) => {
     const meals = service.getAllMeals();
-    // expect(meals.length).toBe(8);
-    // expect(meals[0].id).toEqual(expectedMeals[0].id);
     done();
   });
 
@@ -68,7 +68,6 @@ describe('MealService', () => {
       restaurant: 'Avans restaurant',
     };
     service.addMeal(newMeal);
-    // expect(service.getAllMeals().length).toEqual(9);
     done();
   });
 

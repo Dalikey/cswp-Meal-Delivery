@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable, switchMap } from 'rxjs';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
 
@@ -9,21 +10,18 @@ import { UserService } from '../user.service';
   styleUrls: ['./detail.component.css'],
 })
 export class DetailComponent implements OnInit {
-  componentId: string | null | undefined;
-  user: User | undefined;
+  user$!: Observable<User | null | undefined>;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.componentId = params.get('id');
-      if (this.componentId) {
-        this.user = this.userService.getUserById(this.componentId);
-      }
-    });
+    this.user$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.userService.getUserById(params.get('id')!)
+      )
+    );
   }
 }
