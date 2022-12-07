@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { StudentHouse } from '../studentHouse.model';
 import { StudentHouseService } from '../studentHouse.service';
 
@@ -7,16 +8,14 @@ import { StudentHouseService } from '../studentHouse.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent implements OnInit, OnDestroy {
-  studentHouses: StudentHouse[] | undefined;
+export class ListComponent implements OnInit {
+  studentHouses$!: Observable<StudentHouse[] | null | undefined>;
 
   constructor(private studentHouseService: StudentHouseService) {}
 
   ngOnInit(): void {
-    this.studentHouses = this.studentHouseService.getAllStudentHouses();
+    this.studentHouses$ = this.studentHouseService.getAllStudentHouses();
   }
-
-  ngOnDestroy(): void {}
 
   deleteStudentHouse(id: string) {
     this.studentHouseService.deleteStudentHouse(id);

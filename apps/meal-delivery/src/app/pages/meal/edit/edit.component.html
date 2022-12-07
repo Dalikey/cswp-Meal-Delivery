@@ -1,5 +1,5 @@
 <div *ngIf="componentExists && meal">
-  <h3>Bewerken van {{ mealName }}</h3>
+  <h3>Bewerken van {{ meal!.name }}</h3>
 </div>
 <div *ngIf="!componentExists">
   <h3>Nieuwe maaltijd toevoegen</h3>

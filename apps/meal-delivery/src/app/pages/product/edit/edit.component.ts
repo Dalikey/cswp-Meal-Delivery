@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { catchError, of, Subscription, switchMap, tap } from 'rxjs';
+import { Alert, AlertService } from '../../../shared/alert/alert.service';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 
@@ -18,38 +20,56 @@ export enum AllergyTypesEnum {
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnDestroy {
   componentId: string | null | undefined;
   componentExists: boolean = false;
   product: Product | undefined;
-  productName: string | undefined;
+  productid!: number | undefined;
+  debug = false;
   public allergyTypes = Object.values(AllergyTypesEnum);
 
+  subscriptionOptions!: Subscription;
+  subscriptionParams!: Subscription;
+  subscriptionStudios!: Subscription;
+
   constructor(
+    private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.componentId = params.get('id');
-      if (this.componentId) {
-        this.componentExists = true;
-        this.product = {
-          ...this.productService.getProductById(this.componentId),
-        };
-        this.productName = this.product.name;
-      } else {
-        this.componentExists = false;
-        this.product = {
-          id: undefined,
-          name: '',
-          allergies: [],
-          containsAlcohol: false,
-        };
-      }
-    });
+    this.subscriptionParams = this.route.paramMap
+      .pipe(
+        tap(console.log),
+        switchMap((params: ParamMap) => {
+          this.componentId = params.get('id');
+          if (!params.get('id')) {
+            this.componentExists = false;
+            // const noEmptyStringAllergies = this.product?.allergies!.filter(
+            //   (allergy) => {
+            //     return allergy !== '';
+            //   }
+            // );
+            // this.product!.allergies = noEmptyStringAllergies;
+            return of({} as Product);
+          } else {
+            this.componentExists = true;
+            // const noEmptyStringAllergies = this.product?.allergies!.filter(
+            //   (allergy) => {
+            //     return allergy !== '';
+            //   }
+            // );
+            // this.product!.allergies = noEmptyStringAllergies;
+            return this.productService.getProductById(params.get('id')!);
+          }
+        }),
+        tap(console.log)
+      )
+      .subscribe((product: Product) => {
+        this.product = product;
+      });
   }
 
   addAllergy() {
@@ -57,33 +77,56 @@ export class EditComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.componentExists) {
-      const noEmptyStringAllergies = this.product?.allergies!.filter(
-        (allergy) => {
-          return allergy !== '';
-        }
-      );
-      this.product!.allergies = noEmptyStringAllergies;
-      this.productService.updateProduct(this.product!);
-      this.router.navigate(['product']);
+    console.log('onSubmit', this.product);
+
+    if (this.product!.id) {
+      // A product with id must have been saved before, so it must be an update.
+      console.log('update product');
+      this.productService
+        .updateProduct(this.product!)
+        .pipe(
+          catchError((error: Alert) => {
+            console.log(error);
+            this.alertService.error(error.message);
+            return of(false);
+          })
+        )
+        .subscribe((success) => {
+          console.log(success);
+          if (success) {
+            this.router.navigate(['..'], { relativeTo: this.route });
+          }
+        });
     } else {
-      this.product!.id = this.uuid();
-      const noEmptyStringAllergies = this.product?.allergies!.filter(
-        (allergy) => {
-          return allergy !== '';
-        }
-      );
-      this.product!.allergies = noEmptyStringAllergies;
-      this.productService.addProduct(this.product!);
-      this.router.navigate(['product']);
+      // A product without id has not been saved to the database before.
+      console.log('create product');
+      this.productService
+        .addProduct(this.product!)
+        .pipe(
+          catchError((error: Alert) => {
+            console.log(error);
+            this.alertService.error(error.message);
+            return of(false);
+          })
+        )
+        .subscribe((success) => {
+          console.log(success);
+          if (success) {
+            this.router.navigate(['..'], { relativeTo: this.route });
+          }
+        });
     }
   }
 
-  uuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      var r = (Math.random() * 16) | 0,
-        v = c == 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
+  ngOnDestroy(): void {
+    if (
+      this.subscriptionOptions &&
+      this.subscriptionParams &&
+      this.subscriptionStudios
+    ) {
+      this.subscriptionOptions.unsubscribe();
+      this.subscriptionParams.unsubscribe();
+      this.subscriptionStudios.unsubscribe();
+    }
   }
 }

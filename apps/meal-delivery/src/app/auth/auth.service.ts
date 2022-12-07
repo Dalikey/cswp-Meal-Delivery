@@ -25,12 +25,10 @@ export class AuthService {
   ) {
     this.getUserFromLocalStorage()
       .pipe(
-        // switchMap is overbodig als we validateToken() niet gebruiken...
         switchMap((user: UserInfo | undefined) => {
           if (user) {
             console.log('User found in local storage');
             this.currentUser$.next(user);
-            // return this.validateToken(user);
             return of(user);
           } else {
             return of(undefined);

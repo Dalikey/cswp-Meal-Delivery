@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 
 import { MongooseModule } from '@nestjs/mongoose';
@@ -31,6 +31,9 @@ import { MealModule } from './meal/meal.module';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(TokenMiddleware).forRoutes('api');
+    consumer
+      .apply(TokenMiddleware)
+      .exclude({ path: 'api', method: RequestMethod.GET })
+      .forRoutes('api');
   }
 }

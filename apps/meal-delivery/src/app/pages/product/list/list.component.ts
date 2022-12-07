@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 
@@ -7,16 +8,14 @@ import { ProductService } from '../product.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent implements OnInit, OnDestroy {
-  products: Product[] | undefined;
+export class ListComponent implements OnInit {
+  products$!: Observable<Product[] | null | undefined>;
 
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.products = this.productService.getAllProducts();
+    this.products$ = this.productService.getAllProducts();
   }
-
-  ngOnDestroy(): void {}
 
   deleteProduct(id: string) {
     this.productService.deleteProduct(id);

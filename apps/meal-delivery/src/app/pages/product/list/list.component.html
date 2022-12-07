@@ -10,13 +10,13 @@
       <br>
       <div class="mb240">
         <div class="row">
-          <div class="col-sm-12 col-md-auto col-lg-6" *ngFor="let product of products; let i = index">
+          <div class="col-sm-12 col-md-auto col-lg-6" *ngFor="let product of products$ | async; let i = index">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">{{product.name}}</h5>
                 <ul class="noBullets">
-                  <li *ngIf="product?.allergies.length>0; else noAllergies">Allergieën: {{ product?.allergies.join(',
-                    ') }} </li>
+                  <li *ngIf="product?.allergies.length>0; else noAllergies">Allergieën: {{ product?.allergies.join(', ')
+                    }} </li>
                   <ng-template #noAllergies>
                     <li>Product bevat geen allergieën.</li>
                   </ng-template>
