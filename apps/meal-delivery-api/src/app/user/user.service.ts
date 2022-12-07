@@ -52,7 +52,7 @@ export class UserService {
           console.log(error);
         });
     } else {
-      throw new HttpException('User not exist', HttpStatus.BAD_REQUEST);
+      throw new HttpException('User does not exist', HttpStatus.BAD_REQUEST);
     }
   }
 }
