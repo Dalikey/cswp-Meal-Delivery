@@ -36,7 +36,10 @@ export class EditComponent implements OnInit, OnDestroy {
           this.componentId = params.get('id');
           if (!params.get('id')) {
             this.componentExists = false;
-            return of({} as Meal);
+            return of({
+              deliveryTime: new Date(),
+              deliveryDate: new Date(),
+            } as Meal);
           } else {
             this.componentExists = true;
             return this.mealService.getMealById(params.get('id')!);
@@ -55,6 +58,7 @@ export class EditComponent implements OnInit, OnDestroy {
     if (this.meal!.id) {
       // A meal with id must have been saved before, so it must be an update.
       console.log('update meal');
+
       this.mealService
         .updateMeal(this.meal!)
         .pipe(
