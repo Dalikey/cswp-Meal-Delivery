@@ -8,20 +8,11 @@ export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
-  @Prop({ default: uuid, index: true })
-  id: string;
-
-  @Prop({ required: true, unique: true })
-  name: string;
-
-  @Prop({ required: true, default: [] })
-  roles: string[];
-
-  @Prop({ required: true, default: true })
-  isActive: boolean;
-
-  @Prop({ required: true })
-  emailAddress: string;
+  @Prop({ default: uuid, index: true }) id: string;
+  @Prop({ required: true, unique: true }) name: string;
+  @Prop({ required: true, default: [] }) roles: string[];
+  @Prop({ required: true, default: true }) isActive: boolean;
+  @Prop({ required: true }) emailAddress: string;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'StudentHouse' })
   studentHouse: StudentHouse;
