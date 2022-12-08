@@ -9,21 +9,21 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { MealService } from './meal.service';
-import { MealInfo, Meal, ResourceId } from '@md/data';
+import { ProductService } from './product.service';
+import { ProductInfo, Product, ResourceId } from '@md/data';
 import { InjectToken, Token } from '../auth/token.decorator';
 
-@Controller('meal')
-export class MealController {
-  constructor(private readonly mealService: MealService) {}
+@Controller('product')
+export class ProductController {
+  constructor(private readonly productService: ProductService) {}
 
   @Post()
-  async createMeal(
+  async createProduct(
     @InjectToken() token: Token,
-    @Body() meal: MealInfo
+    @Body() product: ProductInfo
   ): Promise<ResourceId> {
     try {
-      return await this.mealService.createMeal(meal, token.id);
+      return await this.productService.createProduct(product, token.id);
     } catch (e) {
       let errorMessage = 'Failed to do something exceptional';
       if (e instanceof Error) {
@@ -34,23 +34,23 @@ export class MealController {
   }
 
   @Get()
-  async getAll(): Promise<MealInfo[]> {
-    return this.mealService.getAll();
+  async getAll(): Promise<ProductInfo[]> {
+    return this.productService.getAll();
   }
 
   @Get(':id')
-  async getOne(@Param('id') id: string): Promise<Meal> {
-    return this.mealService.getOne(id);
+  async getOne(@Param('id') id: string): Promise<Product> {
+    return this.productService.getOne(id);
   }
 
   @Put(':id')
-  async updateMeal(
+  async updateProduct(
     @InjectToken() token: Token,
-    @Param('id') mealId: string,
-    @Body() meal: MealInfo
+    @Param('id') productId: string,
+    @Body() product: ProductInfo
   ): Promise<string> {
     try {
-      return this.mealService.updateMeal(mealId, meal, token.id);
+      return this.productService.updateProduct(productId, product, token.id);
     } catch (e) {
       let errorMessage = 'Failed to do something exceptional';
       if (e instanceof Error) {
@@ -61,7 +61,7 @@ export class MealController {
   }
 
   @Delete(':id')
-  async deleteMeal(@Param('id') id: string) {
-    await this.mealService.deleteOne(id);
+  async deleteProduct(@Param('id') id: string) {
+    await this.productService.deleteOne(id);
   }
 }

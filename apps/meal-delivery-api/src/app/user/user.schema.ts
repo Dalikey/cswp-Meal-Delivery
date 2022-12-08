@@ -1,8 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { v4 as uuid } from 'uuid';
+import { Meal } from '../meal/meal.schema';
+import { StudentHouse } from '../studentHouse/studentHouse.schema';
 
-export type UserDocument = User & Document;
+export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
@@ -21,13 +23,20 @@ export class User {
   @Prop({ required: true })
   emailAddress: string;
 
-  // we don't use hooks to ensure the topics exist, as nestjs does not play nice
-  // https://github.com/nestjs/mongoose/issues/7
-  @Prop({ default: [] })
-  meals: string[];
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'StudentHouse' })
+  studentHouse: StudentHouse;
 
-  @Prop({ default: [] })
-  friends: string[];
+  @Prop({
+    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Meal', unique: true }],
+    default: [],
+  })
+  meals: Meal[];
+
+  @Prop({
+    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User', unique: true }],
+    default: [],
+  })
+  friends: User[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

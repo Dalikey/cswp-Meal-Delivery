@@ -22,9 +22,8 @@
             <tr *ngFor="let user of users$ | async; let i = index">
               <td>{{ user.id }}</td>
               <td>
-                <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ user.firstName
-                  }}
-                  {{ user.lastName }}</a>
+                <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ user.name
+                  }}</a>
               </td>
               <td>
                 <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{

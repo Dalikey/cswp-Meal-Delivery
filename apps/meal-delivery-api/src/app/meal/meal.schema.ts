@@ -1,8 +1,11 @@
+import { UserIdentity } from '@md/data';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { v4 as uuid } from 'uuid';
+import { Product } from '../product/product.schema';
+import { User } from '../user/user.schema';
 
-export type MealDocument = Meal & Document;
+export type MealDocument = HydratedDocument<Meal>;
 
 @Schema()
 export class Meal {
@@ -20,11 +23,32 @@ export class Meal {
   @Prop({ required: true, default: new Date() })
   deliveryDate: Date;
 
-  @Prop({ required: true })
-  restaurant: string;
+  @Prop({
+    required: true,
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'User',
+  })
+  restaurantRef: User;
 
-  @Prop({ default: [] })
-  users: string[];
+  @Prop({ required: true, type: { id: String, name: String } })
+  restaurant: UserIdentity;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User' })
+  deliverer: User;
+
+  @Prop({
+    type: [
+      { type: MongooseSchema.Types.ObjectId, ref: 'Product', unique: true },
+    ],
+    default: [],
+  })
+  products: Product[];
+
+  @Prop({
+    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User', unique: true }],
+    default: [],
+  })
+  students: User[];
 }
 
 export const MealSchema = SchemaFactory.createForClass(Meal);

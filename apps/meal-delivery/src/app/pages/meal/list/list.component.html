@@ -15,9 +15,9 @@
               <div class="card-body">
                 <h5 class="card-title">{{meal.name}}</h5>
                 <ul class="noBullets">
-                  <li>Restaurant: {{meal.restaurant}}</li>
-                  <li>Bezorgtijd: {{ meal?.deliveryTime | date:"HH:mm" }}</li>
-                  <li>Bezorgdatum: {{meal?.deliveryDate?.toLocaleDateString('nl-NL')}}</li>
+                  <li>Restaurant: {{meal.restaurant?.name}}</li>
+                  <li>Bezorgtijd: {{meal?.deliveryTime | date:"HH:mm"}}</li>
+                  <li>Bezorgdatum: {{meal?.deliveryDate | date: "dd-MM-YYYY"}}</li>
                   <li> <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">Klik hier
                       voor meer details.</a></li>
                 </ul>
