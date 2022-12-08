@@ -20,8 +20,4 @@ export class ListComponent implements OnInit {
   deleteMeal(id: string) {
     this.mealService.deleteMeal(id);
   }
-
-  toDecimal(price: number | undefined) {
-    return price?.toLocaleString('es-ES', { minimumFractionDigits: 2 });
-  }
 }

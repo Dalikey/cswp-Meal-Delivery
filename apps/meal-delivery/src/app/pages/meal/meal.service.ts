@@ -27,7 +27,7 @@ export class MealService {
   getAllMeals(): Observable<Meal[] | null | undefined> {
     this.httpOptions.headers = this.httpOptions.headers.set(
       'Authorization',
-      this.token!
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
     );
 
     return this.http
@@ -40,8 +40,8 @@ export class MealService {
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((error) => {
+          console.log('Unable to connect to database.' + error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -51,7 +51,7 @@ export class MealService {
   getMealById(id: string): Observable<Meal | null | undefined> {
     this.httpOptions.headers = this.httpOptions.headers.set(
       'Authorization',
-      this.token!
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
     );
 
     return this.http
@@ -89,8 +89,8 @@ export class MealService {
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
