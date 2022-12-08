@@ -9,7 +9,7 @@
       <li>Geboortedatum: {{user?.birthDate | date: "dd-MM-YYYY"}}</li>
       <li *ngIf="user?.isGraduated">Is al afgestudeerd.</li>
       <li *ngIf="!user?.isGraduated">Is nog niet afgestudeerd.</li>
-      <li>Telefoonnummer: {{user?.phoneNumber}}</li>
+      <li *ngIf="user?.phoneNumber">Telefoonnummer: {{user?.phoneNumber}}</li>
     </ul>
   </div>
 </div>

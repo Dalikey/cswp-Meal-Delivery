@@ -29,4 +29,9 @@ export class UserController {
   async deleteSelf(@InjectToken() token: Token) {
     await this.userService.deleteOne(token.id);
   }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') id: string) {
+    await this.userService.deleteOne(id);
+  }
 }
