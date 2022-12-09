@@ -31,7 +31,7 @@ export class UserService {
     return users[0];
   }
 
-  async updateUser(userId: string, userInfo: UserInfo): Promise<string> {
+  async updateUser(userId: string, userInfo: UserInfo): Promise<UserInfo> {
     const user = await this.userModel.findOne({ id: userId });
     if (!user) {
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
@@ -68,7 +68,7 @@ export class UserService {
       throw new HttpException('User does not exist', HttpStatus.BAD_REQUEST);
     }
 
-    return 'Updated: ' + userId;
+    return userInfo;
   }
 
   async deleteOne(userId: string) {

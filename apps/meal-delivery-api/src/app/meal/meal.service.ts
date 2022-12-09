@@ -54,7 +54,7 @@ export class MealService {
     mealId: string,
     mealInfo: MealInfo,
     restaurantId: string
-  ): Promise<string> {
+  ): Promise<MealInfo> {
     const meal = await this.mealModel.findOne({ id: mealId });
     const restaurant = await this.userModel.findOne({ id: restaurantId });
     if (!restaurant) {
@@ -94,7 +94,7 @@ export class MealService {
       throw new HttpException('Meal does not exist', HttpStatus.BAD_REQUEST);
     }
 
-    return 'Updated: ' + mealId;
+    return mealInfo;
   }
 
   async deleteOne(mealId: string) {

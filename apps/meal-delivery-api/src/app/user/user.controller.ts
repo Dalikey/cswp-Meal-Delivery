@@ -38,7 +38,7 @@ export class UserController {
   async updateUser(
     @Param('id') userId: string,
     @Body() user: UserInfo
-  ): Promise<string> {
+  ): Promise<UserInfo> {
     try {
       return this.userService.updateUser(userId, user);
     } catch (e) {

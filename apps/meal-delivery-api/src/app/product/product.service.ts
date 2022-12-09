@@ -52,7 +52,7 @@ export class ProductService {
     productId: string,
     productInfo: ProductInfo,
     restaurantId: string
-  ): Promise<string> {
+  ): Promise<ProductInfo> {
     const product = await this.productModel.findOne({ id: productId });
     const restaurant = await this.userModel.findOne({ id: restaurantId });
     if (!restaurant) {
@@ -89,7 +89,7 @@ export class ProductService {
       throw new HttpException('Product does not exist', HttpStatus.BAD_REQUEST);
     }
 
-    return 'Updated: ' + productId;
+    return productInfo;
   }
 
   async deleteOne(productId: string) {
