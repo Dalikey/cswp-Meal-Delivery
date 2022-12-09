@@ -27,7 +27,14 @@ export class TokenMiddleware implements NestMiddleware {
 
       res.locals['token'] = token;
     } catch (e) {
-      throw new HttpException('Token invalid', HttpStatus.UNAUTHORIZED);
+      let errorMessage = 'Failed to do something exceptional';
+      if (e instanceof Error) {
+        errorMessage = e.message;
+      }
+      throw new HttpException(
+        'Token invalid ' + errorMessage,
+        HttpStatus.UNAUTHORIZED
+      );
     }
 
     next();
