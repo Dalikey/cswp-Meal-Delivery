@@ -51,7 +51,7 @@ export class EditComponent implements OnInit, OnDestroy {
             //   (allergy) => {
             //     return allergy !== '';
             //   }
-            // );
+            // ); 
             // this.product!.allergies = noEmptyStringAllergies;
             return of({} as Product);
           } else {
