@@ -13,7 +13,7 @@
           <thead>
             <tr>
               <th scope=" col">id</th>
-              <th scope="col">Naam</th>
+              <th scope="col">Gebruikersnaam</th>
               <th scope="col">E-mailadres</th>
               <th scope="col"></th>
             </tr>
@@ -22,7 +22,7 @@
             <tr *ngFor="let user of users$ | async; let i = index">
               <td>{{ user.id }}</td>
               <td>
-                <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ user.name
+                <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ user.username
                   }}</a>
               </td>
               <td>

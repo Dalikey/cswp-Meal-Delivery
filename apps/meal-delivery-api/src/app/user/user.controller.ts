@@ -1,4 +1,13 @@
-import { Controller, Delete, Get, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Put,
+} from '@nestjs/common';
 
 import { UserService } from './user.service';
 
@@ -23,6 +32,22 @@ export class UserController {
   @Get(':id')
   async getOne(@Param('id') id: string): Promise<User> {
     return this.userService.getOne(id);
+  }
+
+  @Put(':id')
+  async updateUser(
+    @Param('id') userId: string,
+    @Body() user: UserInfo
+  ): Promise<string> {
+    try {
+      return this.userService.updateUser(userId, user);
+    } catch (e) {
+      let errorMessage = 'Failed to do something exceptional';
+      if (e instanceof Error) {
+        errorMessage = e.message;
+      }
+      throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Delete('self')

@@ -31,10 +31,50 @@ export class UserService {
     return users[0];
   }
 
+  async updateUser(userId: string, userInfo: UserInfo): Promise<string> {
+    const user = await this.userModel.findOne({ id: userId });
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+    }
+
+    if (user.username == userInfo.username) {
+      throw new HttpException(
+        'You are not the owner of this user.',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
+    if (user) {
+      try {
+        await this.userModel.updateOne({ id: userId }, [
+          {
+            $set: {
+              id: userId,
+              emailAddress: userInfo.emailAddress,
+              username: userInfo.username,
+              isGraduated: userInfo.isGraduated,
+              phoneNumber: userInfo.phoneNumber,
+            },
+          },
+        ]);
+      } catch (e) {
+        let errorMessage = 'Failed to do something exceptional';
+        if (e instanceof Error) {
+          errorMessage = e.message;
+        }
+        throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
+      }
+    } else {
+      throw new HttpException('User does not exist', HttpStatus.BAD_REQUEST);
+    }
+
+    return 'Updated: ' + userId;
+  }
+
   async deleteOne(userId: string) {
     const user = await this.getOne(userId);
     if (user) {
-      const userName = user.name;
+      const userName = user.username;
       await this.identityModel
         .deleteOne({ username: userName })
         .then(() => {

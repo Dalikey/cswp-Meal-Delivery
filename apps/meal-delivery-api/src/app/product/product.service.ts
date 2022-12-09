@@ -59,7 +59,7 @@ export class ProductService {
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     }
 
-    if (restaurant.name == productInfo.name) {
+    if (restaurant.username == productInfo.name) {
       throw new HttpException(
         'You are not the owner of this product.',
         HttpStatus.BAD_REQUEST

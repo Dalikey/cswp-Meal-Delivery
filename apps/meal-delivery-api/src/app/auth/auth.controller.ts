@@ -26,7 +26,9 @@ export class AuthController {
       return {
         id: await this.authService.createUser(
           credentials.username,
-          credentials.emailAddress
+          credentials.emailAddress,
+          credentials.isGraduated,
+          credentials.phoneNumber
         ),
       };
     } catch (e) {

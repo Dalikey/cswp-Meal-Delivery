@@ -5,6 +5,8 @@ export interface UserCredentials {
 
 export interface UserRegistration extends UserCredentials {
   emailAddress: string;
+  isGraduated: boolean;
+  phoneNumber: string;
 }
 
 export interface Token {

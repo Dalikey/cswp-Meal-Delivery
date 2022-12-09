@@ -61,7 +61,7 @@ export class MealService {
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     }
 
-    if (restaurant.name == mealInfo.restaurant) {
+    if (restaurant.username == mealInfo.restaurant) {
       throw new HttpException(
         'You are not the owner of this meal.',
         HttpStatus.BAD_REQUEST
