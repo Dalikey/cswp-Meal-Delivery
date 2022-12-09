@@ -48,7 +48,7 @@ export class MealController {
     @InjectToken() token: Token,
     @Param('id') mealId: string,
     @Body() meal: MealInfo
-  ): Promise<string> {
+  ): Promise<MealInfo> {
     try {
       return this.mealService.updateMeal(mealId, meal, token.id);
     } catch (e) {

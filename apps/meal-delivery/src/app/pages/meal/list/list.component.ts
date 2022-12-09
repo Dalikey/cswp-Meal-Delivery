@@ -18,6 +18,8 @@ export class ListComponent implements OnInit {
   }
 
   deleteMeal(id: string) {
-    this.mealService.deleteMeal(id);
+    this.mealService.deleteMeal(id).subscribe(() => {
+      this.meals$ = this.mealService.getAllMeals();
+    });
   }
 }

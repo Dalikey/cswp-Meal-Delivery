@@ -54,14 +54,14 @@ export class MealService {
     mealId: string,
     mealInfo: MealInfo,
     restaurantId: string
-  ): Promise<string> {
+  ): Promise<MealInfo> {
     const meal = await this.mealModel.findOne({ id: mealId });
     const restaurant = await this.userModel.findOne({ id: restaurantId });
     if (!restaurant) {
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     }
 
-    if (restaurant.name == mealInfo.restaurant) {
+    if (restaurant.username == mealInfo.restaurant) {
       throw new HttpException(
         'You are not the owner of this meal.',
         HttpStatus.BAD_REQUEST
@@ -94,7 +94,7 @@ export class MealService {
       throw new HttpException('Meal does not exist', HttpStatus.BAD_REQUEST);
     }
 
-    return 'Updated: ' + mealId;
+    return mealInfo;
   }
 
   async deleteOne(mealId: string) {

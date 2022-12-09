@@ -16,7 +16,7 @@
                 <h5 class="card-title">{{product.name}}</h5>
                 <ul class="noBullets">
                   <li *ngIf="product?.allergies.length>0; else noAllergies">Allergieën: {{ product?.allergies.join(', ')
-                    }} </li>
+                    }}</li>
                   <ng-template #noAllergies>
                     <li>Product bevat geen allergieën.</li>
                   </ng-template>

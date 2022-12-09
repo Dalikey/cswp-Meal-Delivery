@@ -18,6 +18,8 @@ export class ListComponent implements OnInit {
   }
 
   deleteStudentHouse(id: string) {
-    this.studentHouseService.deleteStudentHouse(id);
+    this.studentHouseService.deleteStudentHouse(id).subscribe(() => {
+      this.studentHouses$ = this.studentHouseService.getAllStudentHouses();
+    });
   }
 }
