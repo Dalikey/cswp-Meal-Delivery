@@ -89,9 +89,9 @@ export class UserService {
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
-          this.alertService.error('Kan geen verbinding maken met de database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
+          this.alertService.error('Gebruiker bestaat al.');
           return of(undefined);
         })
       );

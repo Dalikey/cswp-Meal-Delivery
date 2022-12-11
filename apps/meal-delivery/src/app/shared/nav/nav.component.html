@@ -51,7 +51,7 @@
 
   <!-- If we have a logged in user: -->
   <ul *ngIf="loggedInUser$ | async as user" class="nav">
-    <li class="nav-item"> <a class="nav-link">{{ user.firstName }} {{ user.lastName }}</a> </li>
+    <li class="nav-item"> <a class="nav-link">{{ user.username }}</a> </li>
     <li class="nav-item"><a class="nav-link" (click)="logout()">Uitloggen</a></li>
   </ul>
 </div>

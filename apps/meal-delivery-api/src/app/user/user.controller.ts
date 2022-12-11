@@ -1,4 +1,13 @@
-import { Controller, Delete, Get, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Put,
+} from '@nestjs/common';
 
 import { UserService } from './user.service';
 
@@ -25,8 +34,29 @@ export class UserController {
     return this.userService.getOne(id);
   }
 
+  @Put(':id')
+  async updateUser(
+    @Param('id') userId: string,
+    @Body() user: UserInfo
+  ): Promise<UserInfo> {
+    try {
+      return this.userService.updateUser(userId, user);
+    } catch (e) {
+      let errorMessage = 'Failed to do something exceptional';
+      if (e instanceof Error) {
+        errorMessage = e.message;
+      }
+      throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   @Delete('self')
   async deleteSelf(@InjectToken() token: Token) {
     await this.userService.deleteOne(token.id);
+  }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') id: string) {
+    await this.userService.deleteOne(id);
   }
 }

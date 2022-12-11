@@ -37,6 +37,8 @@ export class EditComponent implements OnInit, OnDestroy {
           if (!params.get('id')) {
             this.componentExists = false;
             return of({
+              name: '',
+              price: 1,
               deliveryTime: new Date(),
               deliveryDate: new Date(),
             } as Meal);

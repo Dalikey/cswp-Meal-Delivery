@@ -90,7 +90,7 @@
         </button>
         <button type="button" class="btn btn-warning mx-2" routerLink="/meal">Annuleren</button>
       </div>
-      <div *ngIf="componentExists && meal" class="col move20up">
+      <div *ngIf="componentExists && meal" class="col move20up minHe300">
         <button type="submit" class="btn btn-primary mx-2" [disabled]="!mealEditForm.valid">
           <!-- <div *ngIf="componentExists && meal && authService.userMayEdit(meal.restaurantId) | async"> -->
           <div *ngIf="componentExists && meal">

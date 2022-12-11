@@ -51,7 +51,7 @@ export class StudentHouseController {
     @InjectToken() token: Token,
     @Param('id') studentHouseId: string,
     @Body() studentHouse: StudentHouseInfo
-  ): Promise<string> {
+  ): Promise<StudentHouseInfo> {
     try {
       return this.studentHouseService.updateStudentHouse(
         studentHouseId,

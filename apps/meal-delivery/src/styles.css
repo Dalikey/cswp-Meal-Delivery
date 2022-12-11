@@ -167,6 +167,10 @@ a:visited:hover {
   width: 154.21px;
 }
 
+.minHe300 {
+  min-height: 300px;
+}
+
 .bg-main {
   background-color: #940020;
 }

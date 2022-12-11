@@ -6,6 +6,7 @@ import { Meal } from './meal.model';
 import { AuthService } from '../../auth/auth.service';
 import { ConfigService } from '../../shared/moduleconfig/config.service';
 import { AlertService } from '../../shared/alert/alert.service';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,8 @@ export class MealService {
     private http: HttpClient,
     private authService: AuthService,
     private configService: ConfigService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private userService: UserService
   ) {}
   private httpOptions = {
     headers: new HttpHeaders({
@@ -77,7 +79,14 @@ export class MealService {
       'Authorization',
       this.token!
     );
+    this.userService.getUserById(this.token!).subscribe((data) => {
+      console.log('------------------');
 
+      console.log(data);
+      console.log('------------------');
+
+      newMeal.restaurant = data + '';
+    });
     return this.http
       .post<Meal>(
         `${this.configService.getConfig().apiEndpoint}api/meal`,
@@ -91,7 +100,7 @@ export class MealService {
         }),
         catchError((e) => {
           console.log('Unable to connect to database. ' + e.error.message);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.alertService.error('Maaltijd bestaat al.');
           return of(undefined);
         })
       );

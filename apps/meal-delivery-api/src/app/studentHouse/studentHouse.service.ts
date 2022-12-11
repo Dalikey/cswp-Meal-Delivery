@@ -55,7 +55,7 @@ export class StudentHouseService {
     studentHouseId: string,
     studentHouseInfo: StudentHouseInfo,
     studentId: string
-  ): Promise<string> {
+  ): Promise<StudentHouseInfo> {
     const studentHouse = await this.studentHouseModel.findOne({
       id: studentHouseId,
     });
@@ -90,7 +90,7 @@ export class StudentHouseService {
       );
     }
 
-    return 'Updated: ' + studentHouseId;
+    return studentHouseInfo;
   }
 
   async deleteOne(studentHouseId: string) {
