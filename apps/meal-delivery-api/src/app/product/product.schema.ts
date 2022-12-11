@@ -7,10 +7,11 @@ export type ProductDocument = HydratedDocument<Product>;
 
 @Schema()
 export class Product {
-  @Prop({ default: uuid, index: true }) id: string;
-  @Prop({ required: true, unique: true }) name: string;
-  @Prop({ required: false, default: [] }) allergies: string[];
-  @Prop({ required: false, default: false }) containsAlcohol: boolean;
+  @Prop({ type: String, default: uuid, index: true }) id: string;
+  @Prop({ type: String, required: true, unique: true }) name: string;
+  @Prop({ type: Array, required: false, default: [] }) allergies: string[];
+  @Prop({ type: Boolean, required: false, default: false })
+  containsAlcohol: boolean;
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Meal' }] })
   meals: Meal[];
