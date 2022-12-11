@@ -40,7 +40,7 @@ export class AuthService {
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
     console.log(
-      `login at ${this.configService.getConfig().apiEndpoint}auth/login`
+      `login at ${this.configService.getConfig().apiEndpoint}auth-api/auth/login`
     );
     return this.http
       .post<UserIdentity>(
