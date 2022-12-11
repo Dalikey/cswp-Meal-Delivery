@@ -2,11 +2,13 @@ import { Id } from './id.type';
 
 export interface UserIdentity {
   id: Id;
-  name: string;
+  username: string;
 }
 
 export interface UserInfo extends UserIdentity {
   emailAddress: string;
+  isGraduated: boolean;
+  phoneNumber: string;
   token: string;
 }
 

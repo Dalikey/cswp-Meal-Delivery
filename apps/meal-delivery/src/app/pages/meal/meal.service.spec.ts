@@ -9,10 +9,8 @@ import { MealService } from './meal.service';
 // Global mock objects
 const expectedUserData: User = {
   id: 'mongo_id',
-  firstName: 'Voornaam',
-  lastName: 'Achternaam',
+  username: 'Gebruikersnaam',
   emailAddress: 'user@host.com',
-  birthDate: new Date(),
   isGraduated: false,
   phoneNumber: '0647442517',
   token: 'some.dummy.token',

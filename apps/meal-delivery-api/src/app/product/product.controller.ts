@@ -48,7 +48,7 @@ export class ProductController {
     @InjectToken() token: Token,
     @Param('id') productId: string,
     @Body() product: ProductInfo
-  ): Promise<string> {
+  ): Promise<ProductInfo> {
     try {
       return this.productService.updateProduct(productId, product, token.id);
     } catch (e) {

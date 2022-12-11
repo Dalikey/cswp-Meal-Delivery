@@ -5,51 +5,28 @@
   <h3>Nieuwe gebruiker toevoegen</h3>
 </div>
 <div class="max-width77">
-
-
   <!-- Edit form voor user model -->
   <form #userEditForm="ngForm" name="form" (ngSubmit)="onSubmit()" novalidate>
     <div class="row">
       <div class="col-5">
-        <!-- firstname -->
-        <div class="form-group">
-          <label for="firstname">Voornaam</label>
-          <input type="text" id="firstname" name="firstname" class="form-control" [(ngModel)]="user!.firstName"
-            #firstname="ngModel" minlength="3" required [ngClass]="{
-                        'is-invalid': firstname.invalid && firstname.touched
-                    }" />
-          <div *ngIf="firstname.invalid && firstname.touched" class="invalid-feedback">
-            <div *ngIf="firstname.errors!['required']">
-              Voornaam is verplicht
-            </div>
-            <div *ngIf="firstname.errors!['minlength']">
-              De voornaam moet 3 karakters lang zijn.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-5">
-        <!-- lastname -->
-        <div class="form-group">
-          <label for="lastname">Achternaam</label>
-          <input type="text" id="lastname" name="lastname" class="form-control" [(ngModel)]="user!.lastName"
-            #lastname="ngModel" minlength="3" required [ngClass]="{
-                        'is-invalid': lastname.invalid && lastname.touched
-                    }" />
-          <div *ngIf="lastname.invalid && lastname.touched" class="invalid-feedback">
-            <div *ngIf="lastname.errors!['required']">
-              Achternaam is verplicht
-            </div>
-            <div *ngIf="lastname.errors!['minlength']">
-              De achternaam moet 3 karakters lang zijn.
+        <div class="row-5">
+          <!-- username -->
+          <div class="form-group">
+            <label for="username">Gebruikersnaam</label>
+            <input type="text" id="username" name="username" class="form-control" [(ngModel)]="user!.username"
+              #username="ngModel" minlength="3" required [ngClass]="{
+                          'is-invalid': username.invalid && username.touched
+                      }" />
+            <div *ngIf="username.invalid && username.touched" class="invalid-feedback">
+              <div *ngIf="username.errors!['required']">
+                Gebruikersnaam is verplicht
+              </div>
+              <div *ngIf="username.errors!['minlength']">
+                De gebruikersnaam moet 3 karakters lang zijn.
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-5">
+        </div><br>
         <!-- emailaddress -->
         <div class="row-5">
           <div class="form-group">
@@ -67,8 +44,7 @@
               </div>
             </div>
           </div>
-        </div>
-        <br>
+        </div><br>
         <!-- phonenumber -->
         <div class="row-5 move5down">
           <div class="form-group">
@@ -86,31 +62,19 @@
               </div>
             </div>
           </div>
-        </div>
-        <br>
-        <!-- birthdate-->
-        <div class="row-5 move5down">
-          <div class="form-group">
-            <label for="birthdate">Geboortedatum</label>
-            <input type="date" id="birthdate" name="birthdate" class="form-control"
-              [ngModel]="user!.birthDate | date:'yyyy-MM-dd'" (ngModelChange)="user!.birthDate = $event" />
+        </div><br>
+        <!-- isgraduated -->
+        <div class="row-5">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="isgraduated" name="isgraduated"
+              [(ngModel)]="user!.isGraduated" #isgraduated="ngModel" />
+            <label for="isgraduated">Is afgestudeerd</label>
           </div>
         </div>
+        <br>
       </div>
       <div class="col-5">
         <pre>{{user | json}}</pre>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-5"></div>
-      <!-- isgraduated -->
-      <div class="col-5 move30up">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="isgraduated" name="isgraduated"
-            [(ngModel)]="user!.isGraduated" #isgraduated="ngModel" />
-          <label for="isgraduated">Is afgestudeerd</label>
-        </div>
       </div>
     </div>
     <!-- Submit en Cancel buttons -->

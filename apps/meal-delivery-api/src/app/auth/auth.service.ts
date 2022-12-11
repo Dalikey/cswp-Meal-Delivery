@@ -16,8 +16,18 @@ export class AuthService {
     @InjectModel(User.name) private userModel: Model<UserDocument>
   ) {}
 
-  async createUser(name: string, emailAddress: string): Promise<string> {
-    const user = new this.userModel({ name, emailAddress });
+  async createUser(
+    username: string,
+    emailAddress: string,
+    isGraduated: boolean,
+    phoneNumber: string
+  ): Promise<string> {
+    const user = new this.userModel({
+      username,
+      emailAddress,
+      isGraduated,
+      phoneNumber,
+    });
     await user.save();
     return user.id;
   }
@@ -52,7 +62,7 @@ export class AuthService {
     if (!identity || !(await compare(password, identity.hash)))
       throw new Error('user not authorized');
 
-    const user = await this.userModel.findOne({ name: username });
+    const user = await this.userModel.findOne({ username: username });
 
     return new Promise((resolve, reject) => {
       sign(

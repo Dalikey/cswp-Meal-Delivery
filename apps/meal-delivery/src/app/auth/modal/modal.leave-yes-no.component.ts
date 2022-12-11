@@ -9,10 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
         <h4 class="modal-title" id="modal-title">Bevestiging</h4>
       </div>
       <div class="modal-body">
-        <p>
-          Wijzigingen die u eventueel hebt aangebracht worden niet opgeslagen.
-        </p>
-        <p>Weet je zeker dat je deze pagina wilt verlaten?</p>
+        <p>Weet je zeker dat je deze operatie wilt uitvoeren?</p>
       </div>
       <div class="modal-footer">
         <button
