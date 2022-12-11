@@ -18,7 +18,9 @@ describe('DashboardComponent', () => {
     emailAddress: 'testuser@hotmail.com',
     token:
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpb24iLCJpZCI6IjIwOTg1Yjg5LTY5N2QtNDY1Ni04NDU1LWM3MWY0MDNlMjc3NCIsImlhdCI6MTY2NzIxMzE2MX0.rWTA4V_iE662T03Oty7bK2YmGxP5kc1h6IH9z_fArV0',
-    name: 'testuser',
+    username: 'testuser',
+    isGraduated: false,
+    phoneNumber: '0619338415',
   };
 
   const authServiceSpy = {
@@ -51,7 +53,7 @@ describe('DashboardComponent', () => {
     component.loggedInUser$.subscribe((user) => {
       if (!user) fail();
       if (user) {
-        expect(user.name).toBe(loggedInUser.name);
+        expect(user.username).toBe(loggedInUser.username);
       }
     });
   });

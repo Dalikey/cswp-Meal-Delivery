@@ -7,10 +7,10 @@ export type StudentHouseDocument = HydratedDocument<StudentHouse>;
 
 @Schema()
 export class StudentHouse {
-  @Prop({ default: uuid, index: true }) id: string;
-  @Prop({ required: true, unique: true }) streetAndNmr: string;
-  @Prop({ required: false }) city: string;
-  @Prop({ required: false }) postcode: string;
+  @Prop({ type: String, default: uuid, index: true }) id: string;
+  @Prop({ type: String, required: true, unique: true }) streetAndNmr: string;
+  @Prop({ type: String, required: false }) city: string;
+  @Prop({ type: String, required: false }) postcode: string;
 
   @Prop({
     type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User' }],
