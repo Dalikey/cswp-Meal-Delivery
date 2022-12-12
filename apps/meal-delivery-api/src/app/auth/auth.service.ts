@@ -34,7 +34,7 @@ export class AuthService {
 
   async verifyToken(token: string): Promise<string | JwtPayload> {
     return new Promise((resolve, reject) => {
-      verify(token, process.env.JWT_SECRET as string, (err, payload) => {
+      verify(token, process.env.JWT_SECRET!, (err, payload) => {
         if (err) reject(err);
         else resolve(payload as string);
       });
@@ -44,7 +44,7 @@ export class AuthService {
   async registerUser(username: string, password: string, emailAddress: string) {
     const generatedHash = await hash(
       password,
-      parseInt(process.env.SALT_ROUNDS as string, 10)
+      parseInt(process.env.SALT_ROUNDS!, 10)
     );
 
     const identity = new this.identityModel({
@@ -67,7 +67,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       sign(
         { username, id: user?.id },
-        process.env.JWT_SECRET as string,
+        process.env.JWT_SECRET!,
         (err, token) => {
           if (err) reject(err);
           else resolve(token);
