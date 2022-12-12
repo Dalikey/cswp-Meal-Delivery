@@ -80,11 +80,6 @@ export class MealService {
       this.token!
     );
     this.userService.getUserById(this.token!).subscribe((data) => {
-      console.log('------------------');
-
-      console.log(data);
-      console.log('------------------');
-
       newMeal.restaurant = data + '';
     });
     return this.http
