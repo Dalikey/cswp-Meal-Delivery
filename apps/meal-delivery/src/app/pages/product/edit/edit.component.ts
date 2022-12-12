@@ -53,7 +53,11 @@ export class EditComponent implements OnInit, OnDestroy {
             //   }
             // );
             // this.product!.allergies = noEmptyStringAllergies;
-            return of({} as Product);
+            return of({
+              name: '',
+              allergies: [],
+              containsAlcohol: false,
+            } as unknown as Product);
           } else {
             this.componentExists = true;
             // const noEmptyStringAllergies = this.product?.allergies!.filter(

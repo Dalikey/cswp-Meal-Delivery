@@ -13,15 +13,7 @@ export class ProductService {
     @InjectModel(User.name) private userModel: Model<UserDocument>
   ) {}
 
-  async createProduct(
-    productInfo: ProductInfo,
-    restaurantId: string
-  ): Promise<ResourceId> {
-    const restaurant = await this.userModel.findOne({ id: restaurantId });
-
-    if (!restaurant) {
-      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
-    }
+  async createProduct(productInfo: ProductInfo): Promise<ResourceId> {
     const product = new this.productModel({
       id: productInfo.id,
       name: productInfo.name,
@@ -54,17 +46,6 @@ export class ProductService {
     restaurantId: string
   ): Promise<ProductInfo> {
     const product = await this.productModel.findOne({ id: productId });
-    const restaurant = await this.userModel.findOne({ id: restaurantId });
-    if (!restaurant) {
-      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
-    }
-
-    if (restaurant.username == productInfo.name) {
-      throw new HttpException(
-        'You are not the owner of this product.',
-        HttpStatus.BAD_REQUEST
-      );
-    }
 
     if (product) {
       try {

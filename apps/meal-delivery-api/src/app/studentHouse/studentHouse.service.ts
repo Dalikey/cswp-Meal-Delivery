@@ -17,14 +17,8 @@ export class StudentHouseService {
   ) {}
 
   async createStudentHouse(
-    studentHouseInfo: StudentHouseInfo,
-    studentId: string
+    studentHouseInfo: StudentHouseInfo
   ): Promise<ResourceId> {
-    const student = await this.userModel.findOne({ id: studentId });
-
-    if (!student) {
-      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
-    }
     const studentHouse = new this.studentHouseModel({
       id: studentHouseInfo.id,
       streetAndNmr: studentHouseInfo.streetAndNmr,

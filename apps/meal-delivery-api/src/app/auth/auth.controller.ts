@@ -49,6 +49,11 @@ export class AuthController {
         ),
       };
     } catch (e) {
+      let errorMessage = 'Failed to do something exceptional';
+      if (e instanceof Error) {
+        errorMessage = e.message;
+      }
+      console.log('Login error: ' + errorMessage);
       throw new HttpException(
         'Ongeldige inloggegevens',
         HttpStatus.UNAUTHORIZED

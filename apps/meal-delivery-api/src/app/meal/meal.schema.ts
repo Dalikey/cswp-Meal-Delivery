@@ -9,11 +9,11 @@ export type MealDocument = HydratedDocument<Meal>;
 
 @Schema()
 export class Meal {
-  @Prop({ default: uuid, index: true }) id: string;
-  @Prop({ required: true, unique: true }) name: string;
-  @Prop({ required: true, default: 0 }) price: number;
-  @Prop({ required: true, default: new Date() }) deliveryTime: Date;
-  @Prop({ required: true, default: new Date() }) deliveryDate: Date;
+  @Prop({ type: String, default: uuid, index: true }) id: string;
+  @Prop({ type: String, required: true, unique: true }) name: string;
+  @Prop({ type: Number, required: true, default: 0 }) price: number;
+  @Prop({ type: Date, required: true, default: new Date() }) deliveryTime: Date;
+  @Prop({ type: Date, required: true, default: new Date() }) deliveryDate: Date;
 
   @Prop({
     required: true,
