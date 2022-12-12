@@ -19,14 +19,10 @@ export class StudentHouseController {
 
   @Post()
   async createStudentHouse(
-    @InjectToken() token: Token,
     @Body() studentHouse: StudentHouseInfo
   ): Promise<ResourceId> {
     try {
-      return await this.studentHouseService.createStudentHouse(
-        studentHouse,
-        token.id
-      );
+      return await this.studentHouseService.createStudentHouse(studentHouse);
     } catch (e) {
       let errorMessage = 'Failed to do something exceptional';
       if (e instanceof Error) {
