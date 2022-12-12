@@ -18,12 +18,9 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  async createProduct(
-    @InjectToken() token: Token,
-    @Body() product: ProductInfo
-  ): Promise<ResourceId> {
+  async createProduct(@Body() product: ProductInfo): Promise<ResourceId> {
     try {
-      return await this.productService.createProduct(product, token.id);
+      return await this.productService.createProduct(product);
     } catch (e) {
       let errorMessage = 'Failed to do something exceptional';
       if (e instanceof Error) {
