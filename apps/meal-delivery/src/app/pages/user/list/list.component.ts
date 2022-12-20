@@ -1,4 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { SaveEditedWorkGuard } from '../../../auth/auth.guards';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
 
@@ -7,21 +9,25 @@ import { UserService } from '../user.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent implements OnInit, OnDestroy {
-  users: User[] | undefined;
+export class ListComponent implements OnInit {
+  users$!: Observable<User[] | null | undefined>;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private saveEditedWorkGuard: SaveEditedWorkGuard
+  ) {}
 
   ngOnInit(): void {
-    this.users = this.userService.getAllUsers();
-    console.log(this.users.length + ' users found.');
-  }
-
-  ngOnDestroy(): void {
-    console.log('ListComponent.ngOnDestroy');
+    this.users$ = this.userService.getAllUsers();
   }
 
   deleteUser(id: string) {
-    this.userService.deleteUser(id);
+    this.saveEditedWorkGuard.canDeactivate().then((result) => {
+      if (result) {
+        this.userService.deleteUser(id).subscribe(() => {
+          this.users$ = this.userService.getAllUsers();
+        });
+      }
+    });
   }
 }

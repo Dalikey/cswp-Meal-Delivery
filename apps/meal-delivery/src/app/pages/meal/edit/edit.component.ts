@@ -1,70 +1,111 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { catchError, of, Subscription, switchMap, tap } from 'rxjs';
+import { Alert, AlertService } from '../../../shared/alert/alert.service';
 import { Meal } from '../meal.model';
 import { MealService } from '../meal.service';
 
 @Component({
-  selector: 'user-edit',
+  selector: 'meal-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnDestroy {
   componentId: string | null | undefined;
   componentExists: boolean = false;
   meal: Meal | undefined;
-  mealName: string | undefined;
+  mealid!: number | undefined;
+  debug = false;
+
+  subscriptionOptions!: Subscription;
+  subscriptionParams!: Subscription;
+  subscriptionStudios!: Subscription;
 
   constructor(
+    private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
     private mealService: MealService
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.componentId = params.get('id');
-      if (this.componentId) {
-        console.log('Bestaande component');
-        this.componentExists = true;
-        this.meal = {
-          ...this.mealService.getMealById(this.componentId),
-        };
-        this.mealName = this.meal.name;
-      } else {
-        console.log('Nieuwe component');
-        this.componentExists = false;
-        this.meal = {
-          id: undefined,
-          name: '',
-          price: 0,
-          deliveryTime: new Date(),
-          deliveryDate: new Date(),
-          restaurant: 'Avans restaurant',
-        };
-      }
-    });
+    this.subscriptionParams = this.route.paramMap
+      .pipe(
+        tap(console.log),
+        switchMap((params: ParamMap) => {
+          this.componentId = params.get('id');
+          if (!params.get('id')) {
+            this.componentExists = false;
+            return of({
+              name: '',
+              price: 1,
+              deliveryTime: new Date(),
+              deliveryDate: new Date(),
+            } as Meal);
+          } else {
+            this.componentExists = true;
+            return this.mealService.getMealById(params.get('id')!);
+          }
+        }),
+        tap(console.log)
+      )
+      .subscribe((meal: Meal) => {
+        this.meal = meal;
+      });
   }
 
   onSubmit() {
-    console.log('Submitting the form');
-    if (this.componentExists) {
-      this.mealService.updateMeal(this.meal!);
-      this.router.navigate(['meal']);
+    console.log('onSubmit', this.meal);
+
+    if (this.meal!.id) {
+      // A meal with id must have been saved before, so it must be an update.
+      console.log('update meal');
+
+      this.mealService
+        .updateMeal(this.meal!)
+        .pipe(
+          catchError((error: Alert) => {
+            console.log(error);
+            this.alertService.error(error.message);
+            return of(false);
+          })
+        )
+        .subscribe((success) => {
+          console.log(success);
+          if (success) {
+            this.router.navigate(['..'], { relativeTo: this.route });
+          }
+        });
     } else {
-      this.meal!.id = this.uuid();
-      this.mealService.addMeal(this.meal!);
-      this.router.navigate(['meal']);
+      // A meal without id has not been saved to the database before.
+      console.log('create meal');
+      this.mealService
+        .addMeal(this.meal!)
+        .pipe(
+          catchError((error: Alert) => {
+            console.log(error);
+            this.alertService.error(error.message);
+            return of(false);
+          })
+        )
+        .subscribe((success) => {
+          console.log(success);
+          if (success) {
+            this.router.navigate(['..'], { relativeTo: this.route });
+          }
+        });
     }
   }
 
-  uuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-      /[xy]/g,
-      function (c) {
-        var r = (Math.random() * 16) | 0,
-          v = c == 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      }
-    );
+  ngOnDestroy(): void {
+    if (
+      this.subscriptionOptions &&
+      this.subscriptionParams &&
+      this.subscriptionStudios
+    ) {
+      this.subscriptionOptions.unsubscribe();
+      this.subscriptionParams.unsubscribe();
+      this.subscriptionStudios.unsubscribe();
+    }
   }
 }

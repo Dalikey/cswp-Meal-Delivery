@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { catchError, of, Subscription, switchMap, tap } from 'rxjs';
+import { Alert, AlertService } from '../../../shared/alert/alert.service';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
 
@@ -8,65 +10,96 @@ import { UserService } from '../user.service';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnDestroy {
   componentId: string | null | undefined;
   componentExists: boolean = false;
   user: User | undefined;
-  userName: string | undefined;
+  userid!: number | undefined;
+  debug = false;
+
+  subscriptionOptions!: Subscription;
+  subscriptionParams!: Subscription;
+  subscriptionStudios!: Subscription;
 
   constructor(
+    private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.componentId = params.get('id');
-      if (this.componentId) {
-        console.log('Bestaande component');
-        this.componentExists = true;
-        this.user = {
-          ...this.userService.getUserById(this.componentId),
-        };
-        this.userName = this.user.firstName + ' ' + this.user.lastName;
-      } else {
-        console.log('Nieuwe component');
-        this.componentExists = false;
-        this.user = {
-          id: undefined,
-          firstName: '',
-          lastName: '',
-          emailAddress: '',
-          birthDate: new Date(),
-          isGraduated: false,
-          phoneNumber: '',
-          token: '',
-        };
-      }
-    });
+    this.subscriptionParams = this.route.paramMap
+      .pipe(
+        tap(console.log),
+        switchMap((params: ParamMap) => {
+          this.componentId = params.get('id');
+          if (!params.get('id')) {
+            this.componentExists = false;
+            return of({} as User);
+          } else {
+            this.componentExists = true;
+            return this.userService.getUserById(params.get('id')!);
+          }
+        }),
+        tap(console.log)
+      )
+      .subscribe((user: User) => {
+        this.user = user;
+      });
   }
 
   onSubmit() {
-    console.log('Submitting the form');
-    if (this.componentExists) {
-      this.userService.updateUser(this.user!);
-      this.router.navigate(['user']);
+    console.log('onSubmit', this.user);
+
+    if (this.user!.id) {
+      // A user with id must have been saved before, so it must be an update.
+      console.log('update user');
+      this.userService
+        .updateUser(this.user!)
+        .pipe(
+          catchError((error: Alert) => {
+            console.log(error);
+            this.alertService.error(error.message);
+            return of(false);
+          })
+        )
+        .subscribe((success) => {
+          console.log(success);
+          if (success) {
+            this.router.navigate(['..'], { relativeTo: this.route });
+          }
+        });
     } else {
-      this.user!.id = this.uuid();
-      this.userService.addUser(this.user!);
-      this.router.navigate(['user']);
+      // A user without id has not been saved to the database before.
+      console.log('create user');
+      this.userService
+        .addUser(this.user!)
+        .pipe(
+          catchError((error: Alert) => {
+            console.log(error);
+            this.alertService.error(error.message);
+            return of(false);
+          })
+        )
+        .subscribe((success) => {
+          console.log(success);
+          if (success) {
+            this.router.navigate(['..'], { relativeTo: this.route });
+          }
+        });
     }
   }
 
-  uuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-      /[xy]/g,
-      function (c) {
-        var r = (Math.random() * 16) | 0,
-          v = c == 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      }
-    );
+  ngOnDestroy(): void {
+    if (
+      this.subscriptionOptions &&
+      this.subscriptionParams &&
+      this.subscriptionStudios
+    ) {
+      this.subscriptionOptions.unsubscribe();
+      this.subscriptionParams.unsubscribe();
+      this.subscriptionStudios.unsubscribe();
+    }
   }
 }

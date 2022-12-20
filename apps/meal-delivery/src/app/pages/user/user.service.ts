@@ -1,122 +1,151 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, map, Observable, of, tap } from 'rxjs';
+import { ApiResponse } from '@md/data';
 import { User } from './user.model';
+import { AuthService } from '../../auth/auth.service';
+import { ConfigService } from '../../shared/moduleconfig/config.service';
+import { AlertService } from '../../shared/alert/alert.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  users: User[] = [
-    {
-      id: '12345-123-12',
-      firstName: 'Mark',
-      lastName: 'Maarten',
-      emailAddress: 'm.maarten@avans.nl',
-      birthDate: new Date(),
-      isGraduated: false,
-      phoneNumber: '0614442417',
-      token: 'some.dummy.token',
-    },
-    {
-      id: '12345-123-23',
-      firstName: 'Anita',
-      lastName: 'Agnes',
-      emailAddress: 'a.agnes@avans.nl',
-      birthDate: new Date(),
-      isGraduated: false,
-      phoneNumber: '0614442417',
-      token: 'some.dummy.token',
-    },
-    {
-      id: '12345-123-56',
-      firstName: 'Ewald',
-      lastName: 'Linde',
-      emailAddress: 'e.linde@avans.nl',
-      birthDate: new Date(),
-      isGraduated: false,
-      phoneNumber: '0614442417',
-      token: 'some.dummy.token',
-    },
-    {
-      id: '12345-123-13',
-      firstName: 'Judith',
-      lastName: 'Max',
-      emailAddress: 'j.max@avans.nl',
-      birthDate: new Date(),
-      isGraduated: false,
-      phoneNumber: '0614442417',
-      token: 'some.dummy.token',
-    },
-    {
-      id: '12345-123-14',
-      firstName: 'Noor',
-      lastName: 'Anoushka',
-      emailAddress: 'n.anoushka@avans.nl',
-      birthDate: new Date(),
-      isGraduated: false,
-      phoneNumber: '0614442417',
-      token: 'some.dummy.token',
-    },
-    {
-      id: '12345-123-15',
-      firstName: 'Miep',
-      lastName: 'Marga',
-      emailAddress: 'm.marga@avans.nl',
-      birthDate: new Date(),
-      isGraduated: false,
-      phoneNumber: '0614442417',
-      token: 'some.dummy.token',
-    },
-    {
-      id: '12345-123-16',
-      firstName: 'Jurriaan',
-      lastName: 'Hanne',
-      emailAddress: 'j.hanne@avans.nl',
-      birthDate: new Date(),
-      isGraduated: false,
-      phoneNumber: '0614442417',
-      token: 'some.dummy.token',
-    },
-    {
-      id: '12345-123-17',
-      firstName: 'Jenny',
-      lastName: 'Diana',
-      emailAddress: 'j.diana@avans.nl',
-      birthDate: new Date(),
-      isGraduated: false,
-      phoneNumber: '0614442417',
-      token: 'some.dummy.token',
-    },
-  ];
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private configService: ConfigService,
+    private alertService: AlertService
+  ) {}
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
+  private token = this.authService.getAuthorizationToken();
 
-  constructor() {
-    console.log('UserService created');
+  getAllUsers(): Observable<User[] | null | undefined> {
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
+    );
+
+    return this.http
+      .get<ApiResponse<User[]>>(
+        `${this.configService.getConfig().apiEndpoint}api/user`,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 
-  getAllUsers(): User[] {
-    return this.users;
+  getUserById(id: string): Observable<User | null | undefined> {
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
+    );
+
+    return this.http
+      .get<User>(
+        `${this.configService.getConfig().apiEndpoint}api/user/${id}`,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 
-  getUserById(id: string): User {
-    return this.users.filter((user: User) => user.id === id)[0];
-  }
+  addUser(newUser: User) {
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
 
-  addUser(newUser: User): void {
-    this.users.push(newUser);
+    return this.http
+      .post<User>(
+        `${this.configService.getConfig().apiEndpoint}api/user`,
+        newUser,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
+          this.alertService.error('Gebruiker bestaat al.');
+          return of(undefined);
+        })
+      );
   }
 
   updateUser(updatedUser: User) {
-    console.log('Updating user ' + updatedUser.firstName);
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
 
-    let updatedUsers = this.users.filter((user) => user.id !== updatedUser.id);
-    updatedUsers.push(updatedUser);
-    this.users = updatedUsers;
-
-    console.log(this.users);
+    return this.http
+      .put<User>(
+        `${this.configService.getConfig().apiEndpoint}api/user/${
+          updatedUser.id
+        }`,
+        updatedUser,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 
   deleteUser(id: string) {
-    let user = this.users.find((user) => user.id == id);
-    let index = this.users.indexOf(user!);
-    this.users.splice(index, 1);
+    this.httpOptions.headers = this.httpOptions.headers.set(
+      'Authorization',
+      this.token!
+    );
+    console.log(id);
+
+    return this.http
+      .delete<User>(
+        `${this.configService.getConfig().apiEndpoint}api/user/${id}`,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          return data.results;
+        }),
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
   }
 }

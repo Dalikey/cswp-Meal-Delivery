@@ -1,16 +1,23 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { environment } from '../../../environments/environment';
+import { ConfigModule } from '../../shared/moduleconfig/config.module';
 
 import { MealComponent } from './meal.component';
 
-describe('AComponent', () => {
+describe('MealComponent', () => {
   let component: MealComponent;
   let fixture: ComponentFixture<MealComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MealComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      imports: [
+        RouterTestingModule,
+        HttpClientModule,
+        ConfigModule.forRoot({ apiEndpoint: environment.SERVER_API_URL }),
+      ],
     }).compileComponents();
   });
 

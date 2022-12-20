@@ -1,6 +1,9 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { environment } from '../../../../environments/environment';
+import { SaveEditedWorkGuard } from '../../../auth/auth.guards';
+import { ConfigModule } from '../../../shared/moduleconfig/config.module';
 
 import { ListComponent } from './list.component';
 
@@ -11,8 +14,12 @@ describe('ListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ListComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        HttpClientModule,
+        ConfigModule.forRoot({ apiEndpoint: environment.SERVER_API_URL }),
+      ],
+      providers: [SaveEditedWorkGuard],
     }).compileComponents();
   });
 

@@ -1,44 +1,34 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { v4 as uuid } from 'uuid';
+import { Meal } from '../meal/meal.schema';
+import { StudentHouse } from '../studentHouse/studentHouse.schema';
 
-export type UserDocument = User & Document;
+export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
-  @Prop({ default: uuid, index: true })
-  id: string;
+  @Prop({ type: String, default: uuid, index: true }) id: string;
+  @Prop({ type: String, required: true, unique: true }) username: string;
+  @Prop({ type: String, required: true }) emailAddress: string;
+  @Prop({ type: Boolean, required: true, default: false }) isGraduated: boolean;
+  @Prop({ type: String, required: false }) phoneNumber: string;
+  @Prop({ type: Array, required: true, default: [] }) roles: string[];
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'StudentHouse' })
+  studentHouse: StudentHouse;
 
   @Prop({
-    required: true,
-    unique: true,
-  })
-  name: string;
-
-  @Prop({
-    required: true,
+    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Meal', unique: true }],
     default: [],
   })
-  roles: string[];
+  meals: Meal[];
 
   @Prop({
-    required: true,
-    default: true,
+    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User', unique: true }],
+    default: [],
   })
-  isActive: boolean;
-
-  @Prop({
-    required: true,
-  })
-  emailAddress: string;
-
-  // we don't use hooks to ensure the topics exist, as nestjs does not play nice
-  // https://github.com/nestjs/mongoose/issues/7
-  @Prop({ default: [] })
-  tutorTopics: string[];
-
-  @Prop({ default: [] })
-  pupilTopics: string[];
+  friends: User[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
