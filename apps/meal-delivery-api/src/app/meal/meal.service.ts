@@ -19,7 +19,7 @@ export class MealService {
     const restaurant = await this.userModel.findOne({ id: restaurantId });
 
     if (!restaurant) {
-      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Restaurant not found', HttpStatus.BAD_REQUEST);
     }
     const meal = new this.mealModel({
       id: mealInfo.id,
