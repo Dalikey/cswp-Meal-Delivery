@@ -12,7 +12,7 @@
         <!-- streetandnmr -->
         <div class="form-group">
           <label for="streetandnmr">Straat en huisnummer</label>
-          <div *ngIf="studentHouse?.streetAndNmr">
+          <div *ngIf="studentHouse">
             <input type="text" id="streetandnmr" name="streetandnmr" class="form-control"
               [(ngModel)]="studentHouse!.streetAndNmr" #streetAndNmr="ngModel" minlength="3" required [ngClass]="{
                         'is-invalid': streetAndNmr.invalid && streetAndNmr.touched
@@ -30,7 +30,7 @@
         <!-- city -->
         <div class="form-group">
           <label for="city">Stad</label>
-          <div *ngIf="studentHouse?.city">
+          <div *ngIf="studentHouse">
             <input type="text" id="city" name="city" class="form-control" [(ngModel)]="studentHouse!.city"
               #city="ngModel" minlength="3" required [ngClass]="{
                                 'is-invalid': city.invalid && city.touched
@@ -48,7 +48,7 @@
         <!-- postcode -->
         <div class="form-group">
           <label for="postcode">Postcode</label>
-          <div *ngIf="studentHouse?.postcode">
+          <div *ngIf="studentHouse">
             <input type="text" id="postcode" name="postcode" class="form-control" [(ngModel)]="studentHouse!.postcode"
               #postcode="ngModel" minlength="3" required [ngClass]="{
                         'is-invalid': postcode.invalid && postcode.touched

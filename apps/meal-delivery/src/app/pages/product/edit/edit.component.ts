@@ -53,6 +53,7 @@ export class EditComponent implements OnInit, OnDestroy {
             //   }
             // );
             // this.product!.allergies = noEmptyStringAllergies;
+            //           <div *ngIf="meal?.name">
             return of({
               name: '',
               allergies: [],

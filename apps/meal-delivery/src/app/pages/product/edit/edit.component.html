@@ -33,7 +33,7 @@
         <!-- name -->
         <div class="col-8">
           <div class="form-group">
-            <div *ngIf="product?.allergies">
+            <div *ngIf="product">
               <label for="name">Naam</label>
               <input type="text" id="name" name="name" class="form-control" [(ngModel)]="product!.name" #name="ngModel"
                 minlength="3" required [ngClass]="{
