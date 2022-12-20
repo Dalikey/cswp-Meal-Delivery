@@ -15,8 +15,8 @@ export class Meal {
   @Prop({ type: Date, required: true, default: new Date() }) deliveryTime: Date;
   @Prop({ type: Date, required: true, default: new Date() }) deliveryDate: Date;
 
-  // @Prop({ required: true, type: { id: String, name: String } })
-  // // restaurant: UserIdentity;
+  @Prop({ required: true, type: { id: String, name: String } })
+  restaurant: UserIdentity;
   // user: UserIdentity;
 
   // @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User' }) deliverer: User;
