@@ -23,6 +23,7 @@ export class MealController {
     @Body() meal: MealInfo
   ): Promise<ResourceId> {
     try {
+      console.log("Token: " + token.id);
       return await this.mealService.createMeal(meal, token.id);
     } catch (e) {
       let errorMessage = 'Failed to do something exceptional';
