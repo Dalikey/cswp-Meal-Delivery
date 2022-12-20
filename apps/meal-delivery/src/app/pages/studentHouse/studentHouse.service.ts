@@ -40,8 +40,8 @@ export class StudentHouseService {
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -64,8 +64,8 @@ export class StudentHouseService {
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -116,8 +116,8 @@ export class StudentHouseService {
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -140,8 +140,8 @@ export class StudentHouseService {
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
