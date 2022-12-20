@@ -13,6 +13,8 @@ import { AlertService } from './../shared/alert/alert.service';
 export class AuthService {
   public currentUser$ = new BehaviorSubject<UserInfo | undefined>(undefined);
   private readonly CURRENT_USER = 'currentuser';
+  private readonly CURRENT_USERTOKEN = 'currentusertoken';
+  private readonly CURRENT_USERID = 'currentuserid';
   private readonly headers = new HttpHeaders({
     'Content-Type': 'application/json',
   });
@@ -27,6 +29,8 @@ export class AuthService {
       .pipe(
         switchMap((user: UserInfo | undefined) => {
           if (user) {
+            console.log('Local Storage: ' + user);
+
             console.log('User found in local storage');
             this.currentUser$.next(user);
             return of(user);
@@ -40,7 +44,9 @@ export class AuthService {
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
     console.log(
-      `login at ${this.configService.getConfig().apiEndpoint}auth-api/auth/login`
+      `login at ${
+        this.configService.getConfig().apiEndpoint
+      }auth-api/auth/login`
     );
     return this.http
       .post<UserIdentity>(
@@ -54,8 +60,11 @@ export class AuthService {
         tap(console.log),
         map((data: any) => {
           const token = data.results.token;
+          const id = data.results.id;
           console.log('Authorization token: ' + token);
-          this.saveUserToLocalStorage(token);
+          console.log('Authorization id: ' + id);
+          localStorage.setItem(this.CURRENT_USERTOKEN, JSON.stringify(token));
+          localStorage.setItem(this.CURRENT_USERID, JSON.stringify(id));
           this.currentUser$.next(token);
           this.alertService.success('Je bent ingelogd');
           return data;
@@ -86,11 +95,16 @@ export class AuthService {
         }
       )
       .pipe(
-        map((user) => {
-          this.saveUserToLocalStorage(user);
-          this.currentUser$.next(user);
+        map((data: any) => {
+          const token = data.results.token;
+          const id = data.results.id;
+          console.log('Authorization token: ' + token);
+          console.log('Authorization id: ' + id);
+          localStorage.setItem(this.CURRENT_USERTOKEN, JSON.stringify(token));
+          localStorage.setItem(this.CURRENT_USERID, JSON.stringify(id));
+          this.currentUser$.next(id);
           this.alertService.success('Je bent geregistreerd');
-          return user;
+          return data;
         }),
         catchError((error) => {
           console.log('error:', error);
@@ -109,6 +123,8 @@ export class AuthService {
         if (success) {
           console.log('logout - removing local user info');
           localStorage.removeItem(this.CURRENT_USER);
+          localStorage.removeItem(this.CURRENT_USERTOKEN);
+          localStorage.removeItem(this.CURRENT_USERID);
           this.currentUser$.next(undefined);
           this.alertService.success('Je bent uitgelogd.');
         } else {
@@ -142,7 +158,19 @@ export class AuthService {
   }
 
   getAuthorizationToken(): string | undefined {
-    const token = localStorage.getItem(this.CURRENT_USER);
+    const user = localStorage.getItem(this.CURRENT_USER);
+    if (user) {
+      return user!.replace(/['"]+/g, '');
+    }
+    const token = localStorage.getItem(this.CURRENT_USERTOKEN);
+    if (token) {
+      return token!.replace(/['"]+/g, '');
+    }
+    return undefined;
+  }
+
+  getCurrentUserId(): string | undefined {
+    const token = localStorage.getItem(this.CURRENT_USERID);
     if (token) {
       return token!.replace(/['"]+/g, '');
     }

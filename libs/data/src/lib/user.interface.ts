@@ -21,6 +21,9 @@ export interface UserRegister {
   username: string;
   password: string;
   emailAddress: string;
+  isGraduated: boolean;
+  phoneNumber: string;
+  roles: string[];
 }
 
 export interface User extends UserInfo {}

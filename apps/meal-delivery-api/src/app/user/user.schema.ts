@@ -11,8 +11,8 @@ export class User {
   @Prop({ type: String, default: uuid, index: true }) id: string;
   @Prop({ type: String, required: true, unique: true }) username: string;
   @Prop({ type: String, required: true }) emailAddress: string;
-  @Prop({ type: String, required: true }) phoneNumber: string;
   @Prop({ type: Boolean, required: true, default: false }) isGraduated: boolean;
+  @Prop({ type: String, required: false }) phoneNumber: string;
   @Prop({ type: Array, required: true, default: [] }) roles: string[];
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'StudentHouse' })

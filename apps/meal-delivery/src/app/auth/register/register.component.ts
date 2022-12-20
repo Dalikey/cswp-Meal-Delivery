@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserIdentity, UserInfo, UserRegister } from '@md/data';
+import { UserInfo, UserRegister } from '@md/data';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 
@@ -29,6 +29,9 @@ export class RegisterComponent implements OnInit {
       username: '',
       password: '',
       emailAddress: '',
+      isGraduated: false,
+      phoneNumber: '',
+      roles: ['user'],
     };
   }
 
