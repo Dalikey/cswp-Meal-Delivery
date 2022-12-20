@@ -129,6 +129,7 @@ export class UserService {
       'Authorization',
       this.token!
     );
+    console.log(id);
 
     return this.http
       .delete<User>(

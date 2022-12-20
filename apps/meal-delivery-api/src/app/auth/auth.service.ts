@@ -20,13 +20,15 @@ export class AuthService {
     username: string,
     emailAddress: string,
     isGraduated: boolean,
-    phoneNumber: string
+    phoneNumber: string,
+    roles: string[]
   ): Promise<string> {
     const user = new this.userModel({
       username,
       emailAddress,
       isGraduated,
       phoneNumber,
+      roles,
     });
     await user.save();
     return user.id;
@@ -74,5 +76,10 @@ export class AuthService {
         }
       );
     });
+  }
+
+  async getId(username: string, password: string): Promise<string> {
+    const user = await this.userModel.findOne({ username: username });
+    return user?.id;
   }
 }
