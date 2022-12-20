@@ -40,8 +40,8 @@ export class UserService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+        catchError(() => {
+          console.log('Unable to connect to database.');
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -64,8 +64,8 @@ export class UserService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+        catchError(() => {
+          console.log('Unable to connect to database.');
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -116,8 +116,8 @@ export class UserService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+        catchError(() => {
+          console.log('Unable to connect to database.');
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -141,8 +141,8 @@ export class UserService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+        catchError(() => {
+          console.log('Unable to connect to database.');
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })

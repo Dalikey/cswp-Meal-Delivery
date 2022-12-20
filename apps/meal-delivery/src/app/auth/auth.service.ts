@@ -12,8 +12,6 @@ import { AlertService } from './../shared/alert/alert.service';
 })
 export class AuthService {
   public currentUser$ = new BehaviorSubject<UserInfo | undefined>(undefined);
-  public currentUserToken$ = new BehaviorSubject<string | undefined>(undefined);
-  public currentUserId$ = new BehaviorSubject<string | undefined>(undefined);
   private readonly CURRENT_USER = 'currentuser';
   private readonly CURRENT_USERTOKEN = 'currentusertoken';
   private readonly CURRENT_USERID = 'currentuserid';
@@ -31,8 +29,9 @@ export class AuthService {
       .pipe(
         switchMap((user: UserInfo | undefined) => {
           if (user) {
+            console.log('Local Storage: ' + user);
+
             console.log('User found in local storage');
-            console.log(user);
             this.currentUser$.next(user);
             return of(user);
           } else {
@@ -67,8 +66,6 @@ export class AuthService {
           localStorage.setItem(this.CURRENT_USERTOKEN, JSON.stringify(token));
           localStorage.setItem(this.CURRENT_USERID, JSON.stringify(id));
           this.currentUser$.next(token);
-          this.currentUserToken$.next(token);
-          this.currentUserId$.next(id);
           this.alertService.success('Je bent ingelogd');
           return data;
         }),
@@ -105,9 +102,7 @@ export class AuthService {
           console.log('Authorization id: ' + id);
           localStorage.setItem(this.CURRENT_USERTOKEN, JSON.stringify(token));
           localStorage.setItem(this.CURRENT_USERID, JSON.stringify(id));
-          this.currentUser$.next(token);
-          this.currentUserToken$.next(token);
-          this.currentUserId$.next(id);
+          this.currentUser$.next(id);
           this.alertService.success('Je bent geregistreerd');
           return data;
         }),
@@ -140,26 +135,24 @@ export class AuthService {
   }
 
   getUserFromLocalStorage(): Observable<UserInfo | undefined> {
-    const user = localStorage.getItem(this.CURRENT_USER);
-    const userToken = localStorage.getItem(this.CURRENT_USERTOKEN);
-    const userId = localStorage.getItem(this.CURRENT_USERID);
-
-    if (user) {
-      const localUser = JSON.parse(user);
+    const userData = localStorage.getItem(this.CURRENT_USER);
+    if (userData) {
+      const localUser = JSON.parse(userData);
       return of(localUser);
-    } else if (userToken) {
-      const localUserToken = JSON.parse(userToken);
-      return of(localUserToken);
     } else {
       return of(undefined);
     }
   }
 
+  private saveUserToLocalStorage(user: UserInfo): void {
+    localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
+  }
+
   userMayEdit(itemUserId: string): Observable<boolean> {
     console.log('userMayEdit');
-    return this.currentUserId$.pipe(
-      map((userId: string | undefined) =>
-        userId ? userId === itemUserId : false
+    return this.currentUser$.pipe(
+      map((user: UserInfo | undefined) =>
+        user ? user.id === itemUserId : false
       )
     );
   }

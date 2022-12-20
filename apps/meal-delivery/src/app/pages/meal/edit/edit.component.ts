@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { catchError, Observable, of, Subscription, switchMap, tap } from 'rxjs';
-import { AuthService } from '../../../auth/auth.service';
+import { catchError, of, Subscription, switchMap, tap } from 'rxjs';
 import { Alert, AlertService } from '../../../shared/alert/alert.service';
-import { User } from '../../user/user.model';
-import { UserService } from '../../user/user.service';
 import { Meal } from '../meal.model';
 import { MealService } from '../meal.service';
 
@@ -19,7 +16,6 @@ export class EditComponent implements OnInit, OnDestroy {
   meal: Meal | undefined;
   mealid!: number | undefined;
   debug = false;
-  restaurants: User[];
 
   subscriptionOptions!: Subscription;
   subscriptionParams!: Subscription;
@@ -29,9 +25,7 @@ export class EditComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
-    private mealService: MealService,
-    private userService: UserService,
-    private authService: AuthService
+    private mealService: MealService
   ) {}
 
   ngOnInit(): void {
@@ -42,13 +36,6 @@ export class EditComponent implements OnInit, OnDestroy {
           this.componentId = params.get('id');
           if (!params.get('id')) {
             this.componentExists = false;
-            this.userService
-              .getAllUsers()
-              .subscribe((restaurants: User[] | null | undefined) => {
-                if (restaurants) {
-                  this.restaurants = restaurants;
-                }
-              });
             return of({
               name: '',
               price: 1,
@@ -57,13 +44,6 @@ export class EditComponent implements OnInit, OnDestroy {
             } as Meal);
           } else {
             this.componentExists = true;
-            this.userService
-              .getAllUsers()
-              .subscribe((restaurants: User[] | null | undefined) => {
-                if (restaurants) {
-                  this.restaurants = restaurants;
-                }
-              });
             return this.mealService.getMealById(params.get('id')!);
           }
         }),
@@ -80,6 +60,7 @@ export class EditComponent implements OnInit, OnDestroy {
     if (this.meal!.id) {
       // A meal with id must have been saved before, so it must be an update.
       console.log('update meal');
+
       this.mealService
         .updateMeal(this.meal!)
         .pipe(

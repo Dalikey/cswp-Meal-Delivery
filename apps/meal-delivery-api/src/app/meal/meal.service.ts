@@ -17,6 +17,7 @@ export class MealService {
     restaurantId: string
   ): Promise<ResourceId> {
     const restaurant = await this.userModel.findOne({ id: restaurantId });
+    console.log('restaurantId: ' + restaurantId); // token not id ...
     if (!restaurant) {
       throw new HttpException('Restaurant not found', HttpStatus.BAD_REQUEST);
     }
@@ -26,6 +27,7 @@ export class MealService {
       price: mealInfo.price,
       deliveryTime: mealInfo.deliveryTime,
       deliveryDate: mealInfo.deliveryDate,
+      restaurantRef: restaurant._id,
       restaurant: { id: restaurant.id, name: mealInfo.restaurant },
     });
     await meal.save();
@@ -59,7 +61,7 @@ export class MealService {
       throw new HttpException('Restaurant not found', HttpStatus.BAD_REQUEST);
     }
 
-    if (restaurant.username !== mealInfo.restaurant) {
+    if (restaurant.username == mealInfo.restaurant) {
       throw new HttpException(
         'You are not the owner of this meal.',
         HttpStatus.BAD_REQUEST
@@ -76,6 +78,7 @@ export class MealService {
               price: mealInfo.price,
               deliveryTime: mealInfo.deliveryTime,
               deliveryDate: mealInfo.deliveryDate,
+              restaurantRef: restaurant._id,
               restaurant: { id: restaurant.id, name: mealInfo.restaurant },
             },
           },

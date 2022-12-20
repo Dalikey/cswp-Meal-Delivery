@@ -66,8 +66,8 @@ export class MealService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+        catchError(() => {
+          console.log('Unable to connect to database.');
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -79,14 +79,9 @@ export class MealService {
       'Authorization',
       this.token!
     );
-
-    // const userId = this.authService.getCurrentUserId();
-    // if (userId) {
-    //   this.userService.getUserById(userId).subscribe((data) => {
-    //     newMeal.restaurant = data?.username;
-    //   });
-    // }
-
+    this.userService.getUserById(this.token!).subscribe((data) => {
+      newMeal.restaurant = data + '';
+    });
     return this.http
       .post<Meal>(
         `${this.configService.getConfig().apiEndpoint}api/meal`,
@@ -125,9 +120,9 @@ export class MealService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
-          this.alertService.error('U bent niet de eigenaar van deze maaltijd.');
+        catchError(() => {
+          console.log('Unable to connect to database.');
+          this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
       );
@@ -149,8 +144,8 @@ export class MealService {
         map((data: any) => {
           return data.results;
         }),
-        catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+        catchError(() => {
+          console.log('Unable to connect to database.');
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })

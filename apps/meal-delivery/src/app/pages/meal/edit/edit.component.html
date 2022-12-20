@@ -51,7 +51,7 @@
     <br>
     <div class="row">
       <div class="col-5">
-        <!-- deliverytime -->
+        <!-- deliverytime-->
         <div class="row-5">
           <div class="form-group">
             <label for="deliverytime">Bezorgtijd</label>
@@ -69,7 +69,7 @@
           </div>
         </div>
         <br>
-        <!-- deliverydate -->
+        <!-- deliverydate-->
         <div class="row-5">
           <div class="form-group">
             <label for="deliverydate">Bezorgdatum</label>
@@ -78,29 +78,16 @@
                 [ngModel]="meal!.deliveryDate | date:'yyyy-MM-dd'" (ngModelChange)="meal!.deliveryDate = $event" />
             </div>
           </div>
-        </div><br>
-        <!-- restaurant -->
-        <div class="row-5">
-          <div class="form-group">
-            <label for="restaurant">Restaurant</label>
-            <div *ngIf="meal?.deliveryDate">
-              <select class="form-select move10left" id="restaurant" name="restaurant" [(ngModel)]="meal.restaurant"
-                #restaurant="ngModel">
-                <option *ngFor="let restaurant of restaurants" [value]="restaurant.username">{{restaurant.username}}
-                </option>
-              </select>
-            </div>
-          </div>
         </div>
       </div>
       <div class="col-5">
         <pre>{{ meal | json }}</pre>
       </div>
-    </div><br>
+    </div>
 
     <!-- Submit en Cancel buttons -->
     <div class="row">
-      <div *ngIf="!componentExists" class="col">
+      <div *ngIf="!componentExists" class="col py-3">
         <button type="submit" class="btn btn-primary mx-2" [disabled]="!mealEditForm.valid">
           <div *ngIf="componentExists && meal">
             Maaltijd bewerken
