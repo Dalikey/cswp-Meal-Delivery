@@ -47,12 +47,6 @@ export class EditComponent implements OnInit, OnDestroy {
           this.componentId = params.get('id');
           if (!params.get('id')) {
             this.componentExists = false;
-            // const noEmptyStringAllergies = this.product?.allergies!.filter(
-            //   (allergy) => {
-            //     return allergy !== '';
-            //   }
-            // );
-            // this.product!.allergies = noEmptyStringAllergies;
             return of({
               name: '',
               allergies: [],
@@ -60,12 +54,6 @@ export class EditComponent implements OnInit, OnDestroy {
             } as unknown as Product);
           } else {
             this.componentExists = true;
-            // const noEmptyStringAllergies = this.product?.allergies!.filter(
-            //   (allergy) => {
-            //     return allergy !== '';
-            //   }
-            // );
-            // this.product!.allergies = noEmptyStringAllergies;
             return this.productService.getProductById(params.get('id')!);
           }
         }),
@@ -82,6 +70,15 @@ export class EditComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log('onSubmit', this.product);
+
+    if (this.product) {
+      const noEmptyStringAllergies = this.product?.allergies!.filter(
+        (allergy) => {
+          return allergy !== '';
+        }
+      );
+      this.product!.allergies = noEmptyStringAllergies;
+    }
 
     if (this.product!.id) {
       // A product with id must have been saved before, so it must be an update.

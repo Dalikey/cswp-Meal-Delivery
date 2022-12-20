@@ -12,48 +12,54 @@
         <!-- streetandnmr -->
         <div class="form-group">
           <label for="streetandnmr">Straat en huisnummer</label>
-          <input type="text" id="streetandnmr" name="streetandnmr" class="form-control"
-            [(ngModel)]="studentHouse!.streetAndNmr" #streetAndNmr="ngModel" minlength="3" required [ngClass]="{
+          <div *ngIf="studentHouse">
+            <input type="text" id="streetandnmr" name="streetandnmr" class="form-control"
+              [(ngModel)]="studentHouse!.streetAndNmr" #streetAndNmr="ngModel" minlength="3" required [ngClass]="{
                         'is-invalid': streetAndNmr.invalid && streetAndNmr.touched
                     }" />
-          <div *ngIf="streetAndNmr.invalid && streetAndNmr.touched" class="invalid-feedback">
-            <div *ngIf="streetAndNmr.errors!['required']">
-              Straat en huisnummer is verplicht
-            </div>
-            <div *ngIf="streetAndNmr.errors!['minlength']">
-              De straat en huisnummer moet 3 karakters lang zijn.
+            <div *ngIf="streetAndNmr.invalid && streetAndNmr.touched" class="invalid-feedback">
+              <div *ngIf="streetAndNmr.errors!['required']">
+                Straat en huisnummer is verplicht
+              </div>
+              <div *ngIf="streetAndNmr.errors!['minlength']">
+                De straat en huisnummer moet 3 karakters lang zijn.
+              </div>
             </div>
           </div>
         </div><br>
         <!-- city -->
         <div class="form-group">
           <label for="city">Stad</label>
-          <input type="text" id="city" name="city" class="form-control" [(ngModel)]="studentHouse!.city" #city="ngModel"
-            minlength="3" required [ngClass]="{
+          <div *ngIf="studentHouse">
+            <input type="text" id="city" name="city" class="form-control" [(ngModel)]="studentHouse!.city"
+              #city="ngModel" minlength="3" required [ngClass]="{
                                 'is-invalid': city.invalid && city.touched
                             }" />
-          <div *ngIf="city.invalid && city.touched" class="invalid-feedback">
-            <div *ngIf="city.errors!['required']">
-              Stad is verplicht
-            </div>
-            <div *ngIf="city.errors!['minlength']">
-              Stad moet 3 karakters lang zijn.
+            <div *ngIf="city.invalid && city.touched" class="invalid-feedback">
+              <div *ngIf="city.errors!['required']">
+                Stad is verplicht
+              </div>
+              <div *ngIf="city.errors!['minlength']">
+                Stad moet 3 karakters lang zijn.
+              </div>
             </div>
           </div>
         </div><br>
         <!-- postcode -->
         <div class="form-group">
           <label for="postcode">Postcode</label>
-          <input type="text" id="postcode" name="postcode" class="form-control" [(ngModel)]="studentHouse!.postcode"
-            #postcode="ngModel" minlength="3" required [ngClass]="{
+          <div *ngIf="studentHouse">
+            <input type="text" id="postcode" name="postcode" class="form-control" [(ngModel)]="studentHouse!.postcode"
+              #postcode="ngModel" minlength="3" required [ngClass]="{
                         'is-invalid': postcode.invalid && postcode.touched
                     }" />
-          <div *ngIf="postcode.invalid && postcode.touched" class="invalid-feedback">
-            <div *ngIf="postcode.errors!['required']">
-              Postcode is verplicht
-            </div>
-            <div *ngIf="postcode.errors!['minlength']">
-              Postcode moet 6 karakters lang zijn.
+            <div *ngIf="postcode.invalid && postcode.touched" class="invalid-feedback">
+              <div *ngIf="postcode.errors!['required']">
+                Postcode is verplicht
+              </div>
+              <div *ngIf="postcode.errors!['minlength']">
+                Postcode moet 6 karakters lang zijn.
+              </div>
             </div>
           </div>
         </div>
