@@ -52,10 +52,6 @@ p {
   margin-left: -10px;
 }
 
-.mb240 {
-  margin-bottom: 240px;
-}
-
 .card {
   all: unset;
   border-radius: 4px;
@@ -135,10 +131,6 @@ a:visited:hover {
   margin-top: 5px;
 }
 
-.move8down {
-  margin-top: 8px;
-}
-
 .move30down {
   margin-top: 30px;
 }
@@ -155,20 +147,8 @@ a:visited:hover {
   margin-top: 150px;
 }
 
-.move20right {
-  margin-left: 20px;
-}
-
 .move100right {
   margin-left: 100px;
-}
-
-.minWidthButton {
-  width: 154.21px;
-}
-
-.minHe300 {
-  min-height: 300px;
 }
 
 .bg-main {

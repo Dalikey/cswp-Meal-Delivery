@@ -4,11 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {
-        "@typescript-eslint/no-namespace": "off",
-        "@typescript-eslint/no-unused-vars": "off",
-        "@angular-eslint/no-empty-lifecycle-method": "off"
-      }
+      "rules": {}
     }
   ]
 }

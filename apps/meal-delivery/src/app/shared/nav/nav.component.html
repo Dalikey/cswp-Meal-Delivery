@@ -8,20 +8,14 @@
       <a class="nav-link" routerLink="/meal">Maaltijden</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/product">Producten</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/user" [disabled]="(loggedInUser$ | async) === undefined">Gebruikers</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/studentHouse">Studentenhuizen</a>
-    </li>
-    <li class="nav-item">
       <a class="nav-link" routerLink="/about-us">Over ons</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/user">Gebruikers</a>
     </li>
   </ul>
   <div class="spacer"></div>
-  <a aria-label="Avans Hogeschool on twitter" target="_blank" rel="noopener" href="https://twitter.com/avanshogeschool"
+  <a aria-label="Angular on twitter" target="_blank" rel="noopener" href="https://twitter.com/avanshogeschool"
     title="Twitter">
     <svg id="twitter-logo" height="24" data-name="Logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
       <rect width="400" height="400" fill="none" />
@@ -30,8 +24,8 @@
         fill="#fff" />
     </svg>
   </a>
-  <a aria-label="Avans Hogeschool on YouTube" target="_blank" rel="noopener"
-    href="https://www.youtube.com/c/avansonline" title="YouTube">
+  <a aria-label="Angular on YouTube" target="_blank" rel="noopener" href="https://www.youtube.com/c/avansonline"
+    title="YouTube">
     <svg id="youtube-logo" height="24" width="24" data-name="Logo" xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24" fill="#fff">
       <path d="M0 0h24v24H0V0z" fill="none" />
@@ -39,19 +33,12 @@
         d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z" />
     </svg>
   </a>
-  <!-- If no user has logged in: -->
-  <ul *ngIf="(loggedInUser$ | async) === undefined" class="nav">
+  <ul class="nav">
     <li class="nav-item">
       <a class="nav-link" routerLink="/register">Registreer</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLink="/login">Login</a>
     </li>
-  </ul>
-
-  <!-- If we have a logged in user: -->
-  <ul *ngIf="loggedInUser$ | async as user" class="nav">
-    <li class="nav-item"> <a class="nav-link">{{ user.username }}</a> </li>
-    <li class="nav-item"><a class="nav-link" (click)="logout()">Uitloggen</a></li>
   </ul>
 </div>

@@ -16,27 +16,15 @@ export class AuthService {
     @InjectModel(User.name) private userModel: Model<UserDocument>
   ) {}
 
-  async createUser(
-    username: string,
-    emailAddress: string,
-    isGraduated: boolean,
-    phoneNumber: string,
-    roles: string[]
-  ): Promise<string> {
-    const user = new this.userModel({
-      username,
-      emailAddress,
-      isGraduated,
-      phoneNumber,
-      roles,
-    });
+  async createUser(name: string, emailAddress: string): Promise<string> {
+    const user = new this.userModel({ name, emailAddress });
     await user.save();
     return user.id;
   }
 
   async verifyToken(token: string): Promise<string | JwtPayload> {
     return new Promise((resolve, reject) => {
-      verify(token, process.env.JWT_SECRET!, (err, payload) => {
+      verify(token, process.env.JWT_SECRET as string, (err, payload) => {
         if (err) reject(err);
         else resolve(payload as string);
       });
@@ -46,7 +34,7 @@ export class AuthService {
   async registerUser(username: string, password: string, emailAddress: string) {
     const generatedHash = await hash(
       password,
-      parseInt(process.env.SALT_ROUNDS!, 10)
+      parseInt(process.env.SALT_ROUNDS as string, 10)
     );
 
     const identity = new this.identityModel({
@@ -64,22 +52,17 @@ export class AuthService {
     if (!identity || !(await compare(password, identity.hash)))
       throw new Error('user not authorized');
 
-    const user = await this.userModel.findOne({ username: username });
+    const user = await this.userModel.findOne({ name: username });
 
     return new Promise((resolve, reject) => {
       sign(
         { username, id: user?.id },
-        process.env.JWT_SECRET!,
+        process.env.JWT_SECRET as string,
         (err, token) => {
           if (err) reject(err);
           else resolve(token);
         }
       );
     });
-  }
-
-  async getId(username: string, password: string): Promise<string> {
-    const user = await this.userModel.findOne({ username: username });
-    return user?.id;
   }
 }

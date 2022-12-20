@@ -1,154 +1,125 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, tap } from 'rxjs';
-import { ApiResponse } from '@md/data';
 import { Meal } from './meal.model';
-import { AuthService } from '../../auth/auth.service';
-import { ConfigService } from '../../shared/moduleconfig/config.service';
-import { AlertService } from '../../shared/alert/alert.service';
-import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MealService {
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService,
-    private configService: ConfigService,
-    private alertService: AlertService,
-    private userService: UserService
-  ) {}
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    }),
-  };
-  private token = this.authService.getAuthorizationToken();
+  meals: Meal[] = [
+    {
+      id: '12345-123-12',
+      name: 'Pasta Bolognese met tomaat, spekjes en kaas',
+      price: 9.0,
+      deliveryTime: new Date(),
+      deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
+    },
+    {
+      id: '12345-123-23',
+      name: 'Aubergine uit de oven met feta, muntrijst en tomatensaus',
+      price: 8.0,
+      deliveryTime: new Date(),
+      deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
+    },
+    {
+      id: '12345-123-56',
+      name: 'Spaghetti met tapenadekip uit de oven en frisse salade',
+      price: 9.0,
+      deliveryTime: new Date(),
+      deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
+    },
+    {
+      id: '12345-123-13',
+      name: 'Heerlijke zuurkoolschotel, dé winterkost bij uitstek.',
+      price: 3.0,
+      deliveryTime: new Date(),
+      deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
+    },
+    {
+      id: '12345-123-14',
+      name: 'Mooie zomerse salade met veel groente',
+      price: 6.0,
+      deliveryTime: new Date(),
+      deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
+    },
+    {
+      id: '12345-123-15',
+      name: 'Hamburger met friet',
+      price: 5.0,
+      deliveryTime: new Date(),
+      deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
+    },
+    {
+      id: '12345-123-16',
+      name: 'Kipburger met friet',
+      price: 5.0,
+      deliveryTime: new Date(),
+      deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
+    },
+    {
+      id: '12345-123-17',
+      name: 'Twee unox broodjes',
+      price: 3.0,
+      deliveryTime: new Date(),
+      deliveryDate: new Date(),
+      restaurant: 'Avans restaurant',
+    },
+  ];
 
-  getAllMeals(): Observable<Meal[] | null | undefined> {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
-    );
-
-    return this.http
-      .get<ApiResponse<Meal[]>>(
-        `${this.configService.getConfig().apiEndpoint}api/meal`,
-        this.httpOptions
-      )
-      .pipe(
-        tap(console.log),
-        map((data: any) => {
-          return data.results;
-        }),
-        catchError((error) => {
-          console.log('Unable to connect to database.' + error.message);
-          this.alertService.error('Kan geen verbinding maken met de database.');
-          return of(undefined);
-        })
-      );
+  constructor() {
+    console.log('MealService created');
   }
 
-  getMealById(id: string): Observable<Meal | null | undefined> {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
-    );
-
-    return this.http
-      .get<Meal>(
-        `${this.configService.getConfig().apiEndpoint}api/meal/${id}`,
-        this.httpOptions
-      )
-      .pipe(
-        tap(console.log),
-        map((data: any) => {
-          return data.results;
-        }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
-          this.alertService.error('Kan geen verbinding maken met de database.');
-          return of(undefined);
-        })
-      );
+  getAllMeals(): Meal[] {
+    return this.meals;
   }
 
-  addMeal(newMeal: Meal) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-    this.userService.getUserById(this.token!).subscribe((data) => {
-      newMeal.restaurant = data + '';
-    });
-    return this.http
-      .post<Meal>(
-        `${this.configService.getConfig().apiEndpoint}api/meal`,
-        newMeal,
-        this.httpOptions
-      )
-      .pipe(
-        tap(console.log),
-        map((data: any) => {
-          return data.results;
-        }),
-        catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
-          this.alertService.error('Maaltijd bestaat al.');
-          return of(undefined);
-        })
-      );
+  getMealById(id: string): Meal {
+    return this.meals.filter((meal: Meal) => meal.id === id)[0];
+  }
+
+  addMeal(newMeal: Meal): void {
+    if (newMeal.deliveryTime !== undefined) {
+      if (newMeal.deliveryTime.toString().match('\\d{2}:\\d{2}')) {
+        var time = newMeal!.deliveryTime.toString().split(':');
+        newMeal.deliveryTime = new Date();
+        newMeal.deliveryTime.setHours(+time[0]);
+        newMeal.deliveryTime.setMinutes(+time[1]);
+      }
+    }
+    newMeal.deliveryDate = new Date(newMeal!.deliveryDate!);
+    this.meals.push(newMeal);
   }
 
   updateMeal(updatedMeal: Meal) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
+    console.log('Updating meal ' + updatedMeal.name);
 
-    return this.http
-      .put<Meal>(
-        `${this.configService.getConfig().apiEndpoint}api/meal/${
-          updatedMeal.id
-        }`,
-        updatedMeal,
-        this.httpOptions
-      )
-      .pipe(
-        tap(console.log),
-        map((data: any) => {
-          return data.results;
-        }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
-          this.alertService.error('Kan geen verbinding maken met de database.');
-          return of(undefined);
-        })
-      );
+    let updatedMeals = this.meals.filter((meal) => meal.id !== updatedMeal.id);
+
+    if (updatedMeal.deliveryTime !== undefined) {
+      if (updatedMeal.deliveryTime.toString().match('\\d{2}:\\d{2}')) {
+        var time = updatedMeal!.deliveryTime.toString().split(':');
+        updatedMeal.deliveryTime = new Date();
+        updatedMeal.deliveryTime.setHours(+time[0]);
+        updatedMeal.deliveryTime.setMinutes(+time[1]);
+      }
+    }
+    updatedMeal.deliveryDate = new Date(updatedMeal!.deliveryDate!);
+    updatedMeals.push(updatedMeal);
+    this.meals = updatedMeals;
+
+    console.log(this.meals);
   }
 
   deleteMeal(id: string) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-
-    return this.http
-      .delete<Meal>(
-        `${this.configService.getConfig().apiEndpoint}api/meal/${id}`,
-        this.httpOptions
-      )
-      .pipe(
-        tap(console.log),
-        map((data: any) => {
-          return data.results;
-        }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
-          this.alertService.error('Kan geen verbinding maken met de database.');
-          return of(undefined);
-        })
-      );
+    let meal = this.meals.find((meal) => meal.id == id);
+    let index = this.meals.indexOf(meal!);
+    this.meals.splice(index, 1);
   }
 }

@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
-import { User } from '../user.model';
-import { UserService } from '../user.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {User} from "../user.model";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'user-detail',
@@ -10,18 +9,23 @@ import { UserService } from '../user.service';
   styleUrls: ['./detail.component.css'],
 })
 export class DetailComponent implements OnInit {
-  user$!: Observable<User | null | undefined>;
+  componentId: string | null | undefined;
+  user: User | undefined;
 
-  constructor(
-    private route: ActivatedRoute,
-    private userService: UserService
-  ) {}
+  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) {
+  }
 
   ngOnInit(): void {
-    this.user$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.userService.getUserById(params.get('id')!)
-      )
-    );
+    this.route.paramMap.subscribe((params) => {
+      this.componentId = params.get("id");
+      if (this.componentId) {
+        // Bestaande user
+        console.log("Bestaande component");
+        this.user = this.userService.getUserById(this.componentId);
+      } else {
+        // Nieuwe user
+        console.log("Nieuwe component");
+      }
+    });
   }
 }

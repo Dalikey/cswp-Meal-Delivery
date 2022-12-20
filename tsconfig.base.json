@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
+    "baseUrl": ".",
     "outDir": "./dist/out-tsc",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -21,10 +21,16 @@
     "target": "es2017",
     "module": "es2020",
     "lib": ["es2020", "dom"],
-    "baseUrl": ".",
     "paths": {
-      "@md/data": ["libs/data/src/index.ts"]
-    }
+      "@meal-delivery/data": ["libs/data/src/index.ts"]
+    },
+    "rootDir": "."
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   },
   "exclude": ["node_modules", "tmp"]
 }
