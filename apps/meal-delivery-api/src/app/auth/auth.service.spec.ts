@@ -59,13 +59,15 @@ describe('AuthService', () => {
         emailAddress: 'mario@mario.nl',
         isGraduated: false,
         phoneNumber: '0639558161',
+        roles: ['user'],
       };
 
       await service.createUser(
         exampleUser.username,
         exampleUser.emailAddress,
         exampleUser.isGraduated,
-        exampleUser.phoneNumber
+        exampleUser.phoneNumber,
+        exampleUser.roles
       );
 
       const found = await mongoc
@@ -81,7 +83,7 @@ describe('AuthService', () => {
     it('should accept a valid token', async () => {
       const examplePayload = { user: 'userid' };
 
-      const token = sign(examplePayload, process.env.JWT_SECRET || '');
+      const token = sign(examplePayload, process.env.JWT_SECRET!);
 
       const verifiedToken = await service.verifyToken(token);
 
@@ -109,7 +111,7 @@ describe('AuthService', () => {
           username: exampleUser.username,
           hash: hashSync(
             exampleUser.password,
-            parseInt(process.env.SALT_ROUNDS || '', 10)
+            parseInt(process.env.SALT_ROUNDS!, 10)
           ),
         });
       await mongoc.db('test').collection('users').insertOne({
@@ -141,7 +143,7 @@ describe('AuthService', () => {
           username: exampleUser.username,
           hash: hashSync(
             exampleUser.password,
-            parseInt(process.env.SALT_ROUNDS || '', 10)
+            parseInt(process.env.SALT_ROUNDS!, 10)
           ),
         });
 

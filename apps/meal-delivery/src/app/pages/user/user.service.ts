@@ -22,26 +22,19 @@ export class UserService {
       'Content-Type': 'application/json',
     }),
   };
-  private token = this.authService.getAuthorizationToken();
 
   getAllUsers(): Observable<User[] | null | undefined> {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
-    );
-
     return this.http
       .get<ApiResponse<User[]>>(
         `${this.configService.getConfig().apiEndpoint}api/user`,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -49,23 +42,17 @@ export class UserService {
   }
 
   getUserById(id: string): Observable<User | null | undefined> {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
-    );
-
     return this.http
       .get<User>(
         `${this.configService.getConfig().apiEndpoint}api/user/${id}`,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -73,11 +60,6 @@ export class UserService {
   }
 
   addUser(newUser: User) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-
     return this.http
       .post<User>(
         `${this.configService.getConfig().apiEndpoint}api/user`,
@@ -85,7 +67,6 @@ export class UserService {
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -98,11 +79,6 @@ export class UserService {
   }
 
   updateUser(updatedUser: User) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-
     return this.http
       .put<User>(
         `${this.configService.getConfig().apiEndpoint}api/user/${
@@ -112,12 +88,11 @@ export class UserService {
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -125,10 +100,7 @@ export class UserService {
   }
 
   deleteUser(id: string) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
+    console.log(id);
 
     return this.http
       .delete<User>(
@@ -136,12 +108,11 @@ export class UserService {
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })

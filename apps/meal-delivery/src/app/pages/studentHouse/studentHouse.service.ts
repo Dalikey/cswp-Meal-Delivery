@@ -22,26 +22,19 @@ export class StudentHouseService {
       'Content-Type': 'application/json',
     }),
   };
-  private token = this.authService.getAuthorizationToken();
 
   getAllStudentHouses(): Observable<StudentHouse[] | null | undefined> {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
-    );
-
     return this.http
       .get<ApiResponse<StudentHouse[]>>(
         `${this.configService.getConfig().apiEndpoint}api/studentHouse`,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -49,23 +42,17 @@ export class StudentHouseService {
   }
 
   getStudentHouseById(id: string): Observable<StudentHouse | null | undefined> {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
-    );
-
     return this.http
       .get<StudentHouse>(
         `${this.configService.getConfig().apiEndpoint}api/studentHouse/${id}`,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -73,11 +60,6 @@ export class StudentHouseService {
   }
 
   addStudentHouse(newStudentHouse: StudentHouse) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-
     return this.http
       .post<StudentHouse>(
         `${this.configService.getConfig().apiEndpoint}api/studentHouse`,
@@ -85,7 +67,6 @@ export class StudentHouseService {
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -98,11 +79,6 @@ export class StudentHouseService {
   }
 
   updateStudentHouse(updatedStudentHouse: StudentHouse) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-
     return this.http
       .put<StudentHouse>(
         `${this.configService.getConfig().apiEndpoint}api/studentHouse/${
@@ -112,12 +88,11 @@ export class StudentHouseService {
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -125,23 +100,17 @@ export class StudentHouseService {
   }
 
   deleteStudentHouse(id: string) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-
     return this.http
       .delete<StudentHouse>(
         `${this.configService.getConfig().apiEndpoint}api/studentHouse/${id}`,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })

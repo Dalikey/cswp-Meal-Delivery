@@ -12,9 +12,6 @@ export class Product {
   @Prop({ type: Array, required: false, default: [] }) allergies: string[];
   @Prop({ type: Boolean, required: false, default: false })
   containsAlcohol: boolean;
-
-  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Meal' }] })
-  meals: Meal[];
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

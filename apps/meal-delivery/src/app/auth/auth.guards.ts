@@ -13,13 +13,11 @@ export class LoggedInAuthGuard implements CanActivate, CanActivateChild {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> {
-    console.log('canActivate LoggedIn');
     return this.authService.currentUser$.pipe(
       map((user: UserInfo | undefined) => {
         if (user) {
           return true;
         } else {
-          console.log('not logged in, reroute to /login');
           this.router.navigate(['login']);
           return false;
         }
@@ -28,7 +26,6 @@ export class LoggedInAuthGuard implements CanActivate, CanActivateChild {
   }
 
   canActivateChild(): Observable<boolean> | Promise<boolean> | boolean {
-    console.log('canActivateChild LoggedIn');
     return this.canActivate();
   }
 }

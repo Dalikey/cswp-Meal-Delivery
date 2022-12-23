@@ -6,7 +6,7 @@ import {
   Post,
 } from '@nestjs/common';
 
-import { ResourceId, Token, UserCredentials, UserRegistration } from '@md/data';
+import { LocalStorage, UserCredentials, UserRegistration } from '@md/data';
 
 import { AuthService } from './auth.service';
 
@@ -15,7 +15,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  async register(@Body() credentials: UserRegistration): Promise<ResourceId> {
+  async register(@Body() credentials: UserRegistration): Promise<LocalStorage> {
     try {
       await this.authService.registerUser(
         credentials.username,
@@ -24,11 +24,17 @@ export class AuthController {
       );
 
       return {
+        token: await this.authService.generateToken(
+          credentials.username,
+          credentials.password
+        ),
+
         id: await this.authService.createUser(
           credentials.username,
           credentials.emailAddress,
           credentials.isGraduated,
-          credentials.phoneNumber
+          credentials.phoneNumber,
+          credentials.roles
         ),
       };
     } catch (e) {
@@ -40,13 +46,19 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Body() credentials: UserCredentials): Promise<Token> {
+  async login(@Body() credentials: UserCredentials): Promise<LocalStorage> {
     try {
       return {
         token: await this.authService.generateToken(
           credentials.username,
           credentials.password
         ),
+        id: (
+          await this.authService.getId(
+            credentials.username,
+            credentials.password
+          )
+        ).toString(),
       };
     } catch (e) {
       let errorMessage = 'Failed to do something exceptional';

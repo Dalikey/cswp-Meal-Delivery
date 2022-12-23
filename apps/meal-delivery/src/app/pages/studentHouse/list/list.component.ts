@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SaveEditedWorkGuard } from '../../../auth/auth.guards';
 import { StudentHouse } from '../studentHouse.model';
 import { StudentHouseService } from '../studentHouse.service';
 
@@ -11,15 +12,22 @@ import { StudentHouseService } from '../studentHouse.service';
 export class ListComponent implements OnInit {
   studentHouses$!: Observable<StudentHouse[] | null | undefined>;
 
-  constructor(private studentHouseService: StudentHouseService) {}
+  constructor(
+    private studentHouseService: StudentHouseService,
+    private saveEditedWorkGuard: SaveEditedWorkGuard
+  ) {}
 
   ngOnInit(): void {
     this.studentHouses$ = this.studentHouseService.getAllStudentHouses();
   }
 
   deleteStudentHouse(id: string) {
-    this.studentHouseService.deleteStudentHouse(id).subscribe(() => {
-      this.studentHouses$ = this.studentHouseService.getAllStudentHouses();
+    this.saveEditedWorkGuard.canDeactivate().then((result) => {
+      if (result) {
+        this.studentHouseService.deleteStudentHouse(id).subscribe(() => {
+          this.studentHouses$ = this.studentHouseService.getAllStudentHouses();
+        });
+      }
     });
   }
 }

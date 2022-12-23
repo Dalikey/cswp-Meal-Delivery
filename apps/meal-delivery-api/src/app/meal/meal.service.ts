@@ -12,14 +12,10 @@ export class MealService {
     @InjectModel(User.name) private userModel: Model<UserDocument>
   ) {}
 
-  async createMeal(
-    mealInfo: MealInfo,
-    restaurantId: string
-  ): Promise<ResourceId> {
-    const restaurant = await this.userModel.findOne({ id: restaurantId });
-
-    if (!restaurant) {
-      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+  async createMeal(mealInfo: MealInfo, ownerId: string): Promise<ResourceId> {
+    const owner = await this.userModel.findOne({ id: ownerId });
+    if (!owner) {
+      throw new HttpException('Owner not found', HttpStatus.BAD_REQUEST);
     }
     const meal = new this.mealModel({
       id: mealInfo.id,
@@ -27,8 +23,7 @@ export class MealService {
       price: mealInfo.price,
       deliveryTime: mealInfo.deliveryTime,
       deliveryDate: mealInfo.deliveryDate,
-      restaurantRef: restaurant._id,
-      restaurant: { id: restaurant.id, name: mealInfo.restaurant },
+      owner: { id: owner.id, name: owner.username },
     });
     await meal.save();
     return meal.id;
@@ -57,11 +52,12 @@ export class MealService {
   ): Promise<MealInfo> {
     const meal = await this.mealModel.findOne({ id: mealId });
     const restaurant = await this.userModel.findOne({ id: restaurantId });
+
     if (!restaurant) {
-      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Restaurant not found', HttpStatus.BAD_REQUEST);
     }
 
-    if (restaurant.username == mealInfo.restaurant) {
+    if (restaurant.username !== mealInfo.restaurant) {
       throw new HttpException(
         'You are not the owner of this meal.',
         HttpStatus.BAD_REQUEST
@@ -78,7 +74,6 @@ export class MealService {
               price: mealInfo.price,
               deliveryTime: mealInfo.deliveryTime,
               deliveryDate: mealInfo.deliveryDate,
-              restaurantRef: restaurant._id,
               restaurant: { id: restaurant.id, name: mealInfo.restaurant },
             },
           },

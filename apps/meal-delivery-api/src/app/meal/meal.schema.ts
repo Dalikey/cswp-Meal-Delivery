@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { v4 as uuid } from 'uuid';
 import { Product } from '../product/product.schema';
+import { StudentHouse } from '../studentHouse/studentHouse.schema';
 import { User } from '../user/user.schema';
 
 export type MealDocument = HydratedDocument<Meal>;
@@ -15,25 +16,17 @@ export class Meal {
   @Prop({ type: Date, required: true, default: new Date() }) deliveryTime: Date;
   @Prop({ type: Date, required: true, default: new Date() }) deliveryDate: Date;
 
-  @Prop({
-    required: true,
-    type: MongooseSchema.Types.ObjectId,
-    ref: 'User',
-  })
-  restaurantRef: User;
-
   @Prop({ required: true, type: { id: String, name: String } })
-  restaurant: UserIdentity;
+  owner: UserIdentity;
+  // user: UserIdentity;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User' }) deliverer: User;
+  @Prop({ required: true, type: { id: String, streetAndNmr: String } })
+  studentHouse: StudentHouse;
 
-  @Prop({
-    type: [
-      { type: MongooseSchema.Types.ObjectId, ref: 'Product', unique: true },
-    ],
-    default: [],
-  })
-  products: Product[];
+  // @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User' }) deliverer: User;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User' }) user: User;
+
+  @Prop({ type: [], default: [] }) products: Product[];
 
   @Prop({
     type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User', unique: true }],

@@ -1,7 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { catchError, of, Subscription, switchMap, tap } from 'rxjs';
+import { catchError, Observable, of, Subscription, switchMap, tap } from 'rxjs';
+import { AuthService } from '../../../auth/auth.service';
 import { Alert, AlertService } from '../../../shared/alert/alert.service';
+import { StudentHouse } from '../../studentHouse/studentHouse.model';
+import { StudentHouseService } from '../../studentHouse/studentHouse.service';
+import { User } from '../../user/user.model';
+import { UserService } from '../../user/user.service';
 import { Meal } from '../meal.model';
 import { MealService } from '../meal.service';
 
@@ -16,6 +21,7 @@ export class EditComponent implements OnInit, OnDestroy {
   meal: Meal | undefined;
   mealid!: number | undefined;
   debug = false;
+  studentHouses: StudentHouse[];
 
   subscriptionOptions!: Subscription;
   subscriptionParams!: Subscription;
@@ -25,25 +31,41 @@ export class EditComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
-    private mealService: MealService
+    private mealService: MealService,
+    private studentHouseService: StudentHouseService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.subscriptionParams = this.route.paramMap
       .pipe(
-        tap(console.log),
         switchMap((params: ParamMap) => {
           this.componentId = params.get('id');
           if (!params.get('id')) {
             this.componentExists = false;
+            this.studentHouseService
+              .getAllStudentHouses()
+              .subscribe((studentHouses: StudentHouse[] | null | undefined) => {
+                if (studentHouses) {
+                  this.studentHouses = studentHouses;
+                }
+              });
             return of({
               name: '',
               price: 1,
               deliveryTime: new Date(),
               deliveryDate: new Date(),
+              studentHouse: '',
             } as Meal);
           } else {
             this.componentExists = true;
+            this.studentHouseService
+              .getAllStudentHouses()
+              .subscribe((studentHouses: StudentHouse[] | null | undefined) => {
+                if (studentHouses) {
+                  this.studentHouses = studentHouses;
+                }
+              });
             return this.mealService.getMealById(params.get('id')!);
           }
         }),
@@ -60,7 +82,6 @@ export class EditComponent implements OnInit, OnDestroy {
     if (this.meal!.id) {
       // A meal with id must have been saved before, so it must be an update.
       console.log('update meal');
-
       this.mealService
         .updateMeal(this.meal!)
         .pipe(

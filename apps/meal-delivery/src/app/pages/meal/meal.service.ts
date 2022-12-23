@@ -24,21 +24,14 @@ export class MealService {
       'Content-Type': 'application/json',
     }),
   };
-  private token = this.authService.getAuthorizationToken();
 
   getAllMeals(): Observable<Meal[] | null | undefined> {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
-    );
-
     return this.http
       .get<ApiResponse<Meal[]>>(
         `${this.configService.getConfig().apiEndpoint}api/meal`,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -51,23 +44,17 @@ export class MealService {
   }
 
   getMealById(id: string): Observable<Meal | null | undefined> {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
-    );
-
     return this.http
       .get<Meal>(
         `${this.configService.getConfig().apiEndpoint}api/meal/${id}`,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -75,13 +62,13 @@ export class MealService {
   }
 
   addMeal(newMeal: Meal) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-    this.userService.getUserById(this.token!).subscribe((data) => {
-      newMeal.restaurant = data + '';
-    });
+    // const userId = this.authService.getCurrentUserId();
+    // if (userId) {
+    //   this.userService.getUserById(userId).subscribe((data) => {
+    //     newMeal.restaurant = data?.username;
+    //   });
+    // }
+
     return this.http
       .post<Meal>(
         `${this.configService.getConfig().apiEndpoint}api/meal`,
@@ -89,7 +76,6 @@ export class MealService {
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -102,11 +88,6 @@ export class MealService {
   }
 
   updateMeal(updatedMeal: Meal) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-
     return this.http
       .put<Meal>(
         `${this.configService.getConfig().apiEndpoint}api/meal/${
@@ -116,36 +97,29 @@ export class MealService {
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
-          this.alertService.error('Kan geen verbinding maken met de database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
+          this.alertService.error('U bent niet de eigenaar van deze maaltijd.');
           return of(undefined);
         })
       );
   }
 
   deleteMeal(id: string) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-
     return this.http
       .delete<Meal>(
         `${this.configService.getConfig().apiEndpoint}api/meal/${id}`,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
-        catchError(() => {
-          console.log('Unable to connect to database.');
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
