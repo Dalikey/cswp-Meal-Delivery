@@ -79,14 +79,15 @@
             </div>
           </div>
         </div><br>
-        <!-- restaurant -->
+        <!-- studentHouse -->
         <div class="row-5">
           <div class="form-group">
-            <label for="restaurant">Restaurant</label>
-            <div *ngIf="meal?.deliveryDate">
-              <select class="form-select move10left" id="restaurant" name="restaurant" [(ngModel)]="meal.restaurant"
-                #restaurant="ngModel">
-                <option *ngFor="let restaurant of restaurants" [value]="restaurant.username">{{restaurant.username}}
+            <label for="studentHouse">Restaurant</label>
+            <div *ngIf="meal">
+              <select class="form-select move10left" id="studentHouse" name="studentHouse"
+                [(ngModel)]="meal.studentHouse" #studentHouse="ngModel">
+                <option *ngFor="let studentHouse of studentHouses" [value]="studentHouse.id">
+                  {{studentHouse.streetAndNmr}}
                 </option>
               </select>
             </div>

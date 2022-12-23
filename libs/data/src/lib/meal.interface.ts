@@ -8,6 +8,7 @@ export interface MealInfo {
   deliveryTime: Date | undefined;
   deliveryDate: Date | undefined;
   restaurant: string | undefined;
+  studentHouseId: string | undefined;
   user?: User | undefined;
 }
 

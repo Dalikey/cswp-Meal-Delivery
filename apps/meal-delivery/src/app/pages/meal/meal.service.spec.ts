@@ -13,7 +13,7 @@ const expectedUserData: User = {
   emailAddress: 'user@host.com',
   isGraduated: false,
   phoneNumber: '0647442517',
-  roles: ["admin"],
+  roles: ['admin'],
   token: 'some.dummy.token',
 };
 
@@ -25,6 +25,7 @@ const expectedMeals: Meal[] = [
     deliveryTime: new Date(),
     deliveryDate: new Date(),
     restaurant: 'Avans restaurant',
+    studentHouse: 'Lovensdijkstraat 61',
     user: expectedUserData,
   },
 ];
@@ -65,6 +66,7 @@ describe('MealService', () => {
       deliveryTime: new Date(),
       deliveryDate: new Date(),
       restaurant: 'Avans restaurant',
+      studentHouse: 'Lovensdijkstraat 61',
     };
     service.addMeal(newMeal);
     done();
@@ -78,6 +80,7 @@ describe('MealService', () => {
       deliveryTime: new Date(),
       deliveryDate: new Date(),
       restaurant: 'Avans restaurant',
+      studentHouse: 'Lovensdijkstraat 61',
     };
     service.updateMeal(newMeal);
     done();

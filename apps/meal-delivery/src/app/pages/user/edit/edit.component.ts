@@ -31,7 +31,6 @@ export class EditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptionParams = this.route.paramMap
       .pipe(
-        tap(console.log),
         switchMap((params: ParamMap) => {
           this.componentId = params.get('id');
           if (!params.get('id')) {

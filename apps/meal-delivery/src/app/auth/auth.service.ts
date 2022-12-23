@@ -31,8 +31,6 @@ export class AuthService {
       .pipe(
         switchMap((user: UserInfo | undefined) => {
           if (user) {
-            console.log('User found in local storage');
-            console.log(user);
             this.currentUser$.next(user);
             return of(user);
           } else {
@@ -44,11 +42,6 @@ export class AuthService {
   }
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
-    console.log(
-      `login at ${
-        this.configService.getConfig().apiEndpoint
-      }auth-api/auth/login`
-    );
     return this.http
       .post<UserIdentity>(
         `${this.configService.getConfig().apiEndpoint}auth-api/auth/login`,
@@ -58,12 +51,9 @@ export class AuthService {
         }
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           const token = data.results.token;
           const id = data.results.id;
-          console.log('Authorization token: ' + token);
-          console.log('Authorization id: ' + id);
           localStorage.setItem(this.CURRENT_USERTOKEN, JSON.stringify(token));
           localStorage.setItem(this.CURRENT_USERID, JSON.stringify(id));
           this.currentUser$.next(token);
@@ -73,9 +63,7 @@ export class AuthService {
           return data;
         }),
         catchError((error) => {
-          console.log('error:', error);
-          console.log('error.message:', error.message);
-          console.log('error.error.message:', error.error.message);
+          console.log('Error message:', error.error.message);
           this.alertService.error(error.error.message || error.message);
           return of(undefined);
         })
@@ -83,12 +71,6 @@ export class AuthService {
   }
 
   register(userData: UserRegister): Observable<UserInfo | undefined> {
-    console.log(
-      `register at ${
-        this.configService.getConfig().apiEndpoint
-      }auth-api/auth/register`
-    );
-    console.log(userData);
     return this.http
       .post<UserInfo>(
         `${this.configService.getConfig().apiEndpoint}auth-api/auth/register`,
@@ -101,8 +83,6 @@ export class AuthService {
         map((data: any) => {
           const token = data.results.token;
           const id = data.results.id;
-          console.log('Authorization token: ' + token);
-          console.log('Authorization id: ' + id);
           localStorage.setItem(this.CURRENT_USERTOKEN, JSON.stringify(token));
           localStorage.setItem(this.CURRENT_USERID, JSON.stringify(id));
           this.currentUser$.next(token);
@@ -112,9 +92,7 @@ export class AuthService {
           return data;
         }),
         catchError((error) => {
-          console.log('error:', error);
-          console.log('error.message:', error.message);
-          console.log('error.error.message:', error.error.message);
+          console.log('Error message:', error.error.message);
           this.alertService.error(error.error.message || error.message);
           return of(undefined);
         })
@@ -156,7 +134,6 @@ export class AuthService {
   }
 
   userMayEdit(itemUserId: string): Observable<boolean> {
-    console.log('userMayEdit');
     return this.currentUserId$.pipe(
       map((userId: string | undefined) =>
         userId ? userId === itemUserId : false

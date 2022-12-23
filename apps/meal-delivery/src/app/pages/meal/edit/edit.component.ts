@@ -3,6 +3,8 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { catchError, Observable, of, Subscription, switchMap, tap } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
 import { Alert, AlertService } from '../../../shared/alert/alert.service';
+import { StudentHouse } from '../../studentHouse/studentHouse.model';
+import { StudentHouseService } from '../../studentHouse/studentHouse.service';
 import { User } from '../../user/user.model';
 import { UserService } from '../../user/user.service';
 import { Meal } from '../meal.model';
@@ -19,7 +21,7 @@ export class EditComponent implements OnInit, OnDestroy {
   meal: Meal | undefined;
   mealid!: number | undefined;
   debug = false;
-  restaurants: User[];
+  studentHouses: StudentHouse[];
 
   subscriptionOptions!: Subscription;
   subscriptionParams!: Subscription;
@@ -30,23 +32,22 @@ export class EditComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private mealService: MealService,
-    private userService: UserService,
+    private studentHouseService: StudentHouseService,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.subscriptionParams = this.route.paramMap
       .pipe(
-        tap(console.log),
         switchMap((params: ParamMap) => {
           this.componentId = params.get('id');
           if (!params.get('id')) {
             this.componentExists = false;
-            this.userService
-              .getAllUsers()
-              .subscribe((restaurants: User[] | null | undefined) => {
-                if (restaurants) {
-                  this.restaurants = restaurants;
+            this.studentHouseService
+              .getAllStudentHouses()
+              .subscribe((studentHouses: StudentHouse[] | null | undefined) => {
+                if (studentHouses) {
+                  this.studentHouses = studentHouses;
                 }
               });
             return of({
@@ -54,14 +55,15 @@ export class EditComponent implements OnInit, OnDestroy {
               price: 1,
               deliveryTime: new Date(),
               deliveryDate: new Date(),
+              studentHouse: '',
             } as Meal);
           } else {
             this.componentExists = true;
-            this.userService
-              .getAllUsers()
-              .subscribe((restaurants: User[] | null | undefined) => {
-                if (restaurants) {
-                  this.restaurants = restaurants;
+            this.studentHouseService
+              .getAllStudentHouses()
+              .subscribe((studentHouses: StudentHouse[] | null | undefined) => {
+                if (studentHouses) {
+                  this.studentHouses = studentHouses;
                 }
               });
             return this.mealService.getMealById(params.get('id')!);
