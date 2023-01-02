@@ -22,14 +22,8 @@ export class ProductService {
       'Content-Type': 'application/json',
     }),
   };
-  private token = this.authService.getAuthorizationToken();
 
   getAllProducts(): Observable<Product[] | null | undefined> {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
-    );
-
     return this.http
       .get<ApiResponse<Product[]>>(
         `${this.configService.getConfig().apiEndpoint}api/product`,
@@ -49,11 +43,6 @@ export class ProductService {
   }
 
   getProductById(id: string): Observable<Product | null | undefined> {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZXAiLCJpZCI6IjE4MTkyYzFiLTY1NTItNGRlMS1hMWM1LTQ0OTdmMDAyNDk2OCIsImlhdCI6MTY2OTYxODkxN30.YhZS0zdX-sHfcUu0QVzBQsyvWHwj9KLf1pTf4VBRFNE'
-    );
-
     return this.http
       .get<Product>(
         `${this.configService.getConfig().apiEndpoint}api/product/${id}`,
@@ -73,11 +62,6 @@ export class ProductService {
   }
 
   addProduct(newProduct: Product) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-
     return this.http
       .post<Product>(
         `${this.configService.getConfig().apiEndpoint}api/product`,
@@ -98,11 +82,6 @@ export class ProductService {
   }
 
   updateProduct(updatedProduct: Product) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-
     return this.http
       .put<Product>(
         `${this.configService.getConfig().apiEndpoint}api/product/${
@@ -125,11 +104,6 @@ export class ProductService {
   }
 
   deleteProduct(id: string) {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      this.token!
-    );
-
     return this.http
       .delete<Product>(
         `${this.configService.getConfig().apiEndpoint}api/product/${id}`,

@@ -1,3 +1,13 @@
 .move20up {
   margin-top: -20px;
 }
+
+.minHe750 {
+  min-height: 750px;
+}
+
+.json {
+  overflow-y: scroll;
+  max-height: 300px;
+  min-width: 400px;
+}

@@ -36,8 +36,8 @@ p {
   max-width: 77%;
 }
 
-.container {
-  max-width: 900px;
+.list {
+  max-width: 59vw;
 }
 
 .container-fluid {
@@ -53,7 +53,7 @@ p {
 }
 
 .mb240 {
-  margin-bottom: 240px;
+  margin-bottom: 16vw;
 }
 
 .card {
@@ -149,10 +149,6 @@ a:visited:hover {
 
 .move70down {
   margin-top: 70px;
-}
-
-.move150down {
-  margin-top: 150px;
 }
 
 .move20right {

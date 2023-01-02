@@ -41,7 +41,7 @@ import { ModalConfirmYesNoComponent } from './auth/modal/modal.confirm-yes-no.co
 import { ModalLeaveYesNoComponent } from './auth/modal/modal.leave-yes-no.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from './shared/alert/alert.component';
-
+import { httpInterceptorProviders } from './token.interceptor';
 registerLocaleData(localeNl, 'nl');
 
 @NgModule({
@@ -90,6 +90,7 @@ registerLocaleData(localeNl, 'nl');
     { provide: LOCALE_ID, useValue: 'nl' },
     LoggedInAuthGuard,
     SaveEditedWorkGuard,
+    httpInterceptorProviders,
   ],
   bootstrap: [AppComponent],
 })

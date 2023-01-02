@@ -46,14 +46,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.authService
         .login(this.formData)
         .subscribe((user: UserIdentity | undefined) => {
-          console.log('User: ' + user);
-
           if (user) {
             console.log('Logged in');
             this.router.navigate(['/']);
           } else {
             this.alertService.error('Het ingevoerde wachtwoord is onjuist.');
-            console.error('Invalid data');
           }
         });
     }

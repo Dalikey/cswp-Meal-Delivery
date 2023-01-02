@@ -28,7 +28,7 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(TokenMiddleware)
-      .exclude({ path: 'api', method: RequestMethod.GET })
+      .exclude({ path: 'api/(.*)', method: RequestMethod.GET })
       .forRoutes('api');
   }
 }
