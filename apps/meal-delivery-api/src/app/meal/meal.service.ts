@@ -4,12 +4,18 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Meal, MealInfo, ResourceId } from '@md/data';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../user/user.schema';
+import {
+  StudentHouse,
+  StudentHouseDocument,
+} from '../studentHouse/studentHouse.schema';
 
 @Injectable()
 export class MealService {
   constructor(
     @InjectModel(MealModel.name) private mealModel: Model<MealDocument>,
-    @InjectModel(User.name) private userModel: Model<UserDocument>
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(StudentHouse.name)
+    private studentHouseModel: Model<StudentHouseDocument>
   ) {}
 
   async createMeal(mealInfo: MealInfo, ownerId: string): Promise<ResourceId> {
@@ -17,6 +23,9 @@ export class MealService {
     if (!owner) {
       throw new HttpException('Owner not found', HttpStatus.BAD_REQUEST);
     }
+    const studentHouse = await this.studentHouseModel.findOne({
+      id: mealInfo.studentHouseId,
+    });
     const meal = new this.mealModel({
       id: mealInfo.id,
       name: mealInfo.name,
@@ -24,6 +33,7 @@ export class MealService {
       deliveryTime: mealInfo.deliveryTime,
       deliveryDate: mealInfo.deliveryDate,
       owner: { id: owner.id, name: owner.username },
+      studentHouse: studentHouse,
     });
     await meal.save();
     return meal.id;
@@ -48,16 +58,16 @@ export class MealService {
   async updateMeal(
     mealId: string,
     mealInfo: MealInfo,
-    restaurantId: string
+    ownerId: string
   ): Promise<MealInfo> {
     const meal = await this.mealModel.findOne({ id: mealId });
-    const restaurant = await this.userModel.findOne({ id: restaurantId });
+    const owner = await this.userModel.findOne({ id: ownerId });
 
-    if (!restaurant) {
-      throw new HttpException('Restaurant not found', HttpStatus.BAD_REQUEST);
+    if (!owner) {
+      throw new HttpException('Owner not found', HttpStatus.BAD_REQUEST);
     }
 
-    if (restaurant.username !== mealInfo.restaurant) {
+    if (owner.username !== mealInfo.owner) {
       throw new HttpException(
         'You are not the owner of this meal.',
         HttpStatus.BAD_REQUEST
@@ -74,7 +84,7 @@ export class MealService {
               price: mealInfo.price,
               deliveryTime: mealInfo.deliveryTime,
               deliveryDate: mealInfo.deliveryDate,
-              restaurant: { id: restaurant.id, name: mealInfo.restaurant },
+              owner: { id: owner.id, name: mealInfo.owner },
             },
           },
         ]);

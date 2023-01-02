@@ -43,7 +43,7 @@ export class ProductService {
   async updateProduct(
     productId: string,
     productInfo: ProductInfo,
-    restaurantId: string
+    ownerId: string
   ): Promise<ProductInfo> {
     const product = await this.productModel.findOne({ id: productId });
 

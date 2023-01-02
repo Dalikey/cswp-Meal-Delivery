@@ -82,48 +82,56 @@
         <!-- studentHouse -->
         <div class="row-5">
           <div class="form-group">
-            <label for="studentHouse">Restaurant</label>
+            <label for="studentHouse">Studentenhuis</label>
             <div *ngIf="meal">
               <select class="form-select move10left" id="studentHouse" name="studentHouse"
-                [(ngModel)]="meal.studentHouse" #studentHouse="ngModel">
+                [(ngModel)]="meal.studentHouseId" #studentHouseId="ngModel" required>
                 <option *ngFor="let studentHouse of studentHouses" [value]="studentHouse.id">
                   {{studentHouse.streetAndNmr}}
                 </option>
               </select>
+              <div *ngIf="studentHouseId.invalid && studentHouseId.touched" class="invalid-feedback">
+                <div *ngIf="studentHouseId.errors!['required']">
+                  Studentenhuis is verplicht
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <!-- Submit en Cancel buttons -->
+        <div class="row-5">
+          <div *ngIf="!componentExists" class="col">
+            <button type="submit" class="btn btn-primary mx-2 my-4" [disabled]="!mealEditForm.valid">
+              <div *ngIf="componentExists && meal">
+                Maaltijd bewerken
+              </div>
+              <div *ngIf="!componentExists">
+                Maaltijd toevoegen
+              </div>
+            </button>
+            <button type="button" class="btn btn-warning mx-2" routerLink="/meal">Annuleren</button>
+          </div>
+          <div *ngIf="componentExists && meal" class="col">
+            <button type="submit" class="btn btn-primary mx-2 my-4" [disabled]="!mealEditForm.valid">
+              <!-- <div *ngIf="componentExists && meal && authService.userMayEdit(meal.ownerId) | async"> -->
+              <div *ngIf="componentExists && meal">
+                Maaltijd bewerken
+              </div>
+              <div *ngIf="!componentExists">
+                Maaltijd toevoegen
+              </div>
+            </button>
+            <button type="button" class="btn btn-warning mx-2" routerLink="/meal">Annuleren</button>
+          </div>
+        </div>
       </div>
-      <div class="col-5">
+      <div *ngIf="componentExists" class="col-5">
+        <pre class="json">{{ meal | json }}</pre>
+      </div>
+      <div *ngIf="!componentExists" class="col-5">
         <pre>{{ meal | json }}</pre>
       </div>
-    </div><br>
 
-    <!-- Submit en Cancel buttons -->
-    <div class="row">
-      <div *ngIf="!componentExists" class="col">
-        <button type="submit" class="btn btn-primary mx-2" [disabled]="!mealEditForm.valid">
-          <div *ngIf="componentExists && meal">
-            Maaltijd bewerken
-          </div>
-          <div *ngIf="!componentExists">
-            Maaltijd toevoegen
-          </div>
-        </button>
-        <button type="button" class="btn btn-warning mx-2" routerLink="/meal">Annuleren</button>
-      </div>
-      <div *ngIf="componentExists && meal" class="col move20up minHe300">
-        <button type="submit" class="btn btn-primary mx-2" [disabled]="!mealEditForm.valid">
-          <!-- <div *ngIf="componentExists && meal && authService.userMayEdit(meal.restaurantId) | async"> -->
-          <div *ngIf="componentExists && meal">
-            Maaltijd bewerken
-          </div>
-          <div *ngIf="!componentExists">
-            Maaltijd toevoegen
-          </div>
-        </button>
-        <button type="button" class="btn btn-warning mx-2" routerLink="/meal">Annuleren</button>
-      </div>
-    </div>
+    </div><br>
   </form>
 </div>

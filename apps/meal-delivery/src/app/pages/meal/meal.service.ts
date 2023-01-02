@@ -32,6 +32,7 @@ export class MealService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -50,6 +51,7 @@ export class MealService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -62,12 +64,12 @@ export class MealService {
   }
 
   addMeal(newMeal: Meal) {
-    // const userId = this.authService.getCurrentUserId();
-    // if (userId) {
-    //   this.userService.getUserById(userId).subscribe((data) => {
-    //     newMeal.restaurant = data?.username;
-    //   });
-    // }
+    const userId = this.authService.getCurrentUserId();
+    if (userId) {
+      this.userService.getUserById(userId).subscribe((data) => {
+        newMeal.owner = data?.username;
+      });
+    }
 
     return this.http
       .post<Meal>(
@@ -76,6 +78,7 @@ export class MealService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -97,6 +100,7 @@ export class MealService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -115,6 +119,7 @@ export class MealService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),

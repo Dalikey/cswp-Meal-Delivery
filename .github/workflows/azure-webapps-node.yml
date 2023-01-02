@@ -3,17 +3,15 @@
 #     branches: ['main']
 #   workflow_dispatch:
 
-# env:         !!!!!!!!!!!!  You've used 90% of included services for GitHub Actions    !!!!!!!!!!!!
+# env:
 #   AZURE_WEBAPP_NAME: meal-delivery-api
 #   AZURE_WEBAPP_PACKAGE_PATH: '.'
 #   NODE_VERSION: '18.x'
 
-# permissions:      -------------Railway is 10000x beter dan Azure en Netlify is <3-------------
-#   contents: read           ---  https://meal-delivery-api.up.railway.app/   ---
-#                            ---  https://meal-delivery.netlify.app/dashboard ---
-#                   -------------Railway is 10000x beter dan Azure en Netlify is <3-------------
+# permissions:
+#   contents: read
 
-# jobs:       !!!!!!!!!!!!  You've used 90% of included services for GitHub Actions    !!!!!!!!!!!!
+# jobs:
 #   build:
 #     runs-on: ubuntu-latest
 #     steps:

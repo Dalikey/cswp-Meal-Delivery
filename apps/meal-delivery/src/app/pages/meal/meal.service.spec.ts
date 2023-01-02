@@ -24,8 +24,9 @@ const expectedMeals: Meal[] = [
     price: 10.2,
     deliveryTime: new Date(),
     deliveryDate: new Date(),
-    restaurant: 'Avans restaurant',
-    studentHouse: 'Lovensdijkstraat 61',
+    owner: 'Avans eigenaar',
+    studentHouseId: '960c415d-2895-4d41-ae4b-53c44248f105',
+
     user: expectedUserData,
   },
 ];
@@ -65,8 +66,8 @@ describe('MealService', () => {
       price: 10.2,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
-      restaurant: 'Avans restaurant',
-      studentHouse: 'Lovensdijkstraat 61',
+      owner: 'Avans eigenaar',
+      studentHouseId: '960c415d-2895-4d41-ae4b-53c44248f105',
     };
     service.addMeal(newMeal);
     done();
@@ -79,8 +80,8 @@ describe('MealService', () => {
       price: 10.2,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
-      restaurant: 'Avans restaurant',
-      studentHouse: 'Lovensdijkstraat 61',
+      owner: 'Avans eigenaar',
+      studentHouseId: '960c415d-2895-4d41-ae4b-53c44248f105',
     };
     service.updateMeal(newMeal);
     done();

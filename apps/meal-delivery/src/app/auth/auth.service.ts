@@ -51,6 +51,7 @@ export class AuthService {
         }
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           const token = data.results.token;
           const id = data.results.id;
@@ -80,6 +81,7 @@ export class AuthService {
         }
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           const token = data.results.token;
           const id = data.results.id;

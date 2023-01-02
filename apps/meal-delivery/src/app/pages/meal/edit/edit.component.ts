@@ -55,7 +55,7 @@ export class EditComponent implements OnInit, OnDestroy {
               price: 1,
               deliveryTime: new Date(),
               deliveryDate: new Date(),
-              studentHouse: '',
+              studentHouseId: '',
             } as Meal);
           } else {
             this.componentExists = true;

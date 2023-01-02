@@ -20,7 +20,7 @@ export class Meal {
   owner: UserIdentity;
   // user: UserIdentity;
 
-  @Prop({ required: true, type: { id: String, streetAndNmr: String } })
+  @Prop({ required: true })
   studentHouse: StudentHouse;
 
   // @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User' }) deliverer: User;
@@ -29,7 +29,7 @@ export class Meal {
   @Prop({ type: [], default: [] }) products: Product[];
 
   @Prop({
-    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User', unique: true }],
+    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User' }],
     default: [],
   })
   students: User[];

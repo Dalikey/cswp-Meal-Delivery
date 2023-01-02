@@ -30,6 +30,7 @@ export class UserService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -48,6 +49,7 @@ export class UserService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -67,6 +69,7 @@ export class UserService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -88,6 +91,7 @@ export class UserService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -108,6 +112,7 @@ export class UserService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),

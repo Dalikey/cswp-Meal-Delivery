@@ -30,6 +30,7 @@ export class ProductService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -48,6 +49,7 @@ export class ProductService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -67,6 +69,7 @@ export class ProductService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -88,6 +91,7 @@ export class ProductService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
@@ -106,6 +110,7 @@ export class ProductService {
         this.httpOptions
       )
       .pipe(
+        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
