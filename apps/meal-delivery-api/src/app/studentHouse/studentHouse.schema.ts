@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 import { v4 as uuid } from 'uuid';
 import { User } from '../user/user.schema';
 
@@ -12,10 +12,7 @@ export class StudentHouse {
   @Prop({ type: String, required: false }) city: string;
   @Prop({ type: String, required: false }) postcode: string;
 
-  @Prop({
-    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User' }],
-    default: [],
-  })
+  @Prop({ type: [], default: [] })
   students: User[];
 }
 

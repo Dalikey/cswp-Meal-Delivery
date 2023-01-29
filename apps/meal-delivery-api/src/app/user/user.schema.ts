@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 import { v4 as uuid } from 'uuid';
 import { Meal } from '../meal/meal.schema';
 import { StudentHouse } from '../studentHouse/studentHouse.schema';
@@ -15,19 +15,13 @@ export class User {
   @Prop({ type: String, required: false }) phoneNumber: string;
   @Prop({ type: Array, required: true, default: [] }) roles: string[];
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'StudentHouse' })
+  @Prop({ required: false })
   studentHouse: StudentHouse;
 
-  @Prop({
-    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Meal', unique: true }],
-    default: [],
-  })
+  @Prop({ type: [], default: [], unique: true })
   meals: Meal[];
 
-  @Prop({
-    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User', unique: true }],
-    default: [],
-  })
+  @Prop({ type: [], default: [], unique: true })
   friends: User[];
 }
 
