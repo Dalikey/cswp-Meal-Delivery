@@ -3,7 +3,6 @@ export class User {
   username: string | undefined;
   emailAddress: string | undefined;
   isGraduated: boolean | undefined;
-  phoneNumber: string | undefined;
-  roles: string[] | undefined;
+  role: string | undefined;
   token: string | undefined;
 }

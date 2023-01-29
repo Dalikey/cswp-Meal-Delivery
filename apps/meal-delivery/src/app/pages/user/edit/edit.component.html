@@ -49,26 +49,6 @@
             </div>
           </div>
         </div><br>
-        <!-- phonenumber -->
-        <div class="row-5 move5down">
-          <div class="form-group">
-            <label for="phonenumber">Telefoonnummer</label>
-            <div *ngIf="user?.phoneNumber">
-              <input type="text" id="phonenumber" name="phonenumber" class="form-control"
-                [(ngModel)]="user!.phoneNumber" #phonenumber="ngModel" minlength="10" maxlength="10" required [ngClass]="{
-                          'is-invalid': phonenumber.invalid && phonenumber.touched
-                      }" />
-              <div *ngIf="phonenumber.invalid && phonenumber.touched" class="invalid-feedback">
-                <div *ngIf="phonenumber.errors!['required']">
-                  Telefoonnummer is verplicht
-                </div>
-                <div *ngIf="phonenumber.errors!['minlength']">
-                  De Telefoonnummer moet 10 karakters lang zijn.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div><br>
         <!-- isgraduated -->
         <div class="row-5">
           <div class="form-check">

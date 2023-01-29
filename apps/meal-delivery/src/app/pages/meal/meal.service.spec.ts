@@ -12,8 +12,7 @@ const expectedUserData: User = {
   username: 'Gebruikersnaam',
   emailAddress: 'user@host.com',
   isGraduated: false,
-  phoneNumber: '0647442517',
-  roles: ['admin'],
+  role: 'owner',
   token: 'some.dummy.token',
 };
 

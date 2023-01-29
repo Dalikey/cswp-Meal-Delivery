@@ -48,10 +48,9 @@ export class AuthService {
     return jwt_decode(token);
   }
 
-  checkIsAdmin(token: string): boolean {
+  checkIsOwner(token: string): boolean {
     const user = this.decodeJwtToken(token) as any;
-
-    return user.role === 'admin';
+    return user.role === 'owner';
   }
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
@@ -66,7 +65,7 @@ export class AuthService {
       .pipe(
         tap(console.log),
         map((data: any) => {
-          localStorage.setItem(this.CURRENT_USER, JSON.stringify(data));
+          localStorage.setItem(this.CURRENT_USER, JSON.stringify(data.results));
           this.currentUser$.next(data);
           this.alertService.success('Je bent ingelogd');
           return data;
@@ -91,7 +90,7 @@ export class AuthService {
       .pipe(
         tap(console.log),
         map((data: any) => {
-          localStorage.setItem(this.CURRENT_USER, JSON.stringify(data));
+          localStorage.setItem(this.CURRENT_USER, JSON.stringify(data.results));
           this.currentUser$.next(data);
           this.alertService.success('Je bent geregistreerd');
           return data;

@@ -58,16 +58,14 @@ describe('AuthService', () => {
         username: 'mario',
         emailAddress: 'mario@mario.nl',
         isGraduated: false,
-        phoneNumber: '0639558161',
-        roles: ['user'],
+        role: 'student',
       };
 
       await service.createUser(
         exampleUser.username,
         exampleUser.emailAddress,
         exampleUser.isGraduated,
-        exampleUser.phoneNumber,
-        exampleUser.roles
+        exampleUser.role
       );
 
       const found = await mongoc
