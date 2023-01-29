@@ -8,9 +8,7 @@ import {
   Param,
   Put,
 } from '@nestjs/common';
-
 import { UserService } from './user.service';
-
 import { UserInfo, User } from '@md/data';
 import { InjectToken, Token } from '../auth/token.decorator';
 

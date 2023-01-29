@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserIdentity } from '@md/data';
+import { IToken, UserIdentity } from '@md/data';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../auth/auth.service';
@@ -11,7 +11,7 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class DashboardComponent implements OnInit {
   apiUrl = '';
-  loggedInUser$!: Observable<UserIdentity | undefined>;
+  loggedInUser$!: Observable<IToken | undefined>;
 
   constructor(private authService: AuthService) {}
 

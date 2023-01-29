@@ -8,7 +8,12 @@ export interface UserIdentity {
 export interface UserInfo extends UserIdentity {
   emailAddress: string;
   isGraduated: boolean;
-  phoneNumber: string;
+  token: string;
+}
+
+export interface IToken {
+  id: Id;
+  emailAddress: string;
   token: string;
 }
 
@@ -22,8 +27,7 @@ export interface UserRegister {
   password: string;
   emailAddress: string;
   isGraduated: boolean;
-  phoneNumber: string;
-  roles: string[];
+  role: string;
 }
 
 export interface User extends UserInfo {}

@@ -42,7 +42,6 @@ describe('AuthController', () => {
         password: 'secret1',
         emailAddress: 'bastiaan@hotmail.com',
         isGraduated: false,
-        phoneNumber: '0639558161',
       };
       exampleId = 'c816750b-3290-4223-bb38-0d34e23d7757';
 

@@ -3,7 +3,7 @@ import { CanActivate, CanActivateChild, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserInfo } from '@md/data';
+import { IToken, UserInfo } from '@md/data';
 import { AuthService } from './auth.service';
 import { ModalLeaveYesNoComponent } from './modal/modal.leave-yes-no.component';
 
@@ -14,9 +14,37 @@ export class LoggedInAuthGuard implements CanActivate, CanActivateChild {
 
   canActivate(): Observable<boolean> {
     return this.authService.currentUser$.pipe(
-      map((user: UserInfo | undefined) => {
+      map((user: IToken | undefined) => {
         if (user) {
           return true;
+        } else {
+          this.router.navigate(['login']);
+          return false;
+        }
+      })
+    );
+  }
+
+  canActivateChild(): Observable<boolean> | Promise<boolean> | boolean {
+    return this.canActivate();
+  }
+}
+
+@Injectable()
+export class OwnerGuard implements CanActivate, CanActivateChild {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canActivate(): Observable<boolean> {
+    return this.authService.currentUser$.pipe(
+      map((user: IToken | undefined) => {
+        if (user) {
+          let loggedIn = this.authService.decodeJwtToken(user.token) as any;
+          if (loggedIn.role === 'owner') {
+            return true;
+          } else {
+            this.router.navigate(['/']);
+            return false;
+          }
         } else {
           this.router.navigate(['login']);
           return false;

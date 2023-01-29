@@ -33,13 +33,13 @@ export class AuthController {
           credentials.username,
           credentials.emailAddress,
           credentials.isGraduated,
-          credentials.phoneNumber,
-          credentials.roles
+          credentials.role
         ),
       };
     } catch (e) {
       throw new HttpException(
-        'Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.',
+        'Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.' +
+          e,
         HttpStatus.BAD_REQUEST
       );
     }

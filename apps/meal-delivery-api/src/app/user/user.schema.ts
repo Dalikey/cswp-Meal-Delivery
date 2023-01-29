@@ -12,22 +12,16 @@ export class User {
   @Prop({ type: String, required: true, unique: true }) username: string;
   @Prop({ type: String, required: true }) emailAddress: string;
   @Prop({ type: Boolean, required: true, default: false }) isGraduated: boolean;
-  @Prop({ type: String, required: false }) phoneNumber: string;
-  @Prop({ type: Array, required: true, default: [] }) roles: string[];
+  @Prop({ type: String, required: true }) role: string;
 
+  // To prevent studentHouse.streetAndNmr: null for the thousands of times. I tried everything but nothing works.
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'StudentHouse' })
   studentHouse: StudentHouse;
 
-  @Prop({
-    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Meal', unique: true }],
-    default: [],
-  })
+  @Prop({ type: [], default: [], unique: true })
   meals: Meal[];
 
-  @Prop({
-    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User', unique: true }],
-    default: [],
-  })
+  @Prop({ type: [], default: [], unique: true })
   friends: User[];
 }
 

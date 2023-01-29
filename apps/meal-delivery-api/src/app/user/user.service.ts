@@ -53,7 +53,6 @@ export class UserService {
               emailAddress: userInfo.emailAddress,
               username: userInfo.username,
               isGraduated: userInfo.isGraduated,
-              phoneNumber: userInfo.phoneNumber,
             },
           },
         ]);
