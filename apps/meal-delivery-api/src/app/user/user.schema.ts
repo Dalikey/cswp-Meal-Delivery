@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { v4 as uuid } from 'uuid';
 import { Meal } from '../meal/meal.schema';
 import { StudentHouse } from '../studentHouse/studentHouse.schema';
@@ -15,7 +15,8 @@ export class User {
   @Prop({ type: String, required: false }) phoneNumber: string;
   @Prop({ type: Array, required: true, default: [] }) roles: string[];
 
-  @Prop({ type: StudentHouse, required: false })
+  // To prevent studentHouse.streetAndNmr: null for the thousands of times. I tried everything but nothing works.
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'StudentHouse' })
   studentHouse: StudentHouse;
 
   @Prop({ type: [], default: [], unique: true })

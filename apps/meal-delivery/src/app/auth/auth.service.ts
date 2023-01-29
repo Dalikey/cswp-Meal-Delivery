@@ -1,6 +1,13 @@
+import jwt_decode from 'jwt-decode';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { UserIdentity, UserInfo, UserLogin, UserRegister } from '@md/data';
+import {
+  IToken,
+  UserIdentity,
+  UserInfo,
+  UserLogin,
+  UserRegister,
+} from '@md/data';
 import { Router } from '@angular/router';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -11,12 +18,8 @@ import { AlertService } from './../shared/alert/alert.service';
   providedIn: 'root',
 })
 export class AuthService {
-  public currentUser$ = new BehaviorSubject<UserInfo | undefined>(undefined);
-  public currentUserToken$ = new BehaviorSubject<string | undefined>(undefined);
-  public currentUserId$ = new BehaviorSubject<string | undefined>(undefined);
+  public currentUser$ = new BehaviorSubject<IToken | undefined>(undefined);
   private readonly CURRENT_USER = 'currentuser';
-  private readonly CURRENT_USERTOKEN = 'currentusertoken';
-  private readonly CURRENT_USERID = 'currentuserid';
   private readonly headers = new HttpHeaders({
     'Content-Type': 'application/json',
   });
@@ -29,7 +32,7 @@ export class AuthService {
   ) {
     this.getUserFromLocalStorage()
       .pipe(
-        switchMap((user: UserInfo | undefined) => {
+        switchMap((user: IToken | undefined) => {
           if (user) {
             this.currentUser$.next(user);
             return of(user);
@@ -39,6 +42,16 @@ export class AuthService {
         })
       )
       .subscribe();
+  }
+
+  decodeJwtToken(token: string) {
+    return jwt_decode(token);
+  }
+
+  checkIsAdmin(token: string): boolean {
+    const user = this.decodeJwtToken(token) as any;
+
+    return user.role === 'admin';
   }
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
@@ -53,13 +66,8 @@ export class AuthService {
       .pipe(
         tap(console.log),
         map((data: any) => {
-          const token = data.results.token;
-          const id = data.results.id;
-          localStorage.setItem(this.CURRENT_USERTOKEN, JSON.stringify(token));
-          localStorage.setItem(this.CURRENT_USERID, JSON.stringify(id));
-          this.currentUser$.next(token);
-          this.currentUserToken$.next(token);
-          this.currentUserId$.next(id);
+          localStorage.setItem(this.CURRENT_USER, JSON.stringify(data));
+          this.currentUser$.next(data);
           this.alertService.success('Je bent ingelogd');
           return data;
         }),
@@ -83,13 +91,8 @@ export class AuthService {
       .pipe(
         tap(console.log),
         map((data: any) => {
-          const token = data.results.token;
-          const id = data.results.id;
-          localStorage.setItem(this.CURRENT_USERTOKEN, JSON.stringify(token));
-          localStorage.setItem(this.CURRENT_USERID, JSON.stringify(id));
-          this.currentUser$.next(token);
-          this.currentUserToken$.next(token);
-          this.currentUserId$.next(id);
+          localStorage.setItem(this.CURRENT_USER, JSON.stringify(data));
+          this.currentUser$.next(data);
           this.alertService.success('Je bent geregistreerd');
           return data;
         }),
@@ -108,37 +111,30 @@ export class AuthService {
         if (success) {
           console.log('logout - removing local user info');
           localStorage.removeItem(this.CURRENT_USER);
-          localStorage.removeItem(this.CURRENT_USERTOKEN);
-          localStorage.removeItem(this.CURRENT_USERID);
           this.currentUser$.next(undefined);
           this.alertService.success('Je bent uitgelogd.');
         } else {
           console.log('navigate result:', success);
         }
       })
-      .catch((error) => console.log('not logged out!'));
+      .catch((error) => console.log('Error message:', error.error.message));
   }
 
   getUserFromLocalStorage(): Observable<UserInfo | undefined> {
     const user = localStorage.getItem(this.CURRENT_USER);
-    const userToken = localStorage.getItem(this.CURRENT_USERTOKEN);
-    const userId = localStorage.getItem(this.CURRENT_USERID);
 
     if (user) {
       const localUser = JSON.parse(user);
       return of(localUser);
-    } else if (userToken) {
-      const localUserToken = JSON.parse(userToken);
-      return of(localUserToken);
     } else {
       return of(undefined);
     }
   }
 
   userMayEdit(itemUserId: string): Observable<boolean> {
-    return this.currentUserId$.pipe(
-      map((userId: string | undefined) =>
-        userId ? userId === itemUserId : false
+    return this.currentUser$.pipe(
+      map((data: IToken | undefined) =>
+        data?.id ? data.id === itemUserId : false
       )
     );
   }
@@ -146,19 +142,17 @@ export class AuthService {
   getAuthorizationToken(): string | undefined {
     const user = localStorage.getItem(this.CURRENT_USER);
     if (user) {
-      return user!.replace(/['"]+/g, '');
-    }
-    const token = localStorage.getItem(this.CURRENT_USERTOKEN);
-    if (token) {
-      return token!.replace(/['"]+/g, '');
+      const localUser = JSON.parse(user);
+      return localUser.token;
     }
     return undefined;
   }
 
   getCurrentUserId(): string | undefined {
-    const token = localStorage.getItem(this.CURRENT_USERID);
-    if (token) {
-      return token!.replace(/['"]+/g, '');
+    const user = localStorage.getItem(this.CURRENT_USER);
+    if (user) {
+      const localUser = JSON.parse(user);
+      return localUser.id;
     }
     return undefined;
   }

@@ -12,6 +12,12 @@ export interface UserInfo extends UserIdentity {
   token: string;
 }
 
+export interface IToken {
+  id: Id;
+  emailAddress: string;
+  token: string;
+}
+
 export interface UserLogin {
   username: string;
   password: string;

@@ -3,7 +3,10 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { v4 as uuid } from 'uuid';
 import { Product } from '../product/product.schema';
-import { StudentHouse } from '../studentHouse/studentHouse.schema';
+import {
+  StudentHouse,
+  StudentHouseSchema,
+} from '../studentHouse/studentHouse.schema';
 import { User } from '../user/user.schema';
 
 export type MealDocument = HydratedDocument<Meal>;
@@ -19,7 +22,7 @@ export class Meal {
   @Prop({ type: { id: String, name: String }, required: true })
   owner: UserIdentity;
 
-  @Prop({ type: StudentHouse, required: true })
+  @Prop({ type: StudentHouseSchema })
   studentHouse: StudentHouse;
 
   @Prop({ type: [], default: [] })

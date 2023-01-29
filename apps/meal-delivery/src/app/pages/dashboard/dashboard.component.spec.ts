@@ -7,7 +7,7 @@ import { jest } from '@jest/globals';
 
 import { DashboardComponent } from './dashboard.component';
 import { of } from 'rxjs';
-import { UserInfo, UserLogin } from '@md/data';
+import { UserInfo } from '@md/data';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;

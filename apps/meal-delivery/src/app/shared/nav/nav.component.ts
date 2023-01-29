@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserInfo } from '@md/data';
+import { IToken, UserInfo } from '@md/data';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { AuthService } from '../../auth/auth.service';
 export class NavComponent implements OnInit {
   @Input() title!: string;
   isNavbarCollapsed = true;
-  loggedInUser$!: Observable<UserInfo | undefined>;
+  loggedInUser$!: Observable<IToken | undefined>;
 
   constructor(private authService: AuthService) {}
 

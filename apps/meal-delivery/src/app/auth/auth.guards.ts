@@ -3,7 +3,7 @@ import { CanActivate, CanActivateChild, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserInfo } from '@md/data';
+import { IToken, UserInfo } from '@md/data';
 import { AuthService } from './auth.service';
 import { ModalLeaveYesNoComponent } from './modal/modal.leave-yes-no.component';
 
@@ -14,7 +14,7 @@ export class LoggedInAuthGuard implements CanActivate, CanActivateChild {
 
   canActivate(): Observable<boolean> {
     return this.authService.currentUser$.pipe(
-      map((user: UserInfo | undefined) => {
+      map((user: IToken | undefined) => {
         if (user) {
           return true;
         } else {
