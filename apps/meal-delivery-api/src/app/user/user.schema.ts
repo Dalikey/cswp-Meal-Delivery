@@ -15,7 +15,7 @@ export class User {
   @Prop({ type: String, required: false }) phoneNumber: string;
   @Prop({ type: Array, required: true, default: [] }) roles: string[];
 
-  @Prop({ required: false })
+  @Prop({ type: StudentHouse, required: false })
   studentHouse: StudentHouse;
 
   @Prop({ type: [], default: [], unique: true })

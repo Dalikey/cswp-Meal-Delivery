@@ -8,7 +8,8 @@ export type StudentHouseDocument = HydratedDocument<StudentHouse>;
 @Schema()
 export class StudentHouse {
   @Prop({ type: String, default: uuid, index: true }) id: string;
-  @Prop({ type: String, required: true, unique: true }) streetAndNmr: string;
+  @Prop({ type: String, required: true, default: '', unique: true })
+  streetAndNmr: string;
   @Prop({ type: String, required: false }) city: string;
   @Prop({ type: String, required: false }) postcode: string;
 

@@ -83,7 +83,7 @@ describe('AuthService', () => {
     it('should accept a valid token', async () => {
       const examplePayload = { user: 'userid' };
 
-      const token = sign(examplePayload, process.env.JWT_SECRET!);
+      const token = sign(examplePayload, `${process.env.JWT_SECRET}`);
 
       const verifiedToken = await service.verifyToken(token);
 
@@ -100,8 +100,8 @@ describe('AuthService', () => {
   describe('generate token', () => {
     it('should generate a token with user id', async () => {
       const exampleUser = {
-        username: 'dion',
-        password: 'ditisnietmijnwachtwoord',
+        username: 'testuser',
+        password: 'secret1',
       };
 
       await mongoc
@@ -111,12 +111,12 @@ describe('AuthService', () => {
           username: exampleUser.username,
           hash: hashSync(
             exampleUser.password,
-            parseInt(process.env.SALT_ROUNDS!, 10)
+            parseInt(`${process.env.SALT_ROUNDS}`, 10)
           ),
         });
       await mongoc.db('test').collection('users').insertOne({
         name: exampleUser.username,
-        id: 'id1234',
+        id: 'id12345',
       });
 
       const token = await service.generateToken(
@@ -143,7 +143,7 @@ describe('AuthService', () => {
           username: exampleUser.username,
           hash: hashSync(
             exampleUser.password,
-            parseInt(process.env.SALT_ROUNDS!, 10)
+            parseInt(`${process.env.SALT_ROUNDS}`, 10)
           ),
         });
 

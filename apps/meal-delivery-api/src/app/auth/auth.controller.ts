@@ -39,7 +39,7 @@ export class AuthController {
       };
     } catch (e) {
       throw new HttpException(
-        'Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.',
+        'Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.' + e,
         HttpStatus.BAD_REQUEST
       );
     }

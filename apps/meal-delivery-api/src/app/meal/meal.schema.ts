@@ -16,10 +16,10 @@ export class Meal {
   @Prop({ type: Date, required: true, default: new Date() }) deliveryTime: Date;
   @Prop({ type: Date, required: true, default: new Date() }) deliveryDate: Date;
 
-  @Prop({ required: true, type: { id: String, name: String } })
+  @Prop({ type: { id: String, name: String }, required: true })
   owner: UserIdentity;
 
-  @Prop({ required: true })
+  @Prop({ type: StudentHouse, required: true })
   studentHouse: StudentHouse;
 
   @Prop({ type: [], default: [] })
