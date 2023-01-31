@@ -110,4 +110,13 @@ export class MealService {
       throw new HttpException('Meal does not exist', HttpStatus.BAD_REQUEST);
     }
   }
+
+  // async addMealToUser(mealId: string) {
+  //   const meal = await this.getOne(mealId);
+  //   if (meal) {
+  //     await this.mealModel.addToUser({ id: mealId });
+  //   } else {
+  //     throw new HttpException('Meal does not exist', HttpStatus.BAD_REQUEST);
+  //   }
+  // }
 }

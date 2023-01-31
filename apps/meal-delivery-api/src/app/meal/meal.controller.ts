@@ -64,4 +64,9 @@ export class MealController {
   async deleteMeal(@Param('id') id: string) {
     await this.mealService.deleteOne(id);
   }
+
+  // @Post(':id')
+  // async addMealToUser(@Param('id') id: string) {
+  //   await this.mealService.addMealToUser(id);
+  // }
 }
