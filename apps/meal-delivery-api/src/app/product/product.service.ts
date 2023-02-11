@@ -30,13 +30,8 @@ export class ProductService {
 
   async getOne(productId: string): Promise<ProductInfo> {
     const products = await this.productModel.aggregate([
-      {
-        $match: {
-          id: productId,
-        },
-      },
+      { $match: { id: productId } },
     ]);
-
     return products[0];
   }
 

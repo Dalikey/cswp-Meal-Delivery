@@ -17,14 +17,7 @@ export class UserService {
   }
 
   async getOne(userId: string): Promise<UserInfo> {
-    const users = await this.userModel.aggregate([
-      {
-        $match: {
-          id: userId,
-        },
-      },
-    ]);
-
+    const users = await this.userModel.aggregate([{ $match: { id: userId } }]);
     return users[0];
   }
 

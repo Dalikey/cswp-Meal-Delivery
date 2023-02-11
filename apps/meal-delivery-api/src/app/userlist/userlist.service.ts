@@ -19,14 +19,7 @@ export class UserListService {
   ) {}
 
   async getOne(mealId: string): Promise<MealInfo> {
-    const meals = await this.mealModel.aggregate([
-      {
-        $match: {
-          id: mealId,
-        },
-      },
-    ]);
-
+    const meals = await this.mealModel.aggregate([{ $match: { id: mealId } }]);
     return meals[0];
   }
 

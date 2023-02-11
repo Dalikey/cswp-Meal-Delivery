@@ -35,13 +35,8 @@ export class StudentHouseService {
 
   async getOne(studentHouseId: string): Promise<StudentHouseInfo> {
     const studentHouses = await this.studentHouseModel.aggregate([
-      {
-        $match: {
-          id: studentHouseId,
-        },
-      },
+      { $match: { id: studentHouseId } },
     ]);
-
     return studentHouses[0];
   }
 
