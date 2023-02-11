@@ -7,7 +7,7 @@ export interface MealInfo {
   price: number | undefined;
   deliveryTime: Date | undefined;
   deliveryDate: Date | undefined;
-  owner: string | undefined;
+  owner: User | undefined;
   studentHouseId: string | undefined;
   user?: User | undefined;
 }

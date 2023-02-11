@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Meal as MealModel, MealDocument } from './meal.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Meal, MealInfo, ResourceId } from '@md/data';
+import { MealInfo, ResourceId } from '@md/data';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../user/user.schema';
 import {
@@ -67,7 +67,7 @@ export class MealService {
       throw new HttpException('Owner not found', HttpStatus.BAD_REQUEST);
     }
 
-    if (owner.username !== mealInfo.owner) {
+    if (ownerId !== meal?.owner?.id) {
       throw new HttpException(
         'You are not the owner of this meal.',
         HttpStatus.BAD_REQUEST
@@ -106,18 +106,17 @@ export class MealService {
     const meal = await this.getOne(mealId);
     const owner = await this.userModel.findOne({ id: ownerId });
 
-    if (!owner) {
-      throw new HttpException('Owner not found', HttpStatus.BAD_REQUEST);
-    }
-
-    if (owner.username !== meal.owner) {
-      throw new HttpException(
-        'You are not the owner of this meal.',
-        HttpStatus.BAD_REQUEST
-      );
-    }
-
     if (meal) {
+      if (!owner) {
+        throw new HttpException('Owner not found', HttpStatus.BAD_REQUEST);
+      }
+      if (ownerId !== meal?.owner?.id) {
+        throw new HttpException(
+          'You are not the owner of this meal.',
+          HttpStatus.BAD_REQUEST
+        );
+      }
+
       await this.mealModel.deleteOne({ id: mealId });
     } else {
       throw new HttpException('Meal does not exist', HttpStatus.BAD_REQUEST);

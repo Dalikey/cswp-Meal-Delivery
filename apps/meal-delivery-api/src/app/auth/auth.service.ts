@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtPayload, verify, sign } from 'jsonwebtoken';
 import { Model } from 'mongoose';
@@ -44,7 +44,7 @@ export class AuthService {
     await identity.save();
   }
 
-  async getId(username: string, password: string): Promise<string> {
+  async getId(username: string): Promise<string> {
     const user = await this.userModel.findOne({ username: username });
     return user?.id;
   }
@@ -59,7 +59,7 @@ export class AuthService {
 
     return new Promise((resolve, reject) => {
       sign(
-        { username, id: user?.id },
+        { username, id: user?.id, role: user?.role },
         `${process.env.JWT_SECRET}`,
         (err, token) => {
           if (err) reject(err);
@@ -70,6 +70,7 @@ export class AuthService {
   }
 
   async verifyToken(token: string): Promise<string | JwtPayload> {
+    token = token.replace('Bearer ', '');
     return new Promise((resolve, reject) => {
       verify(token, `${process.env.JWT_SECRET}`, (err, payload) => {
         if (err) reject(err);

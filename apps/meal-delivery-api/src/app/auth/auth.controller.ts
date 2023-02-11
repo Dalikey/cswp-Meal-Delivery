@@ -53,12 +53,7 @@ export class AuthController {
           credentials.username,
           credentials.password
         ),
-        id: (
-          await this.authService.getId(
-            credentials.username,
-            credentials.password
-          )
-        ).toString(),
+        id: (await this.authService.getId(credentials.username)).toString(),
       };
     } catch (e) {
       let errorMessage = 'Failed to do something exceptional';
