@@ -17,11 +17,7 @@ export class AuthController {
   @Post('register')
   async register(@Body() credentials: UserRegistration): Promise<LocalStorage> {
     try {
-      await this.authService.registerUser(
-        credentials.username,
-        credentials.password,
-        credentials.emailAddress
-      );
+      await this.authService.registerUser(credentials);
 
       return {
         token: await this.authService.generateToken(

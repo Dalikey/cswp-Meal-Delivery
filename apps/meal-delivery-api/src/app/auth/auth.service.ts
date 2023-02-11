@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from '../user/user.schema';
 import { Identity, IdentityDocument } from './identity.schema';
 import { hash, compare } from 'bcrypt';
+import { UserRegistration, UserRole } from '@md/data';
 
 @Injectable()
 export class AuthService {
@@ -29,16 +30,31 @@ export class AuthService {
     return user.id;
   }
 
-  async registerUser(username: string, password: string, emailAddress: string) {
+  async registerUser(credentials: UserRegistration) {
+    if (
+      !credentials.username ||
+      !credentials.password ||
+      !credentials.emailAddress ||
+      !credentials.role
+    ) {
+      return 'Values must be provided for username, password, email, and role.';
+    }
+
+    if (credentials.role !== UserRole.STUDENT) {
+      if (credentials.role !== UserRole.OWNER) {
+        return 'The role must be student or owner';
+      }
+    }
+
     const generatedHash = await hash(
-      password,
+      credentials.password,
       parseInt(`${process.env.SALT_ROUNDS}`, 10)
     );
 
     const identity = new this.identityModel({
-      username,
+      username: credentials.username,
       hash: generatedHash,
-      emailAddress,
+      emailAddress: credentials.emailAddress,
     });
 
     await identity.save();

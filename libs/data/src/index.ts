@@ -1,4 +1,5 @@
 export * from './lib/id.type';
+export * from './lib/roles';
 export * from './lib/user.interface';
 export * from './lib/meal.interface';
 export * from './lib/product.interface';
