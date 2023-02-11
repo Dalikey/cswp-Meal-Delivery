@@ -43,7 +43,7 @@ export class MealService {
     return this.mealModel.find({}, { _id: 0, __v: 0 });
   }
 
-  async getOne(mealId: string): Promise<Meal> {
+  async getOne(mealId: string): Promise<MealInfo> {
     const meals = await this.mealModel.aggregate([
       {
         $match: {
@@ -102,21 +102,25 @@ export class MealService {
     return mealInfo;
   }
 
-  async deleteOne(mealId: string) {
+  async deleteOne(mealId: string, ownerId: string) {
     const meal = await this.getOne(mealId);
+    const owner = await this.userModel.findOne({ id: ownerId });
+
+    if (!owner) {
+      throw new HttpException('Owner not found', HttpStatus.BAD_REQUEST);
+    }
+
+    if (owner.username !== meal.owner) {
+      throw new HttpException(
+        'You are not the owner of this meal.',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
     if (meal) {
       await this.mealModel.deleteOne({ id: mealId });
     } else {
       throw new HttpException('Meal does not exist', HttpStatus.BAD_REQUEST);
     }
   }
-
-  // async addMealToUser(mealId: string) {
-  //   const meal = await this.getOne(mealId);
-  //   if (meal) {
-  //     await this.mealModel.addToUser({ id: mealId });
-  //   } else {
-  //     throw new HttpException('Meal does not exist', HttpStatus.BAD_REQUEST);
-  //   }
-  // }
 }

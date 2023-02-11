@@ -1,12 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-
-import { Model } from 'mongoose';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-
-import { User as UserModel, UserDocument } from './user.schema';
-
+import { Model } from 'mongoose';
 import { User, UserInfo } from '@md/data';
 import { Identity, IdentityDocument } from '../auth/identity.schema';
+import { User as UserModel, UserDocument } from './user.schema';
 
 @Injectable()
 export class UserService {

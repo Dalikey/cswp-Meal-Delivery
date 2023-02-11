@@ -61,12 +61,7 @@ export class MealController {
   }
 
   @Delete(':id')
-  async deleteMeal(@Param('id') id: string) {
-    await this.mealService.deleteOne(id);
+  async deleteMeal(@InjectToken() token: Token, @Param('id') id: string) {
+    await this.mealService.deleteOne(id, token.id);
   }
-
-  // @Post(':id')
-  // async addMealToUser(@Param('id') id: string) {
-  //   await this.mealService.addMealToUser(id);
-  // }
 }
