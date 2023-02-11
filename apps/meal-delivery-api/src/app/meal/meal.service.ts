@@ -32,7 +32,7 @@ export class MealService {
       price: mealInfo.price,
       deliveryTime: mealInfo.deliveryTime,
       deliveryDate: mealInfo.deliveryDate,
-      owner: { id: owner.id, name: owner.username },
+      owner: owner,
       studentHouse: studentHouse,
     });
     await meal.save();
@@ -84,7 +84,7 @@ export class MealService {
               price: mealInfo.price,
               deliveryTime: mealInfo.deliveryTime,
               deliveryDate: mealInfo.deliveryDate,
-              owner: { id: owner.id, name: mealInfo.owner },
+              owner: owner,
             },
           },
         ]);

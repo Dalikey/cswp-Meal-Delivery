@@ -9,7 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserInfo, User } from '@md/data';
+import { UserInfo } from '@md/data';
 import { InjectToken, Token } from '../auth/token.decorator';
 
 @Controller('user')
@@ -22,13 +22,14 @@ export class UserController {
   }
 
   @Get('self')
-  async getSelf(@InjectToken() token: Token): Promise<User> {
+  async getSelf(@InjectToken() token: Token): Promise<UserInfo> {
+    console.log(token);
     const result = await this.userService.getOne(token.id);
     return result;
   }
 
   @Get(':id')
-  async getOne(@Param('id') id: string): Promise<User> {
+  async getOne(@Param('id') id: string): Promise<UserInfo> {
     return this.userService.getOne(id);
   }
 

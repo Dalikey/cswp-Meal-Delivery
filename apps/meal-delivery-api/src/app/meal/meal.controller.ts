@@ -10,7 +10,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { MealService } from './meal.service';
-import { MealInfo, Meal, ResourceId } from '@md/data';
+import { MealInfo, ResourceId } from '@md/data';
 import { InjectToken, Token } from '../auth/token.decorator';
 
 @Controller('meal')
@@ -39,7 +39,7 @@ export class MealController {
   }
 
   @Get(':id')
-  async getOne(@Param('id') id: string): Promise<Meal> {
+  async getOne(@Param('id') id: string): Promise<MealInfo> {
     return this.mealService.getOne(id);
   }
 

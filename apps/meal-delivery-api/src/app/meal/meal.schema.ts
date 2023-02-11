@@ -7,7 +7,7 @@ import {
   StudentHouse,
   StudentHouseSchema,
 } from '../studentHouse/studentHouse.schema';
-import { User } from '../user/user.schema';
+import { User, UserSchema } from '../user/user.schema';
 
 export type MealDocument = HydratedDocument<Meal>;
 
@@ -19,8 +19,8 @@ export class Meal {
   @Prop({ type: Date, required: true, default: new Date() }) deliveryTime: Date;
   @Prop({ type: Date, required: true, default: new Date() }) deliveryDate: Date;
 
-  @Prop({ type: { id: String, name: String }, required: true })
-  owner: UserIdentity;
+  @Prop({ type: UserSchema, required: true })
+  owner: User;
 
   @Prop({ type: StudentHouseSchema })
   studentHouse: StudentHouse;
