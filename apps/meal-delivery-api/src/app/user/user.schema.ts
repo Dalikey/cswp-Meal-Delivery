@@ -14,7 +14,7 @@ export type UserDocument = HydratedDocument<User>;
 export class User {
   @Prop({ type: String, default: uuid, index: true }) id: string;
   @Prop({ type: String, required: true }) username: string;
-  @Prop({ type: String, required: true }) emailAddress: string;
+  @Prop({ type: String, required: true, unique: true }) emailAddress: string;
   @Prop({ type: Boolean, default: false }) isGraduated: boolean;
   @Prop({ type: String, enum: UserRole, default: UserRole.STUDENT })
   role: string;
