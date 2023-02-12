@@ -16,33 +16,21 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() credentials: UserRegistration): Promise<LocalStorage> {
-    try {
-      await this.authService.registerUser(
+    await this.authService.registerUser(credentials);
+
+    return {
+      token: await this.authService.generateToken(
         credentials.username,
-        credentials.password,
-        credentials.emailAddress
-      );
+        credentials.password
+      ),
 
-      return {
-        token: await this.authService.generateToken(
-          credentials.username,
-          credentials.password
-        ),
-
-        id: await this.authService.createUser(
-          credentials.username,
-          credentials.emailAddress,
-          credentials.isGraduated,
-          credentials.role
-        ),
-      };
-    } catch (e) {
-      throw new HttpException(
-        'Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.' +
-          e,
-        HttpStatus.BAD_REQUEST
-      );
-    }
+      id: await this.authService.createUser(
+        credentials.username,
+        credentials.emailAddress,
+        credentials.isGraduated,
+        credentials.role
+      ),
+    };
   }
 
   @Post('login')
@@ -53,12 +41,7 @@ export class AuthController {
           credentials.username,
           credentials.password
         ),
-        id: (
-          await this.authService.getId(
-            credentials.username,
-            credentials.password
-          )
-        ).toString(),
+        id: (await this.authService.getId(credentials.username)).toString(),
       };
     } catch (e) {
       let errorMessage = 'Failed to do something exceptional';

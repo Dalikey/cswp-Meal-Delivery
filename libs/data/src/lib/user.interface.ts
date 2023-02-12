@@ -29,5 +29,3 @@ export interface UserRegister {
   isGraduated: boolean;
   role: string;
 }
-
-export interface User extends UserInfo {}

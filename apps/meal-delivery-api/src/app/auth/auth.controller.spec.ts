@@ -1,4 +1,4 @@
-import { Token, UserCredentials } from '@md/data';
+import { Token, UserCredentials, UserRegistration } from '@md/data';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AuthController } from './auth.controller';
@@ -57,7 +57,7 @@ describe('AuthController', () => {
     it('should not call create on failed register (duplicate username)', async () => {
       register = jest
         .spyOn(authService, 'registerUser')
-        .mockImplementation(async (_u: string, _p: string, _e: string) => {
+        .mockImplementation(async (_c: UserRegistration) => {
           throw new Error('duplicate user');
         });
 

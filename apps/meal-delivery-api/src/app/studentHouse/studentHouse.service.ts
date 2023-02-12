@@ -4,7 +4,7 @@ import {
   StudentHouseDocument,
 } from './studentHouse.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { StudentHouse, StudentHouseInfo, ResourceId } from '@md/data';
+import { StudentHouseInfo, ResourceId } from '@md/data';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../user/user.schema';
 
@@ -33,15 +33,10 @@ export class StudentHouseService {
     return this.studentHouseModel.find({}, { _id: 0, __v: 0 });
   }
 
-  async getOne(studentHouseId: string): Promise<StudentHouse> {
+  async getOne(studentHouseId: string): Promise<StudentHouseInfo> {
     const studentHouses = await this.studentHouseModel.aggregate([
-      {
-        $match: {
-          id: studentHouseId,
-        },
-      },
+      { $match: { id: studentHouseId } },
     ]);
-
     return studentHouses[0];
   }
 

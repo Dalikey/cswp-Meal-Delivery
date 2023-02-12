@@ -1,12 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-
-import { Model } from 'mongoose';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-
-import { User as UserModel, UserDocument } from './user.schema';
-
-import { User, UserInfo } from '@md/data';
+import { Model } from 'mongoose';
+import { UserInfo } from '@md/data';
 import { Identity, IdentityDocument } from '../auth/identity.schema';
+import { User as UserModel, UserDocument } from './user.schema';
 
 @Injectable()
 export class UserService {
@@ -19,15 +16,8 @@ export class UserService {
     return this.userModel.find({}, { _id: 0, __v: 0 });
   }
 
-  async getOne(userId: string): Promise<User> {
-    const users = await this.userModel.aggregate([
-      {
-        $match: {
-          id: userId,
-        },
-      },
-    ]);
-
+  async getOne(userId: string): Promise<UserInfo> {
+    const users = await this.userModel.aggregate([{ $match: { id: userId } }]);
     return users[0];
   }
 

@@ -10,7 +10,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { StudentHouseService } from './studentHouse.service';
-import { StudentHouseInfo, StudentHouse, ResourceId } from '@md/data';
+import { StudentHouseInfo, ResourceId } from '@md/data';
 import { InjectToken, Token } from '../auth/token.decorator';
 
 @Controller('studentHouse')
@@ -38,7 +38,7 @@ export class StudentHouseController {
   }
 
   @Get(':id')
-  async getOne(@Param('id') id: string): Promise<StudentHouse> {
+  async getOne(@Param('id') id: string): Promise<StudentHouseInfo> {
     return this.studentHouseService.getOne(id);
   }
 
