@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { catchError, Observable, of, Subscription, switchMap, tap } from 'rxjs';
+import { catchError, of, Subscription, switchMap, tap } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
 import { Alert, AlertService } from '../../../shared/alert/alert.service';
 import { StudentHouse } from '../../studentHouse/studentHouse.model';
 import { StudentHouseService } from '../../studentHouse/studentHouse.service';
-import { User } from '../../user/user.model';
-import { UserService } from '../../user/user.service';
 import { Meal } from '../meal.model';
 import { MealService } from '../meal.service';
 

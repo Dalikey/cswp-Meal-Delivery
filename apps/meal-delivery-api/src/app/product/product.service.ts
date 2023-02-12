@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Product as ProductModel, ProductDocument } from './product.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Product, ProductInfo, ResourceId } from '@md/data';
+import { ProductInfo, ResourceId } from '@md/data';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../user/user.schema';
 
@@ -28,15 +28,10 @@ export class ProductService {
     return this.productModel.find({}, { _id: 0, __v: 0 });
   }
 
-  async getOne(productId: string): Promise<Product> {
+  async getOne(productId: string): Promise<ProductInfo> {
     const products = await this.productModel.aggregate([
-      {
-        $match: {
-          id: productId,
-        },
-      },
+      { $match: { id: productId } },
     ]);
-
     return products[0];
   }
 

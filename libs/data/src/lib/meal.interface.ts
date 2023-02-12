@@ -1,5 +1,5 @@
 import { Id } from './id.type';
-import { User } from './user.interface';
+import { UserInfo } from './user.interface';
 
 export interface MealInfo {
   id: Id;
@@ -7,9 +7,6 @@ export interface MealInfo {
   price: number | undefined;
   deliveryTime: Date | undefined;
   deliveryDate: Date | undefined;
-  owner: string | undefined;
+  owner: UserInfo | undefined;
   studentHouseId: string | undefined;
-  user?: User | undefined;
 }
-
-export interface Meal extends MealInfo {}

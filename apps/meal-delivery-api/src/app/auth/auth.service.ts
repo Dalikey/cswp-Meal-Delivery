@@ -1,10 +1,11 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtPayload, verify, sign } from 'jsonwebtoken';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../user/user.schema';
 import { Identity, IdentityDocument } from './identity.schema';
 import { hash, compare } from 'bcrypt';
+import { UserRegistration, UserRole } from '@md/data';
 
 @Injectable()
 export class AuthService {
@@ -19,32 +20,63 @@ export class AuthService {
     isGraduated: boolean,
     role: string
   ): Promise<string> {
+    // Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.
+
     const user = new this.userModel({
       username,
       emailAddress,
       isGraduated,
       role,
     });
-    await user.save();
+    try {
+      await user.save();
+    } catch (e) {
+      let errorMessage = 'Failed to do something exceptional';
+      if (e instanceof Error) {
+        errorMessage = e.message;
+      }
+      throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
+    }
     return user.id;
   }
 
-  async registerUser(username: string, password: string, emailAddress: string) {
+  async registerUser(credentials: UserRegistration) {
+    if (
+      !credentials.username ||
+      !credentials.password ||
+      !credentials.emailAddress ||
+      !credentials.role
+    ) {
+      throw new HttpException(
+        'Values must be provided for username, password, emailAddress, and role',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
+    if (credentials.role !== UserRole.STUDENT) {
+      if (credentials.role !== UserRole.OWNER) {
+        throw new HttpException(
+          'The role must be student or owner',
+          HttpStatus.BAD_REQUEST
+        );
+      }
+    }
+
     const generatedHash = await hash(
-      password,
+      credentials.password,
       parseInt(`${process.env.SALT_ROUNDS}`, 10)
     );
 
     const identity = new this.identityModel({
-      username,
+      username: credentials.username,
       hash: generatedHash,
-      emailAddress,
+      emailAddress: credentials.emailAddress,
     });
 
     await identity.save();
   }
 
-  async getId(username: string, password: string): Promise<string> {
+  async getId(username: string): Promise<string> {
     const user = await this.userModel.findOne({ username: username });
     return user?.id;
   }
@@ -59,7 +91,7 @@ export class AuthService {
 
     return new Promise((resolve, reject) => {
       sign(
-        { username, id: user?.id },
+        { username, id: user?.id, role: user?.role },
         `${process.env.JWT_SECRET}`,
         (err, token) => {
           if (err) reject(err);
@@ -70,6 +102,7 @@ export class AuthService {
   }
 
   async verifyToken(token: string): Promise<string | JwtPayload> {
+    token = token.replace('Bearer ', '');
     return new Promise((resolve, reject) => {
       verify(token, `${process.env.JWT_SECRET}`, (err, payload) => {
         if (err) reject(err);

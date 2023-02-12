@@ -10,7 +10,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { ProductInfo, Product, ResourceId } from '@md/data';
+import { ProductInfo, ResourceId } from '@md/data';
 import { InjectToken, Token } from '../auth/token.decorator';
 
 @Controller('product')
@@ -36,7 +36,7 @@ export class ProductController {
   }
 
   @Get(':id')
-  async getOne(@Param('id') id: string): Promise<Product> {
+  async getOne(@Param('id') id: string): Promise<ProductInfo> {
     return this.productService.getOne(id);
   }
 

@@ -10,6 +10,7 @@ import { MongoClient } from 'mongodb';
 import { AuthService } from './auth.service';
 import { Identity, IdentitySchema } from './identity.schema';
 import { User, UserSchema } from '../user/user.schema';
+import { UserRegistration, UserRole } from '@md/data';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -43,7 +44,7 @@ describe('AuthService', () => {
   });
 
   beforeEach(async () => {
-    await mongoc.db('test').collection('identities').deleteMany({});
+    await mongoc.db('test').dropDatabase();
   });
 
   afterAll(async () => {
@@ -156,14 +157,11 @@ describe('AuthService', () => {
       const exampleUser = {
         username: 'henk',
         password: 'supersecret123',
-        emailAddress: 'mail@mail.com',
-      };
+        emailAddress: 'henk@mail.com',
+        role: UserRole.STUDENT,
+      } as UserRegistration;
 
-      await service.registerUser(
-        exampleUser.username,
-        exampleUser.password,
-        exampleUser.emailAddress
-      );
+      await service.registerUser(exampleUser);
 
       const record = await mongoc
         .db('test')
