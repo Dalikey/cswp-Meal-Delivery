@@ -35,7 +35,7 @@ export class AuthService {
       if (e instanceof Error) {
         errorMessage = e.message;
       }
-      throw new HttpException('aaa' + errorMessage, HttpStatus.BAD_REQUEST);
+      throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
     }
     return user.id;
   }
@@ -48,7 +48,7 @@ export class AuthService {
       !credentials.role
     ) {
       throw new HttpException(
-        'Values must be provided for username, password, email, and role',
+        'Values must be provided for username, password, emailAddress, and role',
         HttpStatus.BAD_REQUEST
       );
     }

@@ -16,29 +16,21 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() credentials: UserRegistration): Promise<LocalStorage> {
-    try {
-      await this.authService.registerUser(credentials);
+    await this.authService.registerUser(credentials);
 
-      return {
-        token: await this.authService.generateToken(
-          credentials.username,
-          credentials.password
-        ),
+    return {
+      token: await this.authService.generateToken(
+        credentials.username,
+        credentials.password
+      ),
 
-        id: await this.authService.createUser(
-          credentials.username,
-          credentials.emailAddress,
-          credentials.isGraduated,
-          credentials.role
-        ),
-      };
-    } catch (e) {
-      let errorMessage = 'Failed to do something exceptional';
-      if (e instanceof Error) {
-        errorMessage = e.message;
-      }
-      throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
-    }
+      id: await this.authService.createUser(
+        credentials.username,
+        credentials.emailAddress,
+        credentials.isGraduated,
+        credentials.role
+      ),
+    };
   }
 
   @Post('login')
