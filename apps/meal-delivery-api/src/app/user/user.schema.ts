@@ -13,7 +13,7 @@ export type UserDocument = HydratedDocument<User>;
 @Schema()
 export class User {
   @Prop({ type: String, default: uuid, index: true }) id: string;
-  @Prop({ type: String, required: true, unique: true }) username: string;
+  @Prop({ type: String, required: true }) username: string;
   @Prop({ type: String, required: true }) emailAddress: string;
   @Prop({ type: Boolean, default: false }) isGraduated: boolean;
   @Prop({ type: String, enum: UserRole, default: UserRole.STUDENT })
@@ -22,10 +22,10 @@ export class User {
   @Prop({ type: StudentHouseSchema })
   studentHouse: StudentHouse;
 
-  @Prop({ type: [], default: [], unique: true })
+  @Prop({ type: [], default: [] })
   meals: Meal[];
 
-  @Prop({ type: [], default: [], unique: true })
+  @Prop({ type: [], default: [] })
   friends: User[];
 }
 

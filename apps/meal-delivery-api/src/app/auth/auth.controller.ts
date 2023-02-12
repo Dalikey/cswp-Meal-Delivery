@@ -33,11 +33,11 @@ export class AuthController {
         ),
       };
     } catch (e) {
-      throw new HttpException(
-        'Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.' +
-          e,
-        HttpStatus.BAD_REQUEST
-      );
+      let errorMessage = 'Failed to do something exceptional';
+      if (e instanceof Error) {
+        errorMessage = e.message;
+      }
+      throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
     }
   }
 

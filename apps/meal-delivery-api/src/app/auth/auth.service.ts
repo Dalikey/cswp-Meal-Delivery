@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtPayload, verify, sign } from 'jsonwebtoken';
 import { Model } from 'mongoose';
@@ -20,13 +20,23 @@ export class AuthService {
     isGraduated: boolean,
     role: string
   ): Promise<string> {
+    // Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.
+
     const user = new this.userModel({
       username,
       emailAddress,
       isGraduated,
       role,
     });
-    await user.save();
+    try {
+      await user.save();
+    } catch (e) {
+      let errorMessage = 'Failed to do something exceptional';
+      if (e instanceof Error) {
+        errorMessage = e.message;
+      }
+      throw new HttpException('aaa' + errorMessage, HttpStatus.BAD_REQUEST);
+    }
     return user.id;
   }
 
@@ -37,12 +47,18 @@ export class AuthService {
       !credentials.emailAddress ||
       !credentials.role
     ) {
-      return 'Values must be provided for username, password, email, and role.';
+      throw new HttpException(
+        'Values must be provided for username, password, email, and role',
+        HttpStatus.BAD_REQUEST
+      );
     }
 
     if (credentials.role !== UserRole.STUDENT) {
       if (credentials.role !== UserRole.OWNER) {
-        return 'The role must be student or owner';
+        throw new HttpException(
+          'The role must be student or owner',
+          HttpStatus.BAD_REQUEST
+        );
       }
     }
 
