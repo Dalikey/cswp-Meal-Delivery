@@ -26,6 +26,7 @@
     "@nestjs/mongoose": "^9.2.1",
     "@nestjs/platform-express": "^9.0.0",
     "@ng-bootstrap/ng-bootstrap": "^14.0.0",
+    "@nhogs/nestjs-neo4j": "^0.5.10",
     "@nrwl/angular": "^15.2.1",
     "@nrwl/js": "^14.8.6",
     "@nrwl/nx-cloud": "^15.0.2",
