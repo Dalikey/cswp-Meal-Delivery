@@ -16,7 +16,7 @@ import { Neo4jModule } from './neo4j/neo4j.module';
       // 'mongodb://127.0.0.1:27017/api' // LocalDb
     ),
     Neo4jModule.forRoot({
-      scheme: 'neo4j+s',
+      scheme: 'neo4j',
       host: `${process.env.NEO4J_HOST}`,
       username: `${process.env.NEO4J_USR}`,
       password: `${process.env.NEO4J_PWD}`,
