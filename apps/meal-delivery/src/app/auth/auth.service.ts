@@ -53,6 +53,15 @@ export class AuthService {
     return user.role === 'owner';
   }
 
+  checkIsAdmin(token: string): boolean {
+    let role;
+    if (token) {
+      const user = this.decodeJwtToken(token) as any;
+      role = user.role;
+    }
+    return role === 'admin';
+  }
+
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
     return this.http
       .post<UserIdentity>(
@@ -65,6 +74,7 @@ export class AuthService {
       .pipe(
         tap(console.log),
         map((data: any) => {
+          location.reload();
           localStorage.setItem(this.CURRENT_USER, JSON.stringify(data.results));
           this.currentUser$.next(data);
           this.alertService.success('Je bent ingelogd');
