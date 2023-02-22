@@ -6,8 +6,6 @@
   min-height: 750px;
 }
 
-.json {
-  overflow-y: scroll;
+.prejson {
   max-height: 300px;
-  min-width: 400px;
 }

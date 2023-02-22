@@ -33,13 +33,6 @@ export class UserService {
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     }
 
-    if (user.username == userInfo.username) {
-      throw new HttpException(
-        'You are not the owner of this user.',
-        HttpStatus.BAD_REQUEST
-      );
-    }
-
     if (user) {
       try {
         await this.userModel.updateOne({ id: userId }, [
@@ -49,6 +42,7 @@ export class UserService {
               emailAddress: userInfo.emailAddress,
               username: userInfo.username,
               isGraduated: userInfo.isGraduated,
+              role: userInfo.role,
             },
           },
         ]);

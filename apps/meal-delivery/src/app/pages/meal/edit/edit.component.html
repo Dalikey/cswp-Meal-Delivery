@@ -125,13 +125,12 @@
           </div>
         </div>
       </div>
-      <div *ngIf="componentExists" class="col-5">
-        <pre class="json">{{ meal | json }}</pre>
+      <div *ngIf="componentExists" class="col-5 prejson">
+        <pre>{{meal | json}}</pre>
       </div>
       <div *ngIf="!componentExists" class="col-5">
         <pre>{{ meal | json }}</pre>
       </div>
-
     </div><br>
   </form>
 </div>
