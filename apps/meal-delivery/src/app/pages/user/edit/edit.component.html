@@ -52,7 +52,7 @@
         <!-- isgraduated -->
         <div class="row-5">
           <div class="form-check">
-            <div *ngIf="user?.isGraduated">
+            <div *ngIf="user?.emailAddress">
               <input class="form-check-input" type="checkbox" id="isgraduated" name="isgraduated"
                 [(ngModel)]="user!.isGraduated" #isgraduated="ngModel" />
               <label for="isgraduated">Is afgestudeerd</label>
@@ -60,23 +60,42 @@
           </div>
         </div>
         <br>
+        <!-- role -->
+        <div class="row-5">
+          <div class="form-group">
+            <label for="role">Rol</label>
+            <div *ngIf="user?.role">
+              <select class="form-select move10left" id="role" name="role" [(ngModel)]="user!.role" #role="ngModel"
+                required>
+                <option value="admin">Admin</option>
+                <option value="student">Student</option>
+                <option value="owner">Owner</option>
+              </select>
+              <div *ngIf="role.invalid && role.touched" class="invalid-feedback">
+                <div *ngIf="role.errors!['required']">
+                  Rol is verplicht
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Submit en Cancel buttons -->
+        <div class="row move34down">
+          <div class="col">
+            <button type="submit" class="btn btn-primary mx-2" [disabled]="!userEditForm.valid">
+              <div *ngIf="componentExists && user">
+                Gebruiker bewerken
+              </div>
+              <div *ngIf="!componentExists">
+                Gebruiker toevoegen
+              </div>
+            </button>
+            <button type="button" class="btn btn-warning mx-2" routerLink="/user">Annuleren</button>
+          </div>
+        </div>
       </div>
-      <div class="col-5">
+      <div class="col-5 prejson">
         <pre>{{user | json}}</pre>
-      </div>
-    </div>
-    <!-- Submit en Cancel buttons -->
-    <div class="row move34down">
-      <div class="col minHe300">
-        <button type="submit" class="btn btn-primary mx-2" [disabled]="!userEditForm.valid">
-          <div *ngIf="componentExists && user">
-            Gebruiker bewerken
-          </div>
-          <div *ngIf="!componentExists">
-            Gebruiker toevoegen
-          </div>
-        </button>
-        <button type="button" class="btn btn-warning mx-2" routerLink="/user">Annuleren</button>
       </div>
     </div>
   </form>
