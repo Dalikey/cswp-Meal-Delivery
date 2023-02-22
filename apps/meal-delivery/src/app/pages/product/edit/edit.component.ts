@@ -71,12 +71,15 @@ export class EditComponent implements OnInit, OnDestroy {
     console.log('onSubmit', this.product);
 
     if (this.product) {
-      const noEmptyStringAllergies = this.product?.allergies!.filter(
+      const noEmptyStringAllergies = this.product.allergies!.filter(
         (allergy) => {
           return allergy !== '';
         }
       );
-      this.product!.allergies = noEmptyStringAllergies;
+      const uniqueAllergies = noEmptyStringAllergies.filter(
+        (value, index, array) => array.indexOf(value) === index
+      );
+      this.product!.allergies = uniqueAllergies;
     }
 
     if (this.product!.id) {

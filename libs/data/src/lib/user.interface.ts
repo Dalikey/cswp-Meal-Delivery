@@ -9,6 +9,7 @@ export interface UserInfo extends UserIdentity {
   emailAddress: string;
   isGraduated: boolean;
   token: string;
+  role: string;
 }
 
 export interface IToken {

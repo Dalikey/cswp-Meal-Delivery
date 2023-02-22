@@ -56,6 +56,16 @@ p {
   margin-bottom: 16vw;
 }
 
+.prejson {
+  overflow-y: scroll;
+  max-height: 400px;
+  min-width: fit-content;
+}
+
+pre {
+  min-width: fit-content;
+}
+
 .card {
   all: unset;
   border-radius: 4px;
