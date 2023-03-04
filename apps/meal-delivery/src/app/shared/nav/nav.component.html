@@ -11,7 +11,7 @@
       <a class="nav-link" routerLink="/product">Producten</a>
     </li>
     <li class="nav-item" *ngIf="loggedInUser$ | async as user">
-      <a *ngIf="authService.checkIsAdmin(token)" class="nav-link" routerLink="/user">Gebruikers</a>
+      <a *ngIf="isAdmin" class="nav-link" routerLink="/user">Gebruikers</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLink="/studentHouse">Studentenhuizen</a>

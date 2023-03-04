@@ -13,6 +13,7 @@ export class NavComponent implements OnInit {
   isNavbarCollapsed = true;
   loggedInUser$!: Observable<IToken | undefined>;
   token: string;
+  isAdmin: boolean;
 
   constructor(private authService: AuthService) {}
 
@@ -21,6 +22,7 @@ export class NavComponent implements OnInit {
     this.authService.currentUser$.subscribe((t) => {
       this.token = t?.token || '';
     });
+    this.isAdmin = this.authService.checkIsAdmin(this.token);
   }
 
   logout(): void {

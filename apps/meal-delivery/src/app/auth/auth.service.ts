@@ -58,6 +58,7 @@ export class AuthService {
     if (token) {
       const user = this.decodeJwtToken(token) as any;
       role = user.role;
+      console.log('checkIsAdmin: ' + role);
     }
     return role === 'admin';
   }
