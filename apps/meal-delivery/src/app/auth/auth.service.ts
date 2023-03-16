@@ -48,19 +48,16 @@ export class AuthService {
     return jwt_decode(token);
   }
 
-  checkIsOwner(token: string): boolean {
-    const user = this.decodeJwtToken(token) as any;
+  checkIsOwner(): boolean {
+    const user = this.decodeJwtToken(this.getAuthorizationToken() || '') as any;
+    console.log('checkIsOwner: ' + user.role);
     return user.role === 'owner';
   }
 
-  checkIsAdmin(token: string): boolean {
-    let role;
-    if (token) {
-      const user = this.decodeJwtToken(token) as any;
-      role = user.role;
-      console.log('checkIsAdmin: ' + role);
-    }
-    return role === 'admin';
+  checkIsAdmin(): boolean {
+    const user = this.decodeJwtToken(this.getAuthorizationToken() || '') as any;
+    console.log('checkIsAdmin: ' + user.role);
+    return user.role === 'admin';
   }
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
