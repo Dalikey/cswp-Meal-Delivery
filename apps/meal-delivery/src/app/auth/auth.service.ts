@@ -50,14 +50,17 @@ export class AuthService {
 
   checkIsOwner(): boolean {
     const user = this.decodeJwtToken(this.getAuthorizationToken() || '') as any;
-    console.log('checkIsOwner: ' + user.role);
     return user.role === 'owner';
   }
 
   checkIsAdmin(): boolean {
     const user = this.decodeJwtToken(this.getAuthorizationToken() || '') as any;
-    console.log('checkIsAdmin: ' + user.role);
     return user.role === 'admin';
+  }
+
+  checkIsStudent(): boolean {
+    const user = this.decodeJwtToken(this.getAuthorizationToken() || '') as any;
+    return user.role === 'student';
   }
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {

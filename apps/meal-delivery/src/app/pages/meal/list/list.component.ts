@@ -13,6 +13,9 @@ import { MealService } from '../meal.service';
 export class ListComponent implements OnInit {
   meals$!: Observable<Meal[] | null | undefined>;
   isOwner: boolean;
+  isAdmin: boolean;
+  isStudent: boolean;
+  currentUserId: string;
 
   constructor(
     private mealService: MealService,
@@ -23,6 +26,9 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.meals$ = this.mealService.getAllMeals();
     this.isOwner = this.authService.checkIsOwner();
+    this.isAdmin = this.authService.checkIsAdmin();
+    this.isStudent = this.authService.checkIsStudent();
+    this.currentUserId = this.authService.getCurrentUserId() || '';
   }
 
   deleteMeal(id: string) {

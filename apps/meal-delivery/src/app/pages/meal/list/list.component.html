@@ -11,7 +11,7 @@
       <div class="mb240">
         <div class="row">
           <div class="col-sm-12 col-md-auto col-lg-6" *ngFor="let meal of meals$ | async; let i = index">
-            <div class="card">
+            <div *ngIf="isAdmin || meal.owner.id == currentUserId" class="card">
               <div class="card-body">
                 <h5 class="card-title">{{meal.name}}</h5>
                 <ul class="noBullets">
@@ -21,7 +21,12 @@
                   <li> <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">Klik hier
                       voor meer details.</a></li>
                 </ul>
-                <div align="end"> <a class="edit" title="Bewerken" data-toggle="tooltip" routerLink="{{ meal.id }}/edit"
+                <div class="alignEnd" *ngIf="isStudent">
+                  <a class="edit" title="Bestellen" data-toggle="tooltip" routerLink="{{ meal.id }}/order"
+                    routerLinkActive="active"><i class="material-icons">&#xE8CC;</i></a>
+                </div>
+                <div class="alignEnd" *ngIf="!isStudent">
+                  <a class="edit" title="Bewerken" data-toggle="tooltip" routerLink="{{ meal.id }}/edit"
                     routerLinkActive="active"><i class="material-icons">&#xE254;</i></a>
                   <a class="delete" title="Verwijderen" data-toggle="tooltip" (click)="deleteMeal(meal.id!)"
                     routerLinkActive="active"><i class="material-icons">&#xE872;</i></a>
