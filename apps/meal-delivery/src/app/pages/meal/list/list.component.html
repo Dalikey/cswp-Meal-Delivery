@@ -22,7 +22,7 @@
                       voor meer details.</a></li>
                 </ul>
                 <div class="alignEnd" *ngIf="isStudent">
-                  <a class="edit" title="Bestellen" data-toggle="tooltip" routerLink="{{ meal.id }}/order"
+                  <a class="order" title="Bestellen" data-toggle="tooltip" (click)="orderMeal(meal.id!)"
                     routerLinkActive="active"><i class="material-icons">&#xE8CC;</i></a>
                 </div>
                 <div class="alignEnd" *ngIf="!isStudent">

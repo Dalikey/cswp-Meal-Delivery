@@ -189,6 +189,10 @@ a:visited:hover {
   background-color: #940020;
 }
 
+.order {
+  color: #ffc107;
+}
+
 .edit {
   color: #ffc107;
 }

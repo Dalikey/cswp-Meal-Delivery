@@ -31,6 +31,12 @@ export class ListComponent implements OnInit {
     this.currentUserId = this.authService.getCurrentUserId() || '';
   }
 
+  orderMeal(id: string) {
+    this.mealService.orderMeal(id).subscribe(() => {
+      this.meals$ = this.mealService.getAllMeals();
+    });
+  }
+
   deleteMeal(id: string) {
     this.saveEditedWorkGuard.canDeactivate().then((result) => {
       if (result) {
