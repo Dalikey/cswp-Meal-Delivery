@@ -12,6 +12,7 @@ import { MealComponent } from './pages/meal/meal.component';
 import { ListComponent as ListComponentMeal } from './pages/meal/list/list.component';
 import { DetailComponent as DetailComponentMeal } from './pages/meal/detail/detail.component';
 import { EditComponent as EditComponentMeal } from './pages/meal/edit/edit.component';
+import { OrderListComponent } from './pages/meal/orderlist/orderlist.component';
 import { AboutComponent } from './pages/about/about.component';
 import { UserComponent } from './pages/user/user.component';
 import { ListComponent as ListComponentUser } from './pages/user/list/list.component';
@@ -54,6 +55,7 @@ registerLocaleData(localeNl, 'nl');
     ListComponentMeal,
     DetailComponentMeal,
     EditComponentMeal,
+    OrderListComponent,
     AboutComponent,
     UserComponent,
     ListComponentUser,

@@ -60,11 +60,13 @@ export class MealService {
       throw new HttpException('Owner not found', HttpStatus.BAD_REQUEST);
     }
 
-    if (ownerId !== meal?.owner?.id) {
-      throw new HttpException(
-        'You are not the owner of this meal.',
-        HttpStatus.BAD_REQUEST
-      );
+    if (owner.role !== 'admin') {
+      if (ownerId !== meal?.owner?.id) {
+        throw new HttpException(
+          'You are not the owner of this meal.',
+          HttpStatus.BAD_REQUEST
+        );
+      }
     }
 
     if (meal) {
@@ -77,7 +79,7 @@ export class MealService {
               price: mealInfo.price,
               deliveryTime: mealInfo.deliveryTime,
               deliveryDate: mealInfo.deliveryDate,
-              owner: owner,
+              owner: mealInfo.owner,
             },
           },
         ]);

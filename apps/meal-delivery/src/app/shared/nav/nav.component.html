@@ -4,14 +4,21 @@
     <li class="nav-item">
       <a class="nav-link active" aria-current="page" routerLink="/dashboard">Home</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/meal">Maaltijden</a>
+    <li class="nav-item dropdown" ngbDropdown>
+      <a class="nav-link dropdown-toggle" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown"
+        aria-expanded="false" ngbDropdownToggle>
+        Maaltijden
+      </a>
+      <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="navbarScrollingDropdown">
+        <li ngbDropdownItem><a class="dropdown-item" routerLink="/meal">Maaltijden</a></li>
+        <li ngbDropdownItem><a class="dropdown-item" routerLink="/meal/orderlist">Bestelde maaltijden</a></li>
+      </ul>
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLink="/product">Producten</a>
     </li>
     <li class="nav-item" *ngIf="loggedInUser$ | async as user">
-      <a *ngIf="authService.checkIsAdmin(token)" class="nav-link" routerLink="/user">Gebruikers</a>
+      <a *ngIf="isAdmin" class="nav-link" routerLink="/user">Gebruikers</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLink="/studentHouse">Studentenhuizen</a>
