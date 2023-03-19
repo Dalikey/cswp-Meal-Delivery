@@ -45,22 +45,24 @@ export class AuthService {
   }
 
   decodeJwtToken(token: string) {
-    return jwt_decode(token);
+    if (token) {
+      return jwt_decode(token);
+    }
   }
 
   checkIsOwner(): boolean {
     const user = this.decodeJwtToken(this.getAuthorizationToken() || '') as any;
-    return user.role === 'owner';
+    return user?.role === 'owner';
   }
 
   checkIsAdmin(): boolean {
     const user = this.decodeJwtToken(this.getAuthorizationToken() || '') as any;
-    return user.role === 'admin';
+    return user?.role === 'admin';
   }
 
   checkIsStudent(): boolean {
     const user = this.decodeJwtToken(this.getAuthorizationToken() || '') as any;
-    return user.role === 'student';
+    return user?.role === 'student';
   }
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
