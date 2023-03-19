@@ -177,6 +177,10 @@ a:visited:hover {
   margin-left: -10px;
 }
 
+.minWi103 {
+  min-width: 103%;
+}
+
 .minWidthButton {
   width: 154.21px;
 }

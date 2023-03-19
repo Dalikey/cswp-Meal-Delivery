@@ -16,8 +16,8 @@ import {
 } from './studentHouse/studentHouse.schema';
 import { StudentHouseController } from './studentHouse/studentHouse.controller';
 import { StudentHouseService } from './studentHouse/studentHouse.service';
-import { UserListService } from './userlist/userlist.service';
-import { UserListController } from './userlist/userlist.controller';
+import { OrderListService } from './orderlist/orderlist.service';
+import { OrderListController } from './orderlist/orderlist.controller';
 
 @Module({
   imports: [
@@ -31,14 +31,14 @@ import { UserListController } from './userlist/userlist.controller';
   ],
   controllers: [
     UserController,
-    UserListController,
+    OrderListController,
     MealController,
     ProductController,
     StudentHouseController,
   ],
   providers: [
     UserService,
-    UserListService,
+    OrderListService,
     MealService,
     ProductService,
     StudentHouseService,

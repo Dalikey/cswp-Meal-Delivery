@@ -115,13 +115,33 @@ export class MealService {
   orderMeal(id: string) {
     return this.http
       .post<Meal>(
-        `${this.configService.getConfig().apiEndpoint}api/userlist/${id}`,
+        `${this.configService.getConfig().apiEndpoint}api/orderlist/${id}`,
         this.httpOptions
       )
       .pipe(
         tap(console.log),
         map((data: any) => {
           this.alertService.success('Maaltijd succesvol besteld.');
+          return data.results;
+        }),
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
+  }
+
+  cancelOrder(id: string) {
+    return this.http
+      .delete<Meal>(
+        `${this.configService.getConfig().apiEndpoint}api/orderlist/${id}`,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          this.alertService.success('Maaltijd succesvol geannuleerd.');
           return data.results;
         }),
         catchError((e) => {

@@ -8,6 +8,7 @@ import { MealComponent } from './pages/meal/meal.component';
 import { ListComponent as ListComponentMeal } from './pages/meal/list/list.component';
 import { DetailComponent as DetailComponentMeal } from './pages/meal/detail/detail.component';
 import { EditComponent as EditComponentMeal } from './pages/meal/edit/edit.component';
+import { OrderListComponent } from './pages/meal/orderlist/orderlist.component';
 import { UserComponent } from './pages/user/user.component';
 import { ListComponent as ListComponentUser } from './pages/user/list/list.component';
 import { DetailComponent as DetailComponentUser } from './pages/user/detail/detail.component';
@@ -33,6 +34,12 @@ const routes: Routes = [
     component: MealComponent,
     children: [
       { path: '', pathMatch: 'full', component: ListComponentMeal },
+      {
+        path: 'orderlist',
+        pathMatch: 'full',
+        canActivate: [LoggedInAuthGuard],
+        component: OrderListComponent,
+      },
       {
         path: 'new',
         pathMatch: 'full',
