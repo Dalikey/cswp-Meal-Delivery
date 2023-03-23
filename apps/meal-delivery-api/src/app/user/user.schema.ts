@@ -3,10 +3,6 @@ import { UserRole } from '@md/data';
 import { HydratedDocument } from 'mongoose';
 import { v4 as uuid } from 'uuid';
 import { Meal } from '../meal/meal.schema';
-import {
-  StudentHouse,
-  StudentHouseSchema,
-} from '../studentHouse/studentHouse.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -19,14 +15,8 @@ export class User {
   @Prop({ type: String, enum: UserRole, default: UserRole.STUDENT })
   role: string;
 
-  @Prop({ type: StudentHouseSchema })
-  studentHouse: StudentHouse;
-
   @Prop({ type: [], default: [] })
   meals: Meal[];
-
-  @Prop({ type: [], default: [] })
-  friends: User[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
