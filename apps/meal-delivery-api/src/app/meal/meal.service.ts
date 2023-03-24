@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Meal as MealModel, MealDocument } from './meal.schema';
+import { Meal as MealModel, MealDocument } from '../schema/meal.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { MealInfo, ResourceId } from '@md/data';
 import { Model } from 'mongoose';
-import { User, UserDocument } from '../user/user.schema';
+import { User, UserDocument } from '../schema/user.schema';
 import {
   StudentHouse,
   StudentHouseDocument,
-} from '../studentHouse/studentHouse.schema';
+} from '../schema/studentHouse.schema';
 
 @Injectable()
 export class MealService {

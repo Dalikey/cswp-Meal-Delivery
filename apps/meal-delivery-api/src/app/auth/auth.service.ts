@@ -2,8 +2,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtPayload, verify, sign } from 'jsonwebtoken';
 import { Model } from 'mongoose';
-import { User, UserDocument } from '../user/user.schema';
-import { Identity, IdentityDocument } from './identity.schema';
+import { User, UserDocument } from '../schema/user.schema';
+import { Identity, IdentityDocument } from '../schema/identity.schema';
 import { hash, compare } from 'bcrypt';
 import { UserRegistration, UserRole } from '@md/data';
 
@@ -20,8 +20,6 @@ export class AuthService {
     isGraduated: boolean,
     role: string
   ): Promise<string> {
-    // Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.
-
     const user = new this.userModel({
       username,
       emailAddress,
@@ -31,11 +29,10 @@ export class AuthService {
     try {
       await user.save();
     } catch (e) {
-      let errorMessage = 'Failed to do something exceptional';
-      if (e instanceof Error) {
-        errorMessage = e.message;
-      }
-      throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.',
+        HttpStatus.BAD_REQUEST
+      );
     }
     return user.id;
   }
