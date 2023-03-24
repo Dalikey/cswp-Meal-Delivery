@@ -143,14 +143,6 @@ export class AuthService {
     }
   }
 
-  userMayEdit(itemUserId: string): Observable<boolean> {
-    return this.currentUser$.pipe(
-      map((data: IToken | undefined) =>
-        data?.id ? data.id === itemUserId : false
-      )
-    );
-  }
-
   getAuthorizationToken(): string | undefined {
     const user = localStorage.getItem(this.CURRENT_USER);
     if (user) {

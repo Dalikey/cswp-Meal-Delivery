@@ -1,19 +1,16 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Identity, IdentitySchema } from './auth/identity.schema';
+import { Identity, IdentitySchema } from './schema/identity.schema';
 import { MealController } from './meal/meal.controller';
-import { Meal, MealSchema } from './meal/meal.schema';
+import { Meal, MealSchema } from './schema/meal.schema';
 import { MealService } from './meal/meal.service';
 import { UserController } from './user/user.controller';
-import { User, UserSchema } from './user/user.schema';
+import { User, UserSchema } from './schema/user.schema';
 import { UserService } from './user/user.service';
-import { Product, ProductSchema } from './product/product.schema';
+import { Product, ProductSchema } from './schema/product.schema';
 import { ProductController } from './product/product.controller';
 import { ProductService } from './product/product.service';
-import {
-  StudentHouse,
-  StudentHouseSchema,
-} from './studentHouse/studentHouse.schema';
+import { StudentHouse, StudentHouseSchema } from './schema/studentHouse.schema';
 import { StudentHouseController } from './studentHouse/studentHouse.controller';
 import { StudentHouseService } from './studentHouse/studentHouse.service';
 import { OrderListService } from './orderlist/orderlist.service';

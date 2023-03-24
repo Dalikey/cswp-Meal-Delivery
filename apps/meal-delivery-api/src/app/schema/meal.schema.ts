@@ -1,12 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { v4 as uuid } from 'uuid';
-import { Product } from '../product/product.schema';
-import {
-  StudentHouse,
-  StudentHouseSchema,
-} from '../studentHouse/studentHouse.schema';
-import { User, UserSchema } from '../user/user.schema';
+import { Product } from './product.schema';
+import { StudentHouse, StudentHouseSchema } from './studentHouse.schema';
+import { User, UserSchema } from './user.schema';
 
 export type MealDocument = HydratedDocument<Meal>;
 
