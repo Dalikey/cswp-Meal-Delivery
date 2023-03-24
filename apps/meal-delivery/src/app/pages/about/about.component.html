@@ -2,11 +2,10 @@
   <div class="col-sm-6 col-md-8 col-lg-9">
     <h3 id="aboutTitle">Over deze applicatie</h3>
     <p>
-      Deze applicatie is gemaakt in het kader van het vak 'Clientside web
-      frameworks' van Avans Hogeschool Breda.
+      Deze applicatie is gemaakt in het kader van het vak 'Clientside web frameworks' van Avans Hogeschool Breda.
     </p>
 
-    <h1>Gouden maaltijdbezorging</h1>
+    <h1>Gouden maaltijden</h1>
     <p>
       In dit project wordt een full stack single page webapplicatie (SPA) gemaakt die een informatiesysteem biedt met
       betrekking tot een zelfgekozen domein. De applicatie biedt een SPA frontend met web-based user-interface, die
@@ -20,19 +19,17 @@
     <p>
       De applicatie is gedeployed op <span><a
           href="https://meal-delivery.netlify.app/dashboard">meal-delivery.netlify.app</a></span>,
-      en alle data in
-      het systeem is geheel online toegankelijk via de user-interface en
-      via de API. Je werkt in een CI/CD-ontwikkelstraat, en zowel je client-side frontend applicatie als de backend
-      zijn voldoende getest door middel van testcases.
+      en alle data in het systeem is geheel online toegankelijk via de user-interface en via de API. Je werkt in een
+      CI/CD-ontwikkelstraat, en zowel je client-side frontend applicatie als de backend zijn voldoende getest door
+      middel van testcases.
     </p><br>
     <p>
-      Dit is een site waar studenten uit studentenhuizen zich kunnen aanmelden voor maaltijden die dan worden bezorgd.
-      Als entiteiten heb je:
+      Dit is een site waar studenten zich kunnen aanmelden voor maaltijden uit een studentenhuis. Als entiteiten heb je:
     </p>
     <ul>
       <li>Studentenhuis</li>
       <li>Student</li>
-      <li>Bezorger</li>
+      <li>Eigenaar</li>
       <li>Maaltijd</li>
       <li>Product</li>
     </ul>
@@ -56,19 +53,20 @@
 
 <div class="move30down max-width77">
   <h3>Entiteiten</h3>
-  <p>De entiteiten zijn: Studentenhuis, Student, Bezorger, Maaltijd en Product. </p><br>
-  <p>Hoe het werkt, is dat je bijvoorbeeld kijkt (Zie afbeelding hieronder) naar Studentenhuis en Student. Je ziet dan
-    dat een student woont in een studentenhuis. Ze zijn verbonden door een pijl, de binnenste met een cirkel en een
-    streep wordt modaliteit genoemd, en de buitenste met meerdere streepjes en één streep wordt kardinaliteit genoemd.
+  <p>De entiteiten zijn: Studentenhuis, Student, Eigenaar, Maaltijd en Product. </p><br>
+  <p>Hoe het werkt, is dat je bijvoorbeeld kijkt (Zie afbeelding hieronder) naar Student en Maaltijd, je ziet dan
+    dat een student één of meerdere maaltijden kan kopen. Ze zijn verbonden door een pijl, de binnenste (tussen twee
+    entiteiten) met een cirkel of een streep wordt modaliteit genoemd, en de buitenste (tussen twee entiteiten) met
+    meerdere streepjes of één streep wordt kardinaliteit genoemd.
   </p><br>
   <p>Voor de binnenste:
     Een cirkel betekent dat het niet verplicht is. Een streepje betekent dat je tenminste één moet hebben. Dus een
-    Studenthuis heeft tenminste één Student en een Student hoeft niet persé in een studentenhuis te wonen om een
-    student te zijn.
+    Maaltijd heeft tenminste één Studentenhuis en een Studentenhuis hoeft niet persé een Maaltijd hebben om een
+    Studentenhuis te zijn.
   </p><br>
   <p>Voor de buitenste:
     Drie streepjes betekent dat het één of meer is. Één streepje betekent dat je maximaal één kan hebben. Dus een
-    Studenthuis kunt meerdere studenten hebben en een Student woont maar in één Studentenhuis.
+    Eigenaar kunt meerdere Maaltijden hebben en een Maaltijd heeft maar één Eigenaar.
   </p><br>
 
   <img src="assets/img/erd.png" class="img-fluid erd" alt="ERD" />
@@ -88,15 +86,16 @@
         <li>Email: string</li>
         <li>Naam: string</li>
         <li>IsAfgestudeerd: boolean</li>
-        <li>TelefoonNmr: string</li>
+        <li>Rol: enum</li>
       </ul>
     </div>
     <div class="col-sm-12 col-md-4">
-      <p>Bezorger</p>
+      <p>Eigenaar</p>
       <ul>
         <li>Email: string</li>
         <li>Naam: string</li>
-        <li>IsBeschikbaar: boolean</li>
+        <li>IsAfgestudeerd: boolean</li>
+        <li>Rol: enum</li>
       </ul>
     </div>
   </div>
@@ -107,7 +106,7 @@
       <ul>
         <li>Naam: string</li>
         <li>Prijs: number</li>
-        <li>Bezorgtijd: date</li>
+        <li>Ophaaltijd: date</li>
         <li>Datum: date</li>
       </ul>
     </div>
@@ -162,13 +161,6 @@
             <td>Overzicht is een grid.</td>
           </tr>
           <tr>
-            <td>5</td>
-            <td>
-              Als bezorger wil ik zien welke maaltijden ik moet bezorgen.
-            </td>
-            <td>Overzicht is een grid.</td>
-          </tr>
-          <tr>
             <td>6</td>
             <td>
               Als eigenaar wil ik een maaltijd kunnen aanmaken.
@@ -192,7 +184,7 @@
           <tr>
             <td>9</td>
             <td>
-              Als eigenaar wil ik een maaltijd kunnen toewijzen aan een bezorger.
+              Als beheerder wil ik overal bij kunnen.
             </td>
             <td>Overzicht is een grid.</td>
           </tr>

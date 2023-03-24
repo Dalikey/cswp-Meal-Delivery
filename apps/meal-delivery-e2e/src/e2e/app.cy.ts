@@ -8,6 +8,6 @@ describe('meal-delivery', () => {
     cy.login('my-email@something.com', 'myPassword');
 
     // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welkom bij Gouden maaltijdbezorging');
+    getGreeting().contains('Welkom bij Gouden maaltijden');
   });
 });

@@ -13,12 +13,14 @@ export class NavComponent implements OnInit {
   isNavbarCollapsed = true;
   loggedInUser$!: Observable<IToken | undefined>;
   isAdmin: boolean;
+  isStudent: boolean;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loggedInUser$ = this.authService.currentUser$;
     this.isAdmin = this.authService.checkIsAdmin();
+    this.isStudent = this.authService.checkIsStudent();
   }
 
   logout(): void {
