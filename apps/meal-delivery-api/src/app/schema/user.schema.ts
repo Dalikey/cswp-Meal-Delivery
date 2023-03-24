@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { UserRole } from '@md/data';
 import { HydratedDocument } from 'mongoose';
 import { v4 as uuid } from 'uuid';
-import { Meal } from '../meal/meal.schema';
+import { Meal } from './meal.schema';
 
 export type UserDocument = HydratedDocument<User>;
 

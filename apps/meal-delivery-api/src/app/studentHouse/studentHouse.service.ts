@@ -2,11 +2,11 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import {
   StudentHouse as StudentHouseModel,
   StudentHouseDocument,
-} from './studentHouse.schema';
+} from '../schema/studentHouse.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { StudentHouseInfo, ResourceId } from '@md/data';
 import { Model } from 'mongoose';
-import { User, UserDocument } from '../user/user.schema';
+import { User, UserDocument } from '../schema/user.schema';
 
 @Injectable()
 export class StudentHouseService {
