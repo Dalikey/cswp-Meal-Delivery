@@ -13,7 +13,6 @@ import { MealService } from '../meal.service';
   styleUrls: ['./orderlist.component.css'],
 })
 export class OrderListComponent implements OnInit {
-  meals$!: Observable<Meal[] | null | undefined>;
   user;
   isOwner: boolean;
   isAdmin: boolean;
@@ -28,7 +27,6 @@ export class OrderListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.meals$ = this.mealService.getAllMeals();
     this.isOwner = this.authService.checkIsOwner();
     this.isAdmin = this.authService.checkIsAdmin();
     this.isStudent = this.authService.checkIsStudent();
@@ -42,7 +40,9 @@ export class OrderListComponent implements OnInit {
     this.saveEditedWorkGuard.canDeactivate().then((result) => {
       if (result) {
         this.mealService.cancelOrder(id).subscribe(() => {
-          this.meals$ = this.mealService.getAllMeals();
+          this.userService.getUserById(this.currentUserId).subscribe((data) => {
+            this.user = data;
+          });
         });
       }
     });

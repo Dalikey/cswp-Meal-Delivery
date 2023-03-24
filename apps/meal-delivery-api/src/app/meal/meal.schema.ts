@@ -26,9 +26,6 @@ export class Meal {
 
   @Prop({ type: [], default: [] })
   products: Product[];
-
-  @Prop({ type: [], default: [] })
-  students: User[];
 }
 
 export const MealSchema = SchemaFactory.createForClass(Meal);

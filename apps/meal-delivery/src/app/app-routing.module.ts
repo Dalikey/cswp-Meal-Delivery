@@ -31,89 +31,83 @@ const routes: Routes = [
   { path: 'login', pathMatch: 'full', component: LoginComponent },
   {
     path: 'meal',
+    canActivate: [LoggedInAuthGuard],
     component: MealComponent,
     children: [
       { path: '', pathMatch: 'full', component: ListComponentMeal },
       {
         path: 'orderlist',
         pathMatch: 'full',
-        canActivate: [LoggedInAuthGuard],
         component: OrderListComponent,
       },
       {
         path: 'new',
         pathMatch: 'full',
-        canActivate: [LoggedInAuthGuard],
         component: EditComponentMeal,
       },
       { path: ':id', pathMatch: 'full', component: DetailComponentMeal },
       {
         path: ':id/edit',
         pathMatch: 'full',
-        canActivate: [LoggedInAuthGuard],
         component: EditComponentMeal,
       },
     ],
   },
   {
     path: 'user',
+    canActivate: [LoggedInAuthGuard],
     component: UserComponent,
     children: [
       {
         path: '',
         pathMatch: 'full',
-        canActivate: [LoggedInAuthGuard],
         component: ListComponentUser,
       },
       {
         path: 'new',
         pathMatch: 'full',
-        canActivate: [LoggedInAuthGuard],
         component: EditComponentUser,
       },
       {
         path: ':id',
         pathMatch: 'full',
-        canActivate: [LoggedInAuthGuard],
         component: DetailComponentUser,
       },
       {
         path: ':id/edit',
         pathMatch: 'full',
-        canActivate: [LoggedInAuthGuard],
         component: EditComponentUser,
       },
     ],
   },
   {
     path: 'product',
+    canActivate: [LoggedInAuthGuard],
     component: ProductComponent,
     children: [
       { path: '', pathMatch: 'full', component: ListComponentProduct },
       {
         path: 'new',
         pathMatch: 'full',
-        canActivate: [LoggedInAuthGuard],
         component: EditComponentProduct,
       },
       { path: ':id', pathMatch: 'full', component: DetailComponentProduct },
       {
         path: ':id/edit',
         pathMatch: 'full',
-        canActivate: [LoggedInAuthGuard],
         component: EditComponentProduct,
       },
     ],
   },
   {
     path: 'studentHouse',
+    canActivate: [LoggedInAuthGuard],
     component: StudentHouseComponent,
     children: [
       { path: '', pathMatch: 'full', component: ListComponentStudentHouse },
       {
         path: 'new',
         pathMatch: 'full',
-        canActivate: [LoggedInAuthGuard],
         component: EditComponentStudentHouse,
       },
       {
@@ -124,7 +118,6 @@ const routes: Routes = [
       {
         path: ':id/edit',
         pathMatch: 'full',
-        canActivate: [LoggedInAuthGuard],
         component: EditComponentStudentHouse,
       },
     ],

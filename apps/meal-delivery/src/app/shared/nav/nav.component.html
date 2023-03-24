@@ -5,8 +5,9 @@
       <a class="nav-link active" aria-current="page" routerLink="/dashboard">Home</a>
     </li>
     <li class="nav-item dropdown" ngbDropdown>
-      <a class="nav-link dropdown-toggle" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown"
-        aria-expanded="false" ngbDropdownToggle>
+      <a *ngIf="!isStudent && loggedInUser$ | async as user" class="nav-link" routerLink="/meal">Maaltijden</a>
+      <a *ngIf="isStudent" class="nav-link dropdown-toggle" id="navbarScrollingDropdown" role="button"
+        data-bs-toggle="dropdown" aria-expanded="false" ngbDropdownToggle>
         Maaltijden
       </a>
       <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="navbarScrollingDropdown">
@@ -15,13 +16,13 @@
       </ul>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/product">Producten</a>
+      <a class="nav-link" routerLink="/product" *ngIf="loggedInUser$ | async as user">Producten</a>
     </li>
     <li class="nav-item" *ngIf="loggedInUser$ | async as user">
       <a *ngIf="isAdmin" class="nav-link" routerLink="/user">Gebruikers</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/studentHouse">Studentenhuizen</a>
+      <a class="nav-link" routerLink="/studentHouse" *ngIf="loggedInUser$ | async as user">Studentenhuizen</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLink="/about-us">Over ons</a>

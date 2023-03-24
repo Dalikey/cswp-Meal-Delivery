@@ -54,7 +54,7 @@
         <!-- deliverytime -->
         <div class="row-5">
           <div class="form-group">
-            <label for="deliverytime">Bezorgtijd</label>
+            <label for="deliverytime">Ophaaltijd</label>
             <div *ngIf="meal?.deliveryTime">
               <input type="time" id="deliverytime" name="deliverytime" class="form-control"
                 [ngModel]="meal!.deliveryTime | date:'shortTime'" #deliveryTime="ngModel"
@@ -62,7 +62,7 @@
                 [ngClass]="{'is-invalid': deliveryTime.invalid && deliveryTime.touched}" />
               <div *ngIf="deliveryTime.invalid && deliveryTime.touched" class="invalid-feedback">
                 <div *ngIf="deliveryTime.errors!['required']">
-                  Bezorgtijd is verplicht
+                  Ophaaltijd is verplicht
                 </div>
               </div>
             </div>
@@ -72,7 +72,7 @@
         <!-- deliverydate -->
         <div class="row-5">
           <div class="form-group">
-            <label for="deliverydate">Bezorgdatum</label>
+            <label for="deliverydate">Ophaaldatum</label>
             <div *ngIf="meal?.deliveryDate">
               <input type="date" id="deliverydate" name="deliverydate" class="form-control"
                 [ngModel]="meal!.deliveryDate | date:'yyyy-MM-dd'" (ngModelChange)="meal!.deliveryDate = $event" />
