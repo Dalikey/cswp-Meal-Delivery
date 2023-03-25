@@ -26,9 +26,6 @@ import { DataModule } from './data.module';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(TokenMiddleware)
-      .exclude({ path: 'api/(.*)', method: RequestMethod.GET })
-      .forRoutes('api');
+    consumer.apply(TokenMiddleware).forRoutes('*');
   }
 }

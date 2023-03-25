@@ -19,18 +19,10 @@ export class ApiResponseInterceptor implements NestInterceptor {
         if (results) {
           return {
             results,
-            info: {
-              type: results instanceof Array ? 'list' : 'object',
-              count: results instanceof Array ? results.length : 1,
-            },
           };
         } else {
           return {
             results: 'Operation successful or no results available.',
-            info: {
-              type: 'none',
-              count: 0,
-            },
           };
         }
       })
