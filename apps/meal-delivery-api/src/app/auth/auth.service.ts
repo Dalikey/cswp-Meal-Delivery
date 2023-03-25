@@ -26,14 +26,8 @@ export class AuthService {
       isGraduated,
       role,
     });
-    try {
-      await user.save();
-    } catch (e) {
-      throw new HttpException(
-        'Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.',
-        HttpStatus.BAD_REQUEST
-      );
-    }
+
+    await user.save();
     return user.id;
   }
 

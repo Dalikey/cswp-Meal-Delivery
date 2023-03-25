@@ -34,9 +34,6 @@ import { Neo4jModule } from './neo4j/neo4j.module';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(TokenMiddleware)
-      .exclude({ path: 'api/(.*)', method: RequestMethod.GET })
-      .forRoutes('api');
+    consumer.apply(TokenMiddleware).forRoutes('api');
   }
 }
