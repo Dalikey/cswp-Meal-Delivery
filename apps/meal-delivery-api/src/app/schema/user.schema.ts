@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { UserRole } from '@md/data';
 import { HydratedDocument } from 'mongoose';
 import { v4 as uuid } from 'uuid';
-import { Meal } from './meal.schema';
+import { Meal, MealSchema } from './meal.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -15,7 +15,7 @@ export class User {
   @Prop({ type: String, enum: UserRole, default: UserRole.STUDENT })
   role: string;
 
-  @Prop({ type: [], default: [] })
+  @Prop({ type: [MealSchema], default: [] })
   meals: Meal[];
 }
 

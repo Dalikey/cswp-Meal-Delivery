@@ -12,9 +12,6 @@ export class StudentHouse {
   streetAndNmr: string;
   @Prop({ type: String, required: false }) city: string;
   @Prop({ type: String, required: false }) postcode: string;
-
-  @Prop({ type: [], default: [] })
-  students: User[];
 }
 
 export const StudentHouseSchema = SchemaFactory.createForClass(StudentHouse);

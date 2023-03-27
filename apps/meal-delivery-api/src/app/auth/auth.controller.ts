@@ -20,16 +20,15 @@ export class AuthController {
       await this.authService.registerUser(credentials);
 
       return {
-        token: await this.authService.generateToken(
-          credentials.username,
-          credentials.password
-        ),
-
         id: await this.authService.createUser(
           credentials.username,
           credentials.emailAddress,
           credentials.isGraduated,
           credentials.role
+        ),
+        token: await this.authService.generateToken(
+          credentials.username,
+          credentials.password
         ),
       };
     } catch (e) {
@@ -49,11 +48,11 @@ export class AuthController {
   async login(@Body() credentials: UserCredentials): Promise<LocalStorage> {
     try {
       return {
+        id: (await this.authService.getId(credentials.username)).toString(),
         token: await this.authService.generateToken(
           credentials.username,
           credentials.password
         ),
-        id: (await this.authService.getId(credentials.username)).toString(),
       };
     } catch (e) {
       let errorMessage = 'Failed to do something exceptional';

@@ -47,7 +47,7 @@ export class ProductController {
     @Body() product: ProductInfo
   ): Promise<ProductInfo> {
     try {
-      return this.productService.updateProduct(productId, product, token.id);
+      return this.productService.updateProduct(productId, product);
     } catch (e) {
       let errorMessage = 'Failed to do something exceptional';
       if (e instanceof Error) {

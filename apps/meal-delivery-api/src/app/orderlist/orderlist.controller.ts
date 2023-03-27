@@ -4,11 +4,11 @@ import { InjectToken, Token } from '../auth/token.decorator';
 
 @Controller('orderlist')
 export class OrderListController {
-  constructor(private readonly userListService: OrderListService) {}
+  constructor(private readonly orderListService: OrderListService) {}
 
   @Post(':id')
   async addMealToUser(@InjectToken() token: Token, @Param('id') id: string) {
-    await this.userListService.addMealToUser(id, token.id);
+    await this.orderListService.addMealToUser(id, token.id);
   }
 
   @Delete(':id')
@@ -16,6 +16,6 @@ export class OrderListController {
     @InjectToken() token: Token,
     @Param('id') id: string
   ) {
-    await this.userListService.removeMealFromUser(id, token.id);
+    await this.orderListService.removeMealFromUser(id, token.id);
   }
 }

@@ -6,3 +6,4 @@ export * from './lib/product.interface';
 export * from './lib/studentHouse.interface';
 export * from './lib/api-response.interface';
 export * from './lib/auth.interface';
+export * from './lib/addProduct.interface';
