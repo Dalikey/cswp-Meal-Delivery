@@ -20,6 +20,7 @@ export class MealService {
 
   async createMeal(mealInfo: MealInfo, ownerId: string): Promise<ResourceId> {
     const owner = await this.userModel.findOne({ id: ownerId });
+
     if (!owner) {
       throw new HttpException('Owner not found', HttpStatus.BAD_REQUEST);
     }
@@ -32,7 +33,7 @@ export class MealService {
       price: mealInfo.price,
       deliveryTime: mealInfo.deliveryTime,
       deliveryDate: mealInfo.deliveryDate,
-      owner: owner,
+      ownerRef: owner._id,
       studentHouse: studentHouse,
     });
     await meal.save();
