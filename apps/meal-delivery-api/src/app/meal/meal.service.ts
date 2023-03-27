@@ -53,7 +53,9 @@ export class MealService {
     mealInfo: MealInfo,
     ownerId: string
   ): Promise<MealInfo> {
-    const meal = await this.mealModel.findOne({ id: mealId });
+    const meal = await this.mealModel
+      .findOne({ id: mealId })
+      .populate('ownerRef');
     const owner = await this.userModel.findOne({ id: ownerId });
 
     if (!owner) {
@@ -61,7 +63,7 @@ export class MealService {
     }
 
     if (owner.role !== 'admin') {
-      if (ownerId !== meal?.owner?.id) {
+      if (ownerId !== meal?.ownerRef?.id) {
         throw new HttpException(
           'You are not the owner of this meal.',
           HttpStatus.BAD_REQUEST

@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { v4 as uuid } from 'uuid';
-import { Product } from './product.schema';
+import { Product, ProductSchema } from './product.schema';
 import { StudentHouse, StudentHouseSchema } from './studentHouse.schema';
-import { User, UserSchema } from './user.schema';
+import { User } from './user.schema';
 
 export type MealDocument = HydratedDocument<Meal>;
 
@@ -15,13 +15,18 @@ export class Meal {
   @Prop({ type: Date, default: new Date() }) deliveryTime: Date;
   @Prop({ type: Date, default: new Date() }) deliveryDate: Date;
 
-  @Prop({ type: UserSchema, required: true })
-  owner: User;
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    // cannot use Meal.owner here, as it leads to a circular dependency
+    ref: 'User',
+    required: true,
+  })
+  ownerRef: User;
 
   @Prop({ type: StudentHouseSchema })
   studentHouse: StudentHouse;
 
-  @Prop({ type: [], default: [] })
+  @Prop({ type: [ProductSchema], default: [] })
   products: Product[];
 }
 

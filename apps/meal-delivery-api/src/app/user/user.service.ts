@@ -21,6 +21,13 @@ export class UserService {
     return users[0];
   }
 
+  async getOneByName(name: string): Promise<UserInfo> {
+    const users = await this.userModel.aggregate([
+      { $match: { username: name } },
+    ]);
+    return users[0];
+  }
+
   async updateUser(userId: string, userInfo: UserInfo): Promise<UserInfo> {
     const user = await this.userModel.findOne({ id: userId });
     if (!user) {

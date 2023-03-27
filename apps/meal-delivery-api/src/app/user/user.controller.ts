@@ -23,7 +23,7 @@ export class UserController {
 
   @Get('self')
   async getSelf(@InjectToken() token: Token): Promise<UserInfo> {
-    const result = await this.userService.getOne(token.id);
+    const result = await this.userService.getOneByName(token.username);
     return result;
   }
 

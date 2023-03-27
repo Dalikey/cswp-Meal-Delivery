@@ -31,10 +31,7 @@ export class TokenMiddleware implements NestMiddleware {
       if (e instanceof Error) {
         errorMessage = e.message;
       }
-      throw new HttpException(
-        'Token invalid ' + errorMessage,
-        HttpStatus.UNAUTHORIZED
-      );
+      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
     }
 
     next();
