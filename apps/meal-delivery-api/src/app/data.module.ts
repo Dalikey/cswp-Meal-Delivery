@@ -15,6 +15,8 @@ import { StudentHouseController } from './studentHouse/studentHouse.controller';
 import { StudentHouseService } from './studentHouse/studentHouse.service';
 import { OrderListService } from './orderlist/orderlist.service';
 import { OrderListController } from './orderlist/orderlist.controller';
+import { ProductListController } from './productlist/productlist.controller';
+import { ProductListService } from './productlist/productlist.service';
 
 @Module({
   imports: [
@@ -31,6 +33,7 @@ import { OrderListController } from './orderlist/orderlist.controller';
     OrderListController,
     MealController,
     ProductController,
+    ProductListController,
     StudentHouseController,
   ],
   providers: [
@@ -38,6 +41,7 @@ import { OrderListController } from './orderlist/orderlist.controller';
     OrderListService,
     MealService,
     ProductService,
+    ProductListService,
     StudentHouseService,
   ],
 })
