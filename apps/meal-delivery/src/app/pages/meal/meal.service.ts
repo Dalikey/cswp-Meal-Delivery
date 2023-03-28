@@ -152,6 +152,47 @@ export class MealService {
       );
   }
 
+  addProductToMeal(id: string) {
+    return this.http
+      .post<Meal>(
+        `${this.configService.getConfig().apiEndpoint}api/productlist`,
+        id,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          this.alertService.success('Product succesvol toegevoegd.');
+          return data.results;
+        }),
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
+  }
+
+  removeProductFromMeal(id: string) {
+    return this.http
+      .delete<Meal>(
+        `${this.configService.getConfig().apiEndpoint}api/productlist/${id}`,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          this.alertService.success('Product succesvol eruit gehaald.');
+          return data.results;
+        }),
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
+  }
+
   deleteMeal(id: string) {
     return this.http
       .delete<Meal>(

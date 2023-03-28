@@ -1,4 +1,4 @@
-import { MealInfo } from '@md/data';
+import { MealInfo, RemoveProductIds } from '@md/data';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -42,25 +42,20 @@ export class ProductListService {
     }
   }
 
-  // async removeProductFromMeal(productId: string, mealId: string) {
-  //   const product = await this.getOne(productId);
-  //   if (product) {
-  //     await this.mealModel.updateOne(
-  //       { id: mealId },
-  //       { $pull: { products: product } }
-  //     );
-  //   } else {
-  //     throw new HttpException('Product does not exist', HttpStatus.BAD_REQUEST);
-  //   }
-  // }
+  async removeProductFromMeal(p: RemoveProductIds, mealId: string) {
+    if (!Array.isArray(p.productIds)) {
+      throw new HttpException(
+        'Invalid product IDs, fill in body with [productId]',
+        HttpStatus.BAD_REQUEST
+      );
+    }
 
-  async removeProductFromMeal(productId: string, mealId: string) {
-    // test this
-    const product = await this.getOne(productId);
-    if (product) {
+    const products = await this.getMultiple(p.productIds);
+    if (products) {
+      const productIdsToRemove = products.map((p) => p.id);
       await this.mealModel.updateOne(
         { id: mealId },
-        { $pull: { products: { id: productId } } }
+        { $pull: { products: { id: { $in: productIdsToRemove } } } }
       );
     } else {
       throw new HttpException('Product does not exist', HttpStatus.BAD_REQUEST);
