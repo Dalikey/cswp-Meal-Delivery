@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { ApiResponse } from '@md/data';
@@ -173,11 +173,12 @@ export class MealService {
       );
   }
 
-  removeProductFromMeal(id: string) {
+  removeProductFromMeal(productIds: string[], id: string) {
+    const params = new HttpParams().set('productIds', [productIds].join(','));
     return this.http
       .delete<RemoveProductIds>(
         `${this.configService.getConfig().apiEndpoint}api/productlist/${id}`,
-        this.httpOptions
+        { ...this.httpOptions, params }
       )
       .pipe(
         tap(console.log),

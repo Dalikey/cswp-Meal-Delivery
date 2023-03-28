@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { SaveEditedWorkGuard } from '../../../auth/auth.guards';
 import { AuthService } from '../../../auth/auth.service';
-import { User } from '../../user/user.model';
 import { UserService } from '../../user/user.service';
-import { Meal } from '../meal.model';
 import { MealService } from '../meal.service';
 
 @Component({

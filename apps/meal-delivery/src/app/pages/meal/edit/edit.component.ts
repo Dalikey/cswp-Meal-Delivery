@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { catchError, of, Subscription, switchMap, tap } from 'rxjs';
-import { AuthService } from '../../../auth/auth.service';
+import { catchError, Observable, of, Subscription, switchMap, tap } from 'rxjs';
+import { SaveEditedWorkGuard } from '../../../auth/auth.guards';
 import { Alert, AlertService } from '../../../shared/alert/alert.service';
+import { Product } from '../../product/product.model';
+import { ProductService } from '../../product/product.service';
 import { StudentHouse } from '../../studentHouse/studentHouse.model';
 import { StudentHouseService } from '../../studentHouse/studentHouse.service';
 import { Meal } from '../meal.model';
@@ -20,6 +22,7 @@ export class EditComponent implements OnInit, OnDestroy {
   mealid!: number | undefined;
   debug = false;
   studentHouses: StudentHouse[];
+  products$!: Observable<Product[] | null | undefined>;
 
   subscriptionOptions!: Subscription;
   subscriptionParams!: Subscription;
@@ -31,10 +34,12 @@ export class EditComponent implements OnInit, OnDestroy {
     private router: Router,
     private mealService: MealService,
     private studentHouseService: StudentHouseService,
-    private authService: AuthService
+    private productService: ProductService,
+    private saveEditedWorkGuard: SaveEditedWorkGuard
   ) {}
 
   ngOnInit(): void {
+    this.products$ = this.productService.getAllProducts();
     this.subscriptionParams = this.route.paramMap
       .pipe(
         switchMap((params: ParamMap) => {
@@ -72,6 +77,36 @@ export class EditComponent implements OnInit, OnDestroy {
       .subscribe((meal: Meal) => {
         this.meal = meal;
       });
+  }
+
+  addProductToMeal(productId: string, meaIid: string) {
+    const AddProductIds = {
+      productId: [productId],
+      mealId: meaIid,
+    };
+    this.mealService.addProductToMeal(AddProductIds).subscribe(() => {
+      this.mealService.getMealById(meaIid).subscribe((meal: any) => {
+        this.meal = meal;
+      });
+    });
+  }
+
+  removeProductFromMeal(productId: string[], mealId: string) {
+    this.mealService.removeProductFromMeal(productId, mealId).subscribe(() => {
+      this.mealService.getMealById(mealId).subscribe((meal: any) => {
+        this.meal = meal;
+      });
+    });
+  }
+
+  deleteProduct(id: string) {
+    this.saveEditedWorkGuard.canDeactivate().then((result) => {
+      if (result) {
+        this.productService.deleteProduct(id).subscribe(() => {
+          this.products$ = this.productService.getAllProducts();
+        });
+      }
+    });
   }
 
   onSubmit() {

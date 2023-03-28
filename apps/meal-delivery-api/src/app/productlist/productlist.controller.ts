@@ -1,5 +1,5 @@
 import { AddProductIds, RemoveProductIds } from '@md/data';
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Query } from '@nestjs/common';
 import { ProductListService } from './productlist.service';
 
 @Controller('productlist')
@@ -16,9 +16,12 @@ export class ProductListController {
 
   @Delete(':id')
   async removeProductFromMeal(
-    @Body() productIds: RemoveProductIds,
+    @Query('productIds') productIds: string,
     @Param('id') mealId: string
   ) {
-    await this.productListService.removeProductFromMeal(productIds, mealId);
+    await this.productListService.removeProductFromMeal(
+      productIds.split(','),
+      mealId
+    );
   }
 }

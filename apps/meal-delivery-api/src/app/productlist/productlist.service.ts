@@ -42,15 +42,15 @@ export class ProductListService {
     }
   }
 
-  async removeProductFromMeal(p: RemoveProductIds, mealId: string) {
-    if (!Array.isArray(p.productIds)) {
+  async removeProductFromMeal(productIds: string[], mealId: string) {
+    if (!Array.isArray(productIds)) {
       throw new HttpException(
-        'Invalid product IDs, fill in body with [productId]',
+        'productId needs to be an array',
         HttpStatus.BAD_REQUEST
       );
     }
 
-    const products = await this.getMultiple(p.productIds);
+    const products = await this.getMultiple(productIds);
     if (products) {
       const productIdsToRemove = products.map((p) => p.id);
       await this.mealModel.updateOne(
