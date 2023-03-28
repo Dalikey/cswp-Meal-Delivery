@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from '../../../../environments/environment';
+import { SaveEditedWorkGuard } from '../../../auth/auth.guards';
 import { ConfigModule } from '../../../shared/moduleconfig/config.module';
 
 import { EditComponent } from './edit.component';
@@ -20,6 +21,7 @@ describe('EditComponent', () => {
         HttpClientModule,
         ConfigModule.forRoot({ apiEndpoint: environment.SERVER_API_URL }),
       ],
+      providers: [SaveEditedWorkGuard],
     }).compileComponents();
   });
 

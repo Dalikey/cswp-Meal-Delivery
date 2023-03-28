@@ -1,6 +1,10 @@
 import { Id } from './id.type';
 
 export interface AddProductIds {
-  productId: Id;
+  productId: string[];
   mealId: Id;
+}
+
+export interface RemoveProductIds {
+  productIds: string[];
 }

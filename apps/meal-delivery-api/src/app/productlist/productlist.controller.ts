@@ -1,5 +1,5 @@
-import { AddProductIds } from '@md/data';
-import { Body, Controller, Delete, Post } from '@nestjs/common';
+import { AddProductIds, RemoveProductIds } from '@md/data';
+import { Body, Controller, Delete, Param, Post, Query } from '@nestjs/common';
 import { ProductListService } from './productlist.service';
 
 @Controller('productlist')
@@ -14,11 +14,14 @@ export class ProductListController {
     );
   }
 
-  @Delete('')
-  async removeProductFromMeal(@Body() addId: AddProductIds) {
+  @Delete(':id')
+  async removeProductFromMeal(
+    @Query('productIds') productIds: string,
+    @Param('id') mealId: string
+  ) {
     await this.productListService.removeProductFromMeal(
-      addId.productId,
-      addId.mealId
+      productIds.split(','),
+      mealId
     );
   }
 }
