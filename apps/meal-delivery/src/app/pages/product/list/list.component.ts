@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { SaveEditedWorkGuard } from '../../../auth/auth.guards';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
@@ -14,7 +13,6 @@ export class ListComponent implements OnInit {
   products$!: Observable<Product[] | null | undefined>;
 
   constructor(
-    private router: Router,
     private productService: ProductService,
     private saveEditedWorkGuard: SaveEditedWorkGuard
   ) {}

@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { ApiResponse } from '@md/data';
-import { Meal } from './meal.model';
+import { AddProductIds, Meal, RemoveProductIds } from './meal.model';
 import { AuthService } from '../../auth/auth.service';
 import { ConfigService } from '../../shared/moduleconfig/config.service';
 import { AlertService } from '../../shared/alert/alert.service';
@@ -142,6 +142,48 @@ export class MealService {
         tap(console.log),
         map((data: any) => {
           this.alertService.success('Maaltijd succesvol geannuleerd.');
+          return data.results;
+        }),
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
+  }
+
+  addProductToMeal(ids: AddProductIds) {
+    return this.http
+      .post<AddProductIds>(
+        `${this.configService.getConfig().apiEndpoint}api/productlist`,
+        ids,
+        this.httpOptions
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          this.alertService.success('Product succesvol toegevoegd.');
+          return data.results;
+        }),
+        catchError((e) => {
+          console.log('Unable to connect to database. ' + e.error.message);
+          this.alertService.error('Kan geen verbinding maken met de database.');
+          return of(undefined);
+        })
+      );
+  }
+
+  removeProductFromMeal(productIds: string[], id: string) {
+    const params = new HttpParams().set('productIds', [productIds].join(','));
+    return this.http
+      .delete<RemoveProductIds>(
+        `${this.configService.getConfig().apiEndpoint}api/productlist/${id}`,
+        { ...this.httpOptions, params }
+      )
+      .pipe(
+        tap(console.log),
+        map((data: any) => {
+          this.alertService.success('Product succesvol eruit gehaald.');
           return data.results;
         }),
         catchError((e) => {
