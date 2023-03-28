@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { ApiResponse } from '@md/data';
-import { Meal } from './meal.model';
+import { AddProductIds, Meal, RemoveProductIds } from './meal.model';
 import { AuthService } from '../../auth/auth.service';
 import { ConfigService } from '../../shared/moduleconfig/config.service';
 import { AlertService } from '../../shared/alert/alert.service';
@@ -152,11 +152,11 @@ export class MealService {
       );
   }
 
-  addProductToMeal(id: string) {
+  addProductToMeal(ids: AddProductIds) {
     return this.http
-      .post<Meal>(
+      .post<AddProductIds>(
         `${this.configService.getConfig().apiEndpoint}api/productlist`,
-        id,
+        ids,
         this.httpOptions
       )
       .pipe(
@@ -175,7 +175,7 @@ export class MealService {
 
   removeProductFromMeal(id: string) {
     return this.http
-      .delete<Meal>(
+      .delete<RemoveProductIds>(
         `${this.configService.getConfig().apiEndpoint}api/productlist/${id}`,
         this.httpOptions
       )

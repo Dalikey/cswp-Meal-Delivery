@@ -16,8 +16,11 @@ export class UserService {
     return this.userModel.find({}, { _id: 0, __v: 0 });
   }
 
-  async getOne(userId: string): Promise<UserInfo> {
-    const users = await this.userModel.aggregate([{ $match: { id: userId } }]);
+  async getOne(userId: string): Promise<any> {
+    const users = await this.userModel
+      .find({ id: userId })
+      .populate({ path: 'meals', populate: { path: 'ownerRef' } })
+      .exec();
     return users[0];
   }
 

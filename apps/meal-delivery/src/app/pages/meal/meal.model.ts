@@ -10,3 +10,12 @@ export class Meal {
   studentHouseId: string | undefined;
   user?: User | undefined;
 }
+
+export class AddProductIds {
+  productId: string[] | undefined;
+  mealId: string | undefined;
+}
+
+export class RemoveProductIds {
+  productIds: string[] | undefined;
+}
