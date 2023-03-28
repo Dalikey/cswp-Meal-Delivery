@@ -18,7 +18,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{meal.name}}</h5>
                 <ul class="noBullets">
-                  <li>Eigenaar: {{meal.owner.username}}</li>
+                  <li>Eigenaar: {{meal.ownerRef.username}}</li>
                   <li>Ophaaltijd: {{meal?.deliveryTime | date:"HH:mm"}}</li>
                   <li>Ophaaldatum: {{meal?.deliveryDate | date: "dd-MM-YYYY"}}</li>
                   <li> <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">Klik hier
