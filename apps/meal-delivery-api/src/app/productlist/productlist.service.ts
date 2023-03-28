@@ -23,24 +23,44 @@ export class ProductListService {
     return meals[0];
   }
 
-  async addProductToMeal(productId: string, mealId: string) {
-    const product = await this.getOne(productId);
-    if (product) {
+  async getMultiple(productIds: string[]): Promise<MealInfo[]> {
+    const meals = await this.productModel.aggregate([
+      { $match: { id: { $in: productIds } } },
+    ]);
+    return meals;
+  }
+
+  async addProductToMeal(productIds: string[], mealId: string) {
+    const products = await this.getMultiple(productIds);
+    if (products.length > 0) {
       await this.mealModel.updateOne(
         { id: mealId },
-        { $addToSet: { products: product } }
+        { $addToSet: { products: { $each: products } } }
       );
     } else {
       throw new HttpException('Product does not exist', HttpStatus.BAD_REQUEST);
     }
   }
 
+  // async removeProductFromMeal(productId: string, mealId: string) {
+  //   const product = await this.getOne(productId);
+  //   if (product) {
+  //     await this.mealModel.updateOne(
+  //       { id: mealId },
+  //       { $pull: { products: product } }
+  //     );
+  //   } else {
+  //     throw new HttpException('Product does not exist', HttpStatus.BAD_REQUEST);
+  //   }
+  // }
+
   async removeProductFromMeal(productId: string, mealId: string) {
+    // test this
     const product = await this.getOne(productId);
     if (product) {
       await this.mealModel.updateOne(
         { id: mealId },
-        { $pull: { products: product } }
+        { $pull: { products: { id: productId } } }
       );
     } else {
       throw new HttpException('Product does not exist', HttpStatus.BAD_REQUEST);
