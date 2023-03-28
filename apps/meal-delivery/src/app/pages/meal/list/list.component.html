@@ -18,9 +18,12 @@
               <div class="card-body">
                 <h5 class="card-title">{{meal.name}}</h5>
                 <ul class="noBullets">
-                  <li>Eigenaar: {{meal.ownerRef.username}}</li>
                   <li>Ophaaltijd: {{meal?.deliveryTime | date:"HH:mm"}}</li>
                   <li>Ophaaldatum: {{meal?.deliveryDate | date: "dd-MM-YYYY"}}</li>
+                  <li *ngIf="meal?.studentHouse">Plaats: {{meal?.studentHouse.streetAndNmr}},
+                    {{meal?.studentHouse.city}},
+                    {{meal?.studentHouse.postcode}}
+                  </li>
                   <li> <a routerLink="{{ meal.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">Klik hier
                       voor meer details.</a></li>
                 </ul>

@@ -13,6 +13,9 @@
       <li *ngIf="!meal?.deliveryTime">Ophaaltijd: maaltijd nog niet gereserveerd.</li>
       <li *ngIf="meal?.deliveryDate">Ophaaldatum: {{meal?.deliveryDate | date: "dd-MM-YYYY"}}</li>
       <li *ngIf="!meal?.deliveryDate">Ophaaldatum: maaltijd nog niet gereserveerd.</li>
+      <li *ngIf="meal?.studentHouse">Plaats: {{meal?.studentHouse.streetAndNmr}}, {{meal?.studentHouse.city}},
+        {{meal?.studentHouse.postcode}}
+      </li>
     </ul>
   </div>
 </div>
