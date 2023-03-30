@@ -50,6 +50,7 @@ export class MealService {
   }
 
   async getOne(mealId: string): Promise<MealInfo> {
+    // Used aggregate to find meal and populate owner because Type '(Document<unknown, any, Meal> & Meal & { _id: ObjectId; } & Required<{ _id: ObjectId; }>)[]' is missing the following properties from type 'MealInfo': id, name, price, deliveryTime, and 3 more.
     const meals = await this.mealModel.aggregate([
       { $match: { id: mealId } },
       { $project: { _id: 0, __v: 0 } },
