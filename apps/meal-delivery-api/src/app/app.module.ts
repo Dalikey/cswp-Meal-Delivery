@@ -12,8 +12,8 @@ import { Neo4jModule } from './neo4j/neo4j.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      // `mongodb+srv://${process.env.MONGO_USR}:${process.env.MONGO_PWD}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`
-      'mongodb://127.0.0.1:27017/mealdelivery' // LocalDb the /mealdelivery is the name of the database
+      `mongodb+srv://${process.env.MONGO_USR}:${process.env.MONGO_PWD}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`
+      // 'mongodb://127.0.0.1:27017/mealdelivery' // LocalDb the /mealdelivery is the name of the database
     ),
     Neo4jModule.forRoot({
       scheme: 'neo4j',
