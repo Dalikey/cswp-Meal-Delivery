@@ -48,46 +48,72 @@ describe('MealService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return a list of meals', (done: DoneFn) => {
-    const meals = service.getAllMeals();
-    done();
+  it('should return a list of meals', () => {
+    service.getAllMeals().subscribe((meals) => {
+      expect(meals).toBeInstanceOf(Array);
+      expect(meals).toBeGreaterThan(0);
+    });
   });
 
   it('should return Kipburger met friet', (done: DoneFn) => {
-    const meal = service.getMealById('12345-123-16');
+    service
+      .getMealById('c311ac5b-21fb-46bf-ab6d-7ed503a260d2')
+      .subscribe((meal) => {
+        expect(meal!.name).toEqual('Kipburger met friet');
+        expect(meal!.price).toBeGreaterThan(0);
+      });
     done();
   });
 
-  it('should add a meal', (done: DoneFn) => {
+  it('should return Pasta Bolognese met spekjes', (done: DoneFn) => {
+    service
+      .getMealById('c311ac5b-21fb-46bf-ab6d-7ed503a260d2')
+      .subscribe((meal) => {
+        expect(meal!.name).toEqual('Pasta Bolognese met spekjes');
+        expect(meal!.price).toBeGreaterThan(0);
+      });
+    done();
+  });
+
+  it('should add a meal', () => {
     const newMeal = {
-      id: '69420-123-12',
+      id: 'c311ac5b-21fb-46bf-ab6d-7ed503a260d2',
       name: 'Kipburger met friet',
       price: 10.2,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
-      owner: 'Avans eigenaar',
+      owner: '7beb2b23-1709-42e7-8bfa-3b2417036470',
       studentHouseId: '960c415d-2895-4d41-ae4b-53c44248f105',
     };
     service.addMeal(newMeal);
-    done();
+    service
+      .getMealById('c311ac5b-21fb-46bf-ab6d-7ed503a260d2')
+      .subscribe((meal) => {
+        expect(meal).toEqual(newMeal);
+      });
   });
 
   it('should update a meal', (done: DoneFn) => {
-    const newMeal = {
-      id: '12345-123-12',
+    const updatedMeal = {
+      id: 'c311ac5b-21fb-46bf-ab6d-7ed503a260d2',
       name: 'Pasta Bolognese met spekjes',
       price: 10.2,
       deliveryTime: new Date(),
       deliveryDate: new Date(),
-      owner: 'Avans eigenaar',
+      owner: '7beb2b23-1709-42e7-8bfa-3b2417036470',
       studentHouseId: '960c415d-2895-4d41-ae4b-53c44248f105',
     };
-    service.updateMeal(newMeal);
+    service.updateMeal(updatedMeal);
     done();
   });
 
   it('should delete a meal', (done: DoneFn) => {
-    service.deleteMeal('12345-123-13');
+    service.deleteMeal('c311ac5b-21fb-46bf-ab6d-7ed503a260d2');
+    service
+      .getMealById('c311ac5b-21fb-46bf-ab6d-7ed503a260d2')
+      .subscribe((meal) => {
+        expect(meal).toBeNull();
+      });
     done();
   });
 });

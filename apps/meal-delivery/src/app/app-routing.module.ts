@@ -21,7 +21,7 @@ import { StudentHouseComponent } from './pages/studentHouse/studentHouse.compone
 import { ListComponent as ListComponentStudentHouse } from './pages/studentHouse/list/list.component';
 import { DetailComponent as DetailComponentStudentHouse } from './pages/studentHouse/detail/detail.component';
 import { EditComponent as EditComponentStudentHouse } from './pages/studentHouse/edit/edit.component';
-import { LoggedInAuthGuard, SaveEditedWorkGuard } from './auth/auth.guards';
+import { LoggedInAuthGuard } from './auth/auth.guards';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
