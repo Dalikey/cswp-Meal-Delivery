@@ -6,14 +6,12 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { ProductInfo, ResourceId } from '@md/data';
 import { Model } from 'mongoose';
-import { User, UserDocument } from '../schema/user.schema';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectModel(ProductModel.name)
-    private productModel: Model<ProductDocument>,
-    @InjectModel(User.name) private userModel: Model<UserDocument>
+    private productModel: Model<ProductDocument>
   ) {}
 
   async createProduct(productInfo: ProductInfo): Promise<ResourceId> {
