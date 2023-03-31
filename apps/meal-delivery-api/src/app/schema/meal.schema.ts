@@ -11,7 +11,7 @@ export type MealDocument = HydratedDocument<Meal>;
 export class Meal {
   @Prop({ type: String, default: uuid, index: true }) id: string;
   @Prop({ type: String, required: true }) name: string;
-  @Prop({ type: Number, required: true, default: 0.01 }) price: number;
+  @Prop({ type: Number, default: 0.01 }) price: number;
   @Prop({ type: Date, default: new Date() }) deliveryTime: Date;
   @Prop({ type: Date, default: new Date() }) deliveryDate: Date;
 
