@@ -91,7 +91,7 @@ export class MealService {
     }
 
     try {
-      const { id, ownerRef } = meal;
+      const { ownerRef } = meal;
       await this.mealModel.updateOne(
         { id: mealId },
         {
