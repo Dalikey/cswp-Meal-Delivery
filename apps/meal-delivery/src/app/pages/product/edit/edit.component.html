@@ -32,12 +32,7 @@
         <div class="col">
           <div class="row-5">
             <button type="submit" class="btn btn-primary mx-2" [disabled]="!productEditForm.valid">
-              <div *ngIf="componentExists && product">
-                Product bewerken
-              </div>
-              <div *ngIf="!componentExists">
-                Product toevoegen
-              </div>
+              {{ componentExists && product ? 'Product bewerken' : 'Product toevoegen' }}
             </button>
             <button type="button" class="btn btn-warning mx-2" routerLink="/product">Annuleren</button>
           </div>

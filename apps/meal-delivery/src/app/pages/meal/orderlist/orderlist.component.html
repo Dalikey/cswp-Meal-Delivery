@@ -16,9 +16,9 @@
                 <h5 class="card-title">{{meal.name}}</h5>
                 <ul class="no-bullets">
                   <li>Eigenaar: {{meal.ownerRef.username}}</li>
-                  <li>Ophaaltijd: {{meal?.deliveryTime | date:"HH:mm"}}</li>
-                  <li>Ophaaldatum: {{meal?.deliveryDate | date: "dd-MM-YYYY"}}</li>
-                  <li> <a [routerLink]="['/meal', meal.id]" routerLinkActive="active" ariaCurrentWhenActive="page">Klik
+                  <li *ngIf="meal.deliveryTime">Ophaaltijd: {{meal.deliveryTime | date:"HH:mm"}}</li>
+                  <li *ngIf="meal.deliveryDate">Ophaaldatum: {{meal.deliveryDate | date: "dd-MM-YYYY"}}</li>
+                  <li><a [routerLink]="['/meal', meal.id]" routerLinkActive="active" ariaCurrentWhenActive="page">Klik
                       hier voor meer details.</a></li>
                 </ul>
                 <div class="alignEnd" *ngIf="isStudent">
