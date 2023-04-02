@@ -14,7 +14,7 @@
             <div *ngIf="isStudent || isAdmin || meal.ownerRef.id == currentUserId" class="card">
               <div class="card-body">
                 <h5 class="card-title">{{meal.name}}</h5>
-                <ul class="noBullets">
+                <ul class="no-bullets">
                   <li>Eigenaar: {{meal.ownerRef.username}}</li>
                   <li>Ophaaltijd: {{meal?.deliveryTime | date:"HH:mm"}}</li>
                   <li>Ophaaldatum: {{meal?.deliveryDate | date: "dd-MM-YYYY"}}</li>
