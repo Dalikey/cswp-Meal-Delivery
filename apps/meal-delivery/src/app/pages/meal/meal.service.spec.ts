@@ -2,33 +2,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { environment } from '../../../environments/environment';
 import { ConfigModule } from '../../shared/moduleconfig/config.module';
-import { User } from '../user/user.model';
-import { Meal } from './meal.model';
 import { MealService } from './meal.service';
-
-// Global mock objects
-const expectedUserData: User = {
-  id: 'mongo_id',
-  username: 'Gebruikersnaam',
-  emailAddress: 'user@host.com',
-  isGraduated: false,
-  role: 'owner',
-  token: 'some.dummy.token',
-};
-
-const expectedMeals: Meal[] = [
-  {
-    id: '12345-123-12',
-    name: 'Maaltijd naam',
-    price: 10.2,
-    deliveryTime: new Date(),
-    deliveryDate: new Date(),
-    owner: 'Avans eigenaar',
-    studentHouseId: '960c415d-2895-4d41-ae4b-53c44248f105',
-
-    user: expectedUserData,
-  },
-];
 
 describe('MealService', () => {
   let service: MealService;
@@ -48,11 +22,12 @@ describe('MealService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return a list of meals', () => {
+  it('should return a list of meals', (done: DoneFn) => {
     service.getAllMeals().subscribe((meals) => {
       expect(meals).toBeInstanceOf(Array);
       expect(meals).toBeGreaterThan(0);
     });
+    done();
   });
 
   it('should return Kipburger met friet', (done: DoneFn) => {
@@ -75,7 +50,7 @@ describe('MealService', () => {
     done();
   });
 
-  it('should add a meal', () => {
+  it('should add a meal', (done: DoneFn) => {
     const newMeal = {
       id: 'c311ac5b-21fb-46bf-ab6d-7ed503a260d2',
       name: 'Kipburger met friet',
@@ -91,6 +66,7 @@ describe('MealService', () => {
       .subscribe((meal) => {
         expect(meal).toEqual(newMeal);
       });
+    done();
   });
 
   it('should update a meal', (done: DoneFn) => {

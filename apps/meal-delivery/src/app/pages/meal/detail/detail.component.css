@@ -1,4 +1,5 @@
-ul {
+ul,
+ol {
   color: #fff;
 }
 
@@ -8,4 +9,16 @@ ul {
 
 .btn {
   margin-bottom: auto;
+  margin-right: 42px;
+}
+
+.card,
+.card-body {
+  padding-top: 1px;
+  max-height: 193px;
+}
+
+.no-bullets {
+  list-style-type: none;
+  padding: 0;
 }
