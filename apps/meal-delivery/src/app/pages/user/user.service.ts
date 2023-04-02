@@ -13,9 +13,8 @@ import { AlertService } from '../../shared/alert/alert.service';
 export class UserService {
   constructor(
     private http: HttpClient,
-    private authService: AuthService,
-    private configService: ConfigService,
-    private alertService: AlertService
+    public configService: ConfigService,
+    public alertService: AlertService
   ) {}
   private httpOptions = {
     headers: new HttpHeaders({
