@@ -1,8 +1,5 @@
-<div *ngIf="componentExists && user">
-  <h3>Bewerken van {{ user.username }}</h3>
-</div>
-<div *ngIf="!componentExists">
-  <h3>Nieuwe gebruiker toevoegen</h3>
+<div>
+  <h3>{{ componentExists && user ? 'Bewerken van ' + user.username : 'Nieuwe gebruiker toevoegen' }}</h3>
 </div>
 <div class="max-width77">
   <!-- Edit form voor user model -->
@@ -83,12 +80,7 @@
         <div class="row move34down">
           <div class="col">
             <button type="submit" class="btn btn-primary mx-2" [disabled]="!userEditForm.valid">
-              <div *ngIf="componentExists && user">
-                Gebruiker bewerken
-              </div>
-              <div *ngIf="!componentExists">
-                Gebruiker toevoegen
-              </div>
+              {{ componentExists && user ? 'Gebruiker bewerken' : 'Gebruiker toevoegen' }}
             </button>
             <button type="button" class="btn btn-warning mx-2" routerLink="/user">Annuleren</button>
           </div>

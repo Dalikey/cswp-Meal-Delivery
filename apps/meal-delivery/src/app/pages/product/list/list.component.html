@@ -14,7 +14,7 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">{{product.name}}</h5>
-                <ul class="noBullets">
+                <ul class="no-bullets">
                   <li *ngIf="product?.allergies.length>0; else noAllergies">Allergieën: {{ product?.allergies.join(', ')
                     }}</li>
                   <ng-template #noAllergies>
@@ -22,9 +22,8 @@
                   </ng-template>
                   <li *ngIf="product?.containsAlcohol">Product bevat alcohol.</li>
                   <li *ngIf="!product?.containsAlcohol">Product bevat geen alcohol.</li>
-                  <li><a routerLink="{{ product.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">Klik
-                      hier
-                      voor meer details.</a></li>
+                  <li><a [routerLink]="['/product', product.id]" routerLinkActive="active"
+                      ariaCurrentWhenActive="page">Klik hier voor meer details.</a></li>
                 </ul>
                 <div class="alignEnd"><a class="edit" title="Bewerken" data-toggle="tooltip"
                     routerLink="{{ product.id }}/edit" routerLinkActive="active"><i

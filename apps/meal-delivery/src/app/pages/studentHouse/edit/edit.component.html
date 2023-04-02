@@ -1,8 +1,6 @@
-<div *ngIf="componentExists && studentHouse">
-  <h3>Bewerken van {{ studentHouse!.streetAndNmr }}</h3>
-</div>
-<div *ngIf="!componentExists">
-  <h3>Nieuwe studentenhuis toevoegen</h3>
+<div>
+  <h3>{{ studentHouse?.streetAndNmr ? 'Bewerken van ' + studentHouse?.streetAndNmr : 'Nieuwe studentenhuis toevoegen' }}
+  </h3>
 </div>
 <div class="max-width77 mb240">
   <!-- Edit form voor studentHouse model -->
@@ -77,12 +75,7 @@
     <div class="row minHe100">
       <div class="col">
         <button type="submit" class="btn btn-primary mx-2" [disabled]="!studentHouseEditForm.valid">
-          <div *ngIf="componentExists && studentHouse">
-            Studentenhuis bewerken
-          </div>
-          <div *ngIf="!componentExists">
-            Studentenhuis toevoegen
-          </div>
+          {{ componentExists && studentHouse ? 'Studentenhuis bewerken' : 'Studentenhuis toevoegen' }}
         </button>
         <button type="button" class="btn btn-warning mx-2" routerLink="/studentHouse">Annuleren</button>
       </div>

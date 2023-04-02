@@ -19,14 +19,19 @@ export class MealService {
   ) {}
 
   async createMeal(mealInfo: MealInfo, ownerId: string): Promise<ResourceId> {
-    const owner = await this.userModel.findOne({ id: ownerId }).select('_id');
+    const owner = await this.userModel
+      .findOne({ id: ownerId })
+      .select('_id role');
 
-    if (!owner) {
+    if (!owner || owner.role === 'student') {
       throw new HttpException(
-        `Owner with ID ${ownerId} not found`,
+        owner
+          ? `You must be a cook or admin to create a meal`
+          : `Owner with ID ${ownerId} not found`,
         HttpStatus.BAD_REQUEST
       );
     }
+
     const studentHouse = await this.studentHouseModel.findOne({
       id: mealInfo.studentHouseId,
     });
