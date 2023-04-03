@@ -6,6 +6,14 @@ import { MealService } from './meal.service';
 
 describe('MealService', () => {
   let service: MealService;
+  const mockUser = {
+    id: '1',
+    username: 'mario',
+    emailAddress: 'mario@mario.nl',
+    isGraduated: false,
+    token: '123',
+    role: 'student',
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -58,6 +66,7 @@ describe('MealService', () => {
       deliveryTime: new Date(),
       deliveryDate: new Date(),
       owner: '7beb2b23-1709-42e7-8bfa-3b2417036470',
+      ownerRef: mockUser,
       studentHouseId: '960c415d-2895-4d41-ae4b-53c44248f105',
     };
     service.addMeal(newMeal);
@@ -77,6 +86,7 @@ describe('MealService', () => {
       deliveryTime: new Date(),
       deliveryDate: new Date(),
       owner: '7beb2b23-1709-42e7-8bfa-3b2417036470',
+      ownerRef: mockUser,
       studentHouseId: '960c415d-2895-4d41-ae4b-53c44248f105',
     };
     service.updateMeal(updatedMeal);

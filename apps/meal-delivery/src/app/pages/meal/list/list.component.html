@@ -7,11 +7,11 @@
       </button>
     </div>
   </div>
-  <div *ngFor="let meal of meals$ | async; let i = index">
-    <div *ngIf="isOwner && meal.ownerRef.id !== currentUserId && i == 0" class="row">
-      <p>U heeft nog geen maaltijden aangemaakt, voeg een nieuwe maaltijd toe.</p>
-    </div>
+
+  <div class="row" *ngIf="isOwner && showNoMealsMessage">
+    <p>U heeft nog geen maaltijden aangemaakt, voeg een nieuwe maaltijd toe.</p>
   </div>
+
   <div class="row container">
     <div class="col">
       <br>

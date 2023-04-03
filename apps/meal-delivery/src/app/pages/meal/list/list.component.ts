@@ -16,6 +16,7 @@ export class ListComponent implements OnInit {
   isAdmin: boolean;
   isStudent: boolean;
   currentUserId: string;
+  showNoMealsMessage = true;
 
   constructor(
     private mealService: MealService,
@@ -25,6 +26,14 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.meals$ = this.mealService.getAllMeals();
+    this.meals$.subscribe((meals) => {
+      for (let meal of meals!) {
+        if (meal.ownerRef!.id === this.currentUserId) {
+          this.showNoMealsMessage = false;
+          break;
+        }
+      }
+    });
     this.isOwner = this.authService.checkIsOwner();
     this.isAdmin = this.authService.checkIsAdmin();
     this.isStudent = this.authService.checkIsStudent();
