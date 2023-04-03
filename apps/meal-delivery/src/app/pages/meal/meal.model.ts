@@ -7,6 +7,7 @@ export class Meal {
   deliveryTime: Date | undefined;
   deliveryDate: Date | undefined;
   owner: string | undefined;
+  ownerRef: User | undefined;
   studentHouseId: string | undefined;
   user?: User | undefined;
 }
