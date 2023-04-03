@@ -15,10 +15,10 @@ export class UserService {
   ) {}
 
   async getAll(): Promise<UserInfo[]> {
-    const neo = await this.neo4j.singleRead('MATCH (n) RETURN n');
-    neo.records.forEach((record) => {
-      console.log(record.get('n'));
-    });
+    // const neo = await this.neo4j.singleRead('MATCH (n) RETURN n');
+    // neo.records.forEach((record) => {
+    //   console.log(record.get('n'));
+    // });
     return this.userModel.find({}, { _id: 0, __v: 0 });
   }
 

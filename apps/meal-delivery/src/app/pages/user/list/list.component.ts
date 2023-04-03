@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SaveEditedWorkGuard } from '../../../auth/auth.guards';
+import { AuthService } from '../../../auth/auth.service';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
 
@@ -11,14 +12,17 @@ import { UserService } from '../user.service';
 })
 export class ListComponent implements OnInit {
   users$!: Observable<User[] | null | undefined>;
+  isAdmin: boolean;
 
   constructor(
     private userService: UserService,
-    private saveEditedWorkGuard: SaveEditedWorkGuard
+    private saveEditedWorkGuard: SaveEditedWorkGuard,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.users$ = this.userService.getAllUsers();
+    this.isAdmin = this.authService.checkIsAdmin();
   }
 
   deleteUser(id: string) {
