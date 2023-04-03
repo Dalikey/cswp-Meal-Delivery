@@ -9,15 +9,25 @@
         <table class="table table-bordered table-dark minWi103">
           <thead>
             <tr>
-              <th scope=" col">id</th>
+              <th scope="col">Bestelde maaltijden</th>
               <th scope="col">Gebruikersnaam</th>
               <th scope="col">E-mailadres</th>
-              <th scope="col"></th>
+              <th *ngIf="isAdmin" scope="col"></th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let user of users$ | async; let i = index">
-              <td>{{ user.id }}</td>
+              <td>
+                <ng-container *ngIf="user.meals.length > 0; else noMeals">
+                  <ng-container *ngFor="let meal of user.meals; let isLast = last">
+                    {{meal.name}}-{{meal.studentHouse.streetAndNmr}}-{{meal.studentHouse.city}}<ng-container
+                      *ngIf="!isLast">, <br></ng-container>
+                  </ng-container>.
+                </ng-container>
+                <ng-template #noMeals>
+                  Geen maaltijden besteld.
+                </ng-template>
+              </td>
               <td>
                 <a routerLink="{{ user.id }}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ user.username
                   }}</a>
@@ -28,7 +38,7 @@
                   }}
                 </a>
               </td>
-              <td class="text-center">
+              <td *ngIf="isAdmin" class="text-center">
                 <a class="edit" title="Bewerken" data-toggle="tooltip" routerLink="{{ user.id }}/edit"
                   routerLinkActive="active"><i class="material-icons">&#xE254;</i></a>
                 <a class="delete" title="Verwijderen" data-toggle="tooltip" (click)="deleteUser(user.id!)"

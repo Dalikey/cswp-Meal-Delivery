@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
+import { AuthService } from '../../../auth/auth.service';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
 
@@ -11,10 +12,12 @@ import { UserService } from '../user.service';
 })
 export class DetailComponent implements OnInit {
   user$!: Observable<User | null | undefined>;
+  isAdmin: boolean;
 
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -23,5 +26,6 @@ export class DetailComponent implements OnInit {
         this.userService.getUserById(params.get('id')!)
       )
     );
+    this.isAdmin = this.authService.checkIsAdmin();
   }
 }
