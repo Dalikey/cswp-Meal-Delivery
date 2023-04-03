@@ -7,13 +7,8 @@ import neo4j, {
 import { Injectable, Inject, OnApplicationShutdown } from '@nestjs/common';
 import { Neo4jConfig } from './neo4j-config.interface';
 import { NEO4J_CONFIG, NEO4J_DRIVER } from './neo4j.constants';
-// import { Neo4jQuery, ReadWriteMode } from './neo4j.query';
 
 export type TransactionWork = (tx: ManagedTransaction) => Promise<Result>;
-
-// function getMode(mode: ReadWriteMode): SessionMode {
-//   return mode == 'read' ? neo4j.session.READ : neo4j.session.WRITE;
-// }
 
 @Injectable()
 export class Neo4jService implements OnApplicationShutdown {
@@ -78,18 +73,6 @@ export class Neo4jService implements OnApplicationShutdown {
   async writeTransaction(transactionWork: TransactionWork): Promise<Result> {
     return this.executeTransaction(neo4j.session.READ, transactionWork);
   }
-
-  // here the neo4j driver is abstracted away from the outside
-  // TODO handle 64 bit integers
-  // TODO clean returned object to match our own Node and Relation type?
-  // TODO how to handle variadic types?
-  // async run<R>(query: Neo4jQuery<R>, params?: unknown): Promise<R[]> {
-  //   const result = await this.executeSingle(getMode(query.mode), query.text, params);
-  //   return result.records.map(r => r.toObject());
-  // }
-
-  // transaction with neo4j driver abstracted away
-  // TODO
 
   onApplicationShutdown() {
     return this.driver.close();
