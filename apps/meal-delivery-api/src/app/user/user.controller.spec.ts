@@ -14,11 +14,13 @@ describe('UserController', () => {
         {
           provide: UserService,
           useValue: {
-            getAll: jest.fn(),
             getSelf: jest.fn(),
             getOne: jest.fn(),
+            getOneByName: jest.fn(),
+            getAll: jest.fn(),
             updateUser: jest.fn(),
             deleteSelf: jest.fn(),
+            deleteOne: jest.fn(),
             deleteUser: jest.fn(),
           },
         },
