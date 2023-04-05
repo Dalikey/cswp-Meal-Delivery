@@ -71,9 +71,9 @@ describe('UserService', () => {
 
   describe('getAll', () => {
     // it('executes correct cypher query in the neo4j service', async () => {
-    //   const singleWrite = jest
-    //     .spyOn(neo4jService, 'singleWrite')
-    //     .mockImplementation((q, p) => undefined);
+    // const singleWrite = jest
+    // .spyOn(neo4jService, 'singleWrite')
+    // .mockImplementation((q, p) => undefined);
     // });
 
     xit('should return all users', async () => {
