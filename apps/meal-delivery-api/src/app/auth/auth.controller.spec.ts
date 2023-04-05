@@ -1,6 +1,5 @@
-import { Token, UserCredentials, UserRegistration } from '@md/data';
+import { UserRegistration } from '@md/data';
 import { Test, TestingModule } from '@nestjs/testing';
-
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 

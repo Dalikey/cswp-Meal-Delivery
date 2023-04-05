@@ -1,4 +1,4 @@
-import { AddProductIds, RemoveProductIds } from '@md/data';
+import { AddProductIds } from '@md/data';
 import { Body, Controller, Delete, Param, Post, Query } from '@nestjs/common';
 import { ProductListService } from './productlist.service';
 
