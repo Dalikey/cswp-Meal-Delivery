@@ -74,7 +74,6 @@ export class AuthService {
 
   async generateToken(username: string, password: string): Promise<string> {
     const identity = await this.identityModel.findOne({ username });
-    console.log('identity', identity);
     if (!identity || !(await compare(password, identity.hash)))
       throw new Error('user not authorized');
 

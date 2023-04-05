@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       .getUserFromLocalStorage()
       .subscribe((user: UserInfo | undefined) => {
         if (user) {
-          console.log('User already logged in > to dashboard');
           this.router.navigate(['/']);
         }
       });
@@ -47,7 +46,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         .login(this.formData)
         .subscribe((user: UserIdentity | undefined) => {
           if (user) {
-            console.log('Logged in');
             this.router.navigate(['/']);
           } else {
             this.alertService.error('Het ingevoerde wachtwoord is onjuist.');

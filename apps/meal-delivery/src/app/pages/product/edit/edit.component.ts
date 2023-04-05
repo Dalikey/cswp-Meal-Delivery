@@ -84,7 +84,6 @@ export class EditComponent implements OnInit, OnDestroy {
 
     if (this.product!.id) {
       // A product with id must have been saved before, so it must be an update.
-      console.log('update product');
       this.productService
         .updateProduct(this.product!)
         .pipe(
@@ -102,7 +101,6 @@ export class EditComponent implements OnInit, OnDestroy {
         });
     } else {
       // A product without id has not been saved to the database before.
-      console.log('create product');
       this.productService
         .addProduct(this.product!)
         .pipe(

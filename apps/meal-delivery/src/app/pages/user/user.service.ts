@@ -103,8 +103,6 @@ export class UserService {
   }
 
   deleteUser(id: string) {
-    console.log(id);
-
     return this.http
       .delete<User>(
         `${this.configService.getConfig().apiEndpoint}api/user/${id}`,

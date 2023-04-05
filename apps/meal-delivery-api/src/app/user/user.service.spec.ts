@@ -32,7 +32,7 @@ describe('UserService', () => {
   };
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const app: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
         {
@@ -61,12 +61,12 @@ describe('UserService', () => {
       ],
     }).compile();
 
-    userService = module.get<UserService>(UserService);
-    neo4jService = module.get<Neo4jService>(Neo4jService);
-    identityModel = module.get<Model<IdentityDocument>>(
+    userService = app.get<UserService>(UserService);
+    neo4jService = app.get<Neo4jService>(Neo4jService);
+    identityModel = app.get<Model<IdentityDocument>>(
       getModelToken(Identity.name)
     );
-    userModel = module.get<Model<UserDocument>>(getModelToken(User.name));
+    userModel = app.get<Model<UserDocument>>(getModelToken(User.name));
   });
 
   describe('getAll', () => {
