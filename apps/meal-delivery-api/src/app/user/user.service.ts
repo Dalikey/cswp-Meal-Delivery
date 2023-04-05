@@ -19,6 +19,7 @@ export class UserService {
     neo.records.forEach((record) => {
       console.log(record.get('n'));
     });
+
     return this.userModel.find({}, { _id: 0, __v: 0 });
   }
 
