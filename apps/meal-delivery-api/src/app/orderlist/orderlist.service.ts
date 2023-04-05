@@ -38,6 +38,26 @@ export class OrderListService {
 
   async removeMealFromUser(mealId: string, userId: string) {
     try {
+      const neo = await this.neo4j.singleRead(
+        `
+        MATCH (u:User)-[o:ORDERED]->(m:Meal)
+        WHERE u.id = $userId AND m.id = $mealId 
+        RETURN u, m, ID(o) as orderRelId
+        `,
+        { mealId, userId }
+      );
+      neo.records.forEach((record) => {
+        const orderRelId = record.get('orderRelId').toNumber();
+        this.neo4j.singleWrite(
+          `
+          MATCH (u:User)-[o:ORDERED]->(m:Meal)
+          WHERE u.id = $userId AND m.id = $mealId AND ID(o) = $orderRelId
+          DELETE o
+          `,
+          { mealId, userId, orderRelId }
+        );
+      });
+
       await this.userModel.updateOne(
         { id: userId },
         { $pull: { meals: { id: mealId } } }

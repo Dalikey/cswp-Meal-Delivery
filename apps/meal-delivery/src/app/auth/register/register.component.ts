@@ -20,7 +20,6 @@ export class RegisterComponent implements OnInit {
       .getUserFromLocalStorage()
       .subscribe((user: UserInfo | undefined) => {
         if (user) {
-          console.log('User already logged in > to dashboard');
           this.router.navigate(['/']);
         }
       });

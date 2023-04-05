@@ -62,11 +62,8 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log('onSubmit', this.studentHouse);
-
     if (this.studentHouse!.id) {
       // A studentHouse with id must have been saved before, so it must be an update.
-      console.log('update studentHouse');
       this.studentHouseService
         .updateStudentHouse(this.studentHouse!)
         .pipe(
@@ -84,7 +81,6 @@ export class EditComponent implements OnInit, OnDestroy {
         });
     } else {
       // A studentHouse without id has not been saved to the database before.
-      console.log('create studentHouse');
       this.studentHouseService
         .addStudentHouse(this.studentHouse!)
         .pipe(

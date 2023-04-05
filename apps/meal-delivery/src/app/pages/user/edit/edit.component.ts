@@ -53,7 +53,6 @@ export class EditComponent implements OnInit, OnDestroy {
 
     if (this.user!.id) {
       // A user with id must have been saved before, so it must be an update.
-      console.log('update user');
       this.userService
         .updateUser(this.user!)
         .pipe(
@@ -71,7 +70,6 @@ export class EditComponent implements OnInit, OnDestroy {
         });
     } else {
       // A user without id has not been saved to the database before.
-      console.log('create user');
       this.userService
         .addUser(this.user!)
         .pipe(
