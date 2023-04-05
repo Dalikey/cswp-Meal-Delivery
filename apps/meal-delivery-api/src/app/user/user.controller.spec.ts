@@ -8,7 +8,7 @@ describe('UserController', () => {
   let userService: UserService;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
+    const app = await Test.createTestingModule({
       controllers: [UserController],
       providers: [
         {
@@ -27,8 +27,8 @@ describe('UserController', () => {
       ],
     }).compile();
 
-    userController = moduleRef.get<UserController>(UserController);
-    userService = moduleRef.get<UserService>(UserService);
+    userController = app.get<UserController>(UserController);
+    userService = app.get<UserService>(UserService);
   });
 
   describe('getAll', () => {
