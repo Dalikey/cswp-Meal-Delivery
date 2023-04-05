@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { environment } from '../../../environments/environment';
 import { ConfigModule } from '../../shared/moduleconfig/config.module';
 import { UserService } from './user.service';
+import { httpInterceptorProviders } from '../../token.interceptor';
 
 describe('UserService', () => {
   let service: UserService;
@@ -13,7 +14,7 @@ describe('UserService', () => {
         HttpClientModule,
         ConfigModule.forRoot({ apiEndpoint: environment.SERVER_API_URL }),
       ],
-      providers: [{ provide: HttpClient }],
+      providers: [{ provide: HttpClient }, httpInterceptorProviders],
     });
     service = TestBed.inject(UserService);
   });

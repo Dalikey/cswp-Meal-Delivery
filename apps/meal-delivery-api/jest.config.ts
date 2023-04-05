@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'meal-delivery-api',
   preset: '../../jest.preset.js',

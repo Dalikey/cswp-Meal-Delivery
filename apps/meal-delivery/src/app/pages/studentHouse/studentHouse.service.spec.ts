@@ -2,6 +2,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { environment } from '../../../environments/environment';
 import { ConfigModule } from '../../shared/moduleconfig/config.module';
+import { httpInterceptorProviders } from '../../token.interceptor';
 import { StudentHouse } from './studentHouse.model';
 import { StudentHouseService } from './studentHouse.service';
 
@@ -24,7 +25,7 @@ describe('StudentHouseService', () => {
         HttpClientModule,
         ConfigModule.forRoot({ apiEndpoint: environment.SERVER_API_URL }),
       ],
-      providers: [{ provide: HttpClient }],
+      providers: [{ provide: HttpClient }, httpInterceptorProviders],
     });
     service = TestBed.inject(StudentHouseService);
   });
