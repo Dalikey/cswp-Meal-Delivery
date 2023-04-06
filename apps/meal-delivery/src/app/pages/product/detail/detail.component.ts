@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
+import { AuthService } from '../../../auth/auth.service';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 
@@ -11,10 +12,12 @@ import { ProductService } from '../product.service';
 })
 export class DetailComponent implements OnInit {
   product$!: Observable<Product | null | undefined>;
+  isStudent: boolean;
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -23,5 +26,6 @@ export class DetailComponent implements OnInit {
         this.productService.getProductById(params.get('id')!)
       )
     );
+    this.isStudent = this.authService.checkIsStudent();
   }
 }
