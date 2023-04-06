@@ -109,6 +109,14 @@ export class EditComponent implements OnInit, OnDestroy {
     });
   }
 
+  convertToDateTime(value: string): Date {
+    const timeParts = value.split(':');
+    const date = new Date();
+    date.setHours(parseInt(timeParts[0]));
+    date.setMinutes(parseInt(timeParts[1]));
+    return date;
+  }
+
   onSubmit() {
     console.log('onSubmit', this.meal);
 

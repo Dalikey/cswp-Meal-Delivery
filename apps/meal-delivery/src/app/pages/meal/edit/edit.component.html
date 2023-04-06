@@ -32,7 +32,7 @@
       <div class="col-5">
         <div class="form-group">
           <label for="price">Prijs</label>
-          <div>
+          <div *ngIf="meal">
             <input type="number" id="price" pattern="^\d*(\.\d{0,2})?$" name="price" class="form-control"
               [(ngModel)]="meal!.price" #price="ngModel" required
               [ngClass]="{'is-invalid': price.invalid && price.touched}" />
@@ -55,10 +55,10 @@
         <div class="row-5">
           <div class="form-group">
             <label for="deliverytime">Ophaaltijd</label>
-            <div *ngIf="meal?.deliveryTime">
+            <div *ngIf="meal">
               <input type="time" id="deliverytime" name="deliverytime" class="form-control"
                 [ngModel]="meal!.deliveryTime | date:'shortTime'" #deliveryTime="ngModel"
-                (ngModelChange)="meal!.deliveryTime = $event" required
+                (ngModelChange)="meal!.deliveryTime = convertToDateTime($event)" required
                 [ngClass]="{'is-invalid': deliveryTime.invalid && deliveryTime.touched}" />
               <div *ngIf="deliveryTime.invalid && deliveryTime.touched" class="invalid-feedback">
                 <div *ngIf="deliveryTime.errors!['required']">
@@ -73,7 +73,7 @@
         <div class="row-5">
           <div class="form-group">
             <label for="deliverydate">Ophaaldatum</label>
-            <div *ngIf="meal?.deliveryDate">
+            <div *ngIf="meal">
               <input type="date" id="deliverydate" name="deliverydate" class="form-control"
                 [ngModel]="meal!.deliveryDate | date:'yyyy-MM-dd'" (ngModelChange)="meal!.deliveryDate = $event" />
             </div>
