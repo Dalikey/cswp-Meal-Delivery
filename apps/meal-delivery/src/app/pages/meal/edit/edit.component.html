@@ -99,14 +99,10 @@
           </div>
         </div>
         <!-- Submit en Cancel buttons -->
-        <div class="row-5">
-          <div class="col">
-            <button type="submit" class="btn btn-primary mx-2 my-4" [disabled]="!mealEditForm.valid">
-              {{ componentExists && meal ? 'Maaltijd bewerken' : 'Maaltijd toevoegen' }}
-            </button>
-            <button type="button" class="btn btn-warning mx-2" routerLink="/meal">Annuleren</button>
-          </div>
-        </div>
+        <button id="save-meal-btn" type="submit" class="btn btn-primary mx-2 my-4" [disabled]="!mealEditForm.valid">
+          {{ componentExists && meal ? 'Maaltijd bewerken' : 'Maaltijd toevoegen' }}
+        </button>
+        <button type="button" class="btn btn-warning mx-2" routerLink="/meal">Annuleren</button>
       </div>
       <div class="col-5" [ngClass]="{'prejson': componentExists}">
         <pre>{{ meal | json }}</pre>

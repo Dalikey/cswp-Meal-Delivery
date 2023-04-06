@@ -1,7 +1,7 @@
 import { getGreeting } from '../support/app.po';
 
 describe('meal-delivery', () => {
-  beforeEach(() => cy.visit('/'));
+  beforeEach(() => cy.visit(''));
 
   it('should display welcome message', () => {
     // Custom command example, see `../support/commands.ts` file
@@ -13,13 +13,17 @@ describe('meal-delivery', () => {
 
   it('should display big buttons', () => {
     cy.get('h5').contains('Inloggen');
+
     cy.get('h5').contains('Over ons');
   });
 
   it('should display a navbar', () => {
     cy.get('.nav-link').contains('Home');
+
     cy.get('.nav-link').contains('Over ons');
+
     cy.get('.nav-link').contains('Registreer');
+
     cy.get('.nav-link').contains('Login');
   });
 });
