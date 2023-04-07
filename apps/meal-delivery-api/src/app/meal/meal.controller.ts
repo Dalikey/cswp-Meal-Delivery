@@ -8,16 +8,21 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { MealService } from './meal.service';
 import { MealInfo, ResourceId } from '@md/data';
 import { InjectToken, Token } from '../auth/token.decorator';
+import { Roles } from '../auth/role.decorator';
+import { RolesGuard } from '../auth/roles.guard';
 
 @Controller('meal')
+@UseGuards(RolesGuard)
 export class MealController {
   constructor(private readonly mealService: MealService) {}
 
   @Post()
+  @Roles('owner', 'admin')
   async createMeal(
     @InjectToken() token: Token,
     @Body() meal: MealInfo
@@ -44,6 +49,7 @@ export class MealController {
   }
 
   @Put(':id')
+  @Roles('owner', 'admin')
   async updateMeal(
     @InjectToken() token: Token,
     @Param('id') mealId: string,
@@ -61,6 +67,7 @@ export class MealController {
   }
 
   @Delete(':id')
+  @Roles('owner', 'admin')
   async deleteMeal(@InjectToken() token: Token, @Param('id') id: string) {
     await this.mealService.deleteOne(id, token.id);
   }

@@ -17,6 +17,8 @@ import { OrderListService } from './orderlist/orderlist.service';
 import { OrderListController } from './orderlist/orderlist.controller';
 import { ProductListController } from './productlist/productlist.controller';
 import { ProductListService } from './productlist/productlist.service';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/roles.guard';
 
 @Module({
   imports: [
@@ -43,6 +45,10 @@ import { ProductListService } from './productlist/productlist.service';
     ProductService,
     ProductListService,
     StudentHouseService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
   ],
 })
 export class DataModule {}

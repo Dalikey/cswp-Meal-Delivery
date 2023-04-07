@@ -56,7 +56,7 @@ export class MealService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -83,8 +83,14 @@ export class MealService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
-          this.alertService.error('Maaltijd bestaat al.');
+          console.log(`Unable to connect to database. ${e.error.message}`);
+          if (e.error.message === 'Forbidden resource') {
+            this.alertService.error(
+              'Je hebt geen toegang om deze functie te gebruiken.'
+            );
+          } else {
+            this.alertService.error('Maaltijd bestaat al.');
+          }
           return of(undefined);
         })
       );
@@ -105,7 +111,7 @@ export class MealService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('U bent niet de eigenaar van deze maaltijd.');
           return of(undefined);
         })
@@ -125,7 +131,7 @@ export class MealService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -145,7 +151,7 @@ export class MealService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -166,7 +172,7 @@ export class MealService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -187,7 +193,7 @@ export class MealService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -206,7 +212,7 @@ export class MealService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })

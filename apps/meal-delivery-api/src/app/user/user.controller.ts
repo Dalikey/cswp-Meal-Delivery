@@ -7,16 +7,21 @@ import {
   HttpStatus,
   Param,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserInfo } from '@md/data';
 import { InjectToken, Token } from '../auth/token.decorator';
+import { Roles } from '../auth/role.decorator';
+import { RolesGuard } from '../auth/roles.guard';
 
 @Controller('user')
+@UseGuards(RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @Roles('owner', 'admin')
   async getAll(): Promise<UserInfo[]> {
     return this.userService.getAll();
   }
@@ -33,6 +38,7 @@ export class UserController {
   }
 
   @Put(':id')
+  @Roles('admin')
   async updateUser(
     @Param('id') userId: string,
     @Body() user: UserInfo
@@ -54,6 +60,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @Roles('admin')
   async deleteUser(@Param('id') id: string) {
     await this.userService.deleteOne(id);
   }

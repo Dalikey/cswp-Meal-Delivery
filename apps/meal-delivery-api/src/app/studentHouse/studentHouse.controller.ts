@@ -8,16 +8,21 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { StudentHouseService } from './studentHouse.service';
 import { StudentHouseInfo, ResourceId } from '@md/data';
 import { InjectToken, Token } from '../auth/token.decorator';
+import { Roles } from '../auth/role.decorator';
+import { RolesGuard } from '../auth/roles.guard';
 
 @Controller('studentHouse')
+@UseGuards(RolesGuard)
 export class StudentHouseController {
   constructor(private readonly studentHouseService: StudentHouseService) {}
 
   @Post()
+  @Roles('owner', 'admin')
   async createStudentHouse(
     @Body() studentHouse: StudentHouseInfo
   ): Promise<ResourceId> {
@@ -43,6 +48,7 @@ export class StudentHouseController {
   }
 
   @Put(':id')
+  @Roles('owner', 'admin')
   async updateStudentHouse(
     @InjectToken() token: Token,
     @Param('id') studentHouseId: string,
@@ -64,6 +70,7 @@ export class StudentHouseController {
   }
 
   @Delete(':id')
+  @Roles('owner', 'admin')
   async deleteStudentHouse(@Param('id') id: string) {
     await this.studentHouseService.deleteOne(id);
   }
