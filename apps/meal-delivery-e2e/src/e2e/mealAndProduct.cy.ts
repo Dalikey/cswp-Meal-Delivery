@@ -32,6 +32,38 @@ describe('meals', () => {
 
     cy.get('#save-meal-btn').click({ force: true });
   });
+
+  // --------------------------------------------------------------------------
+  it('should add product to list', () => {
+    cy.get('.meal-card').click();
+
+    cy.get(
+      '.col-sm-12:nth-child(7) > .card > .card-body > .alignEnd > .edit > .material-icons'
+    ).click({ force: true });
+
+    cy.get(
+      '.col-sm-12:nth-child(1) > .card > .card-body > .alignEnd > .add > .material-icons'
+    ).click({ force: true });
+  });
+  // --------------------------------------------------------------------------
+  it('should remove product from list', () => {
+    cy.get('.meal-card').click();
+
+    cy.get(
+      '.col-sm-12:nth-child(7) > .card > .card-body > .alignEnd > .edit > .material-icons'
+    ).click({ force: true });
+
+    cy.get(
+      '.col-sm-12:nth-child(1) > .card > .card-body > .alignEnd > .delete:nth-child(2) > .material-icons'
+    ).click({ force: true });
+
+    cy.get('app-nav > .toolbar > .nav > .dropdown > .nav-link').click();
+
+    cy.get(
+      '.col-sm-12:nth-child(7) > .card > .card-body > .no-bullets > li > a'
+    ).click({ force: true });
+  });
+
   // --------------------------------------------------------------------------
   it('it should be able to see meals and products and their details', () => {
     cy.get('.meal-card').click();
@@ -50,7 +82,7 @@ describe('meals', () => {
 
     cy.get(
       ':nth-child(7) > .card > .card-body > .alignEnd > .edit > .material-icons'
-    ).click();
+    ).click({ force: true });
 
     cy.get('#name').clear({ force: true }).type('Cypress bewerkte maaltijd');
 
@@ -71,11 +103,9 @@ describe('meals', () => {
   // --------------------------------------------------------------------------
   it('should be able to delete a meal', () => {
     cy.get('.meal-card').click();
-
     cy.get(
       '.col-sm-12:nth-child(7) > .card > .card-body > .alignEnd > .delete > .material-icons'
     ).click();
-
     cy.get('.btn-danger').click();
   });
 });
