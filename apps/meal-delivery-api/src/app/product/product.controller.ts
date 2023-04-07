@@ -8,16 +8,21 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductInfo, ResourceId } from '@md/data';
 import { InjectToken, Token } from '../auth/token.decorator';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/role.decorator';
 
 @Controller('product')
+@UseGuards(RolesGuard)
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
+  @Roles('owner', 'admin')
   async createProduct(@Body() product: ProductInfo): Promise<ResourceId> {
     try {
       return await this.productService.createProduct(product);
@@ -41,6 +46,7 @@ export class ProductController {
   }
 
   @Put(':id')
+  @Roles('owner', 'admin')
   async updateProduct(
     @InjectToken() token: Token,
     @Param('id') productId: string,
@@ -58,6 +64,7 @@ export class ProductController {
   }
 
   @Delete(':id')
+  @Roles('owner', 'admin')
   async deleteProduct(@Param('id') id: string) {
     await this.productService.deleteOne(id);
   }

@@ -35,7 +35,7 @@ export class ProductService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -54,7 +54,7 @@ export class ProductService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -74,7 +74,7 @@ export class ProductService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Product bestaat al.');
           return of(undefined);
         })
@@ -96,7 +96,7 @@ export class ProductService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -115,7 +115,7 @@ export class ProductService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
