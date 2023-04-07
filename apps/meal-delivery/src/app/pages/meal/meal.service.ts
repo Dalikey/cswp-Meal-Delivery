@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { ApiResponse } from '@md/data';
 import { AddProductIds, Meal, RemoveProductIds } from './meal.model';
 import { AuthService } from '../../auth/auth.service';
@@ -75,14 +75,15 @@ export class MealService {
   addMeal(newMeal: Meal) {
     const userId = this.authService.getCurrentUserId();
     if (userId) {
-      this.userService.getUserById(userId).subscribe((data) => {
-        newMeal.owner = data?.username;
-      });
-    }
-
-    return this.http
-      .post<Meal>(`${this.siteEndpoint}/meal`, newMeal, this.httpOptions)
-      .pipe(
+      return this.userService.getUserById(userId).pipe(
+        switchMap((data) => {
+          newMeal.owner = data?.username;
+          return this.http.post<Meal>(
+            `${this.siteEndpoint}/meal`,
+            newMeal,
+            this.httpOptions
+          );
+        }),
         map((data: any) => {
           return data.results;
         }),
@@ -91,6 +92,9 @@ export class MealService {
           return of(undefined);
         })
       );
+    } else {
+      return throwError('UserId bestaat niet');
+    }
   }
 
   updateMeal(updatedMeal: Meal) {
