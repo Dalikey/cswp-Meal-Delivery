@@ -34,7 +34,7 @@ export class UserService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -53,7 +53,7 @@ export class UserService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -73,7 +73,7 @@ export class UserService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Gebruiker bestaat al.');
           return of(undefined);
         })
@@ -95,7 +95,7 @@ export class UserService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
@@ -114,7 +114,7 @@ export class UserService {
           return data.results;
         }),
         catchError((e) => {
-          console.log('Unable to connect to database. ' + e.error.message);
+          console.log(`Unable to connect to database. ${e.error.message}`);
           this.alertService.error('Kan geen verbinding maken met de database.');
           return of(undefined);
         })
