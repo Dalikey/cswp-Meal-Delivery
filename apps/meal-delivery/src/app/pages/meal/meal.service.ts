@@ -25,20 +25,34 @@ export class MealService {
     }),
   };
 
-  getAllMeals(): Observable<Meal[] | null | undefined> {
+  private handleHttpError<T>(error: any) {
+    let message = error.message;
+
+    if (error?.error?.message) {
+      message = error.error.message;
+    }
+    console.log(message);
+
+    if (message.includes('Http failure response for')) {
+      message = 'Kan geen verbinding maken met de database.';
+    } else if (message === 'You are not the owner of this meal.') {
+      message = 'U bent niet de eigenaar van deze maaltijd.';
+    } else if (message === 'Forbidden resource') {
+      message = 'Je hebt geen toegang om deze functie te gebruiken.';
+    }
+
+    this.alertService.error(message);
+  }
+
+  private siteEndpoint = `${this.configService.getConfig().apiEndpoint}api`;
+
+  getAllMeals() {
     return this.http
-      .get<ApiResponse<Meal[]>>(
-        `${this.configService.getConfig().apiEndpoint}api/meal`,
-        this.httpOptions
-      )
+      .get<ApiResponse<Meal[]>>(`${this.siteEndpoint}/meal`, this.httpOptions)
       .pipe(
-        tap(console.log),
-        map((data: any) => {
-          return data.results;
-        }),
-        catchError((error) => {
-          console.log('Unable to connect to database.' + error.message);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+        map((data: any) => data.results),
+        catchError((e) => {
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -46,18 +60,13 @@ export class MealService {
 
   getMealById(id: string): Observable<Meal | null | undefined> {
     return this.http
-      .get<Meal>(
-        `${this.configService.getConfig().apiEndpoint}api/meal/${id}`,
-        this.httpOptions
-      )
+      .get<Meal>(`${this.siteEndpoint}/meal/${id}`, this.httpOptions)
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -72,25 +81,13 @@ export class MealService {
     }
 
     return this.http
-      .post<Meal>(
-        `${this.configService.getConfig().apiEndpoint}api/meal`,
-        newMeal,
-        this.httpOptions
-      )
+      .post<Meal>(`${this.siteEndpoint}/meal`, newMeal, this.httpOptions)
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          if (e.error.message === 'Forbidden resource') {
-            this.alertService.error(
-              'Je hebt geen toegang om deze functie te gebruiken.'
-            );
-          } else {
-            this.alertService.error('Maaltijd bestaat al.');
-          }
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -99,20 +96,16 @@ export class MealService {
   updateMeal(updatedMeal: Meal) {
     return this.http
       .put<Meal>(
-        `${this.configService.getConfig().apiEndpoint}api/meal/${
-          updatedMeal.id
-        }`,
+        `${this.siteEndpoint}/meal/${updatedMeal.id}`,
         updatedMeal,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('U bent niet de eigenaar van deze maaltijd.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -120,19 +113,14 @@ export class MealService {
 
   orderMeal(id: string) {
     return this.http
-      .post<Meal>(
-        `${this.configService.getConfig().apiEndpoint}api/orderlist/${id}`,
-        this.httpOptions
-      )
+      .post<Meal>(`${this.siteEndpoint}/orderlist/${id}`, this.httpOptions)
       .pipe(
-        tap(console.log),
         map((data: any) => {
           this.alertService.success('Maaltijd succesvol besteld.');
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -140,19 +128,14 @@ export class MealService {
 
   cancelOrder(id: string) {
     return this.http
-      .delete<Meal>(
-        `${this.configService.getConfig().apiEndpoint}api/orderlist/${id}`,
-        this.httpOptions
-      )
+      .delete<Meal>(`${this.siteEndpoint}/orderlist/${id}`, this.httpOptions)
       .pipe(
-        tap(console.log),
         map((data: any) => {
           this.alertService.success('Maaltijd succesvol geannuleerd.');
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -161,19 +144,17 @@ export class MealService {
   addProductToMeal(ids: AddProductIds) {
     return this.http
       .post<AddProductIds>(
-        `${this.configService.getConfig().apiEndpoint}api/productlist`,
+        `${this.siteEndpoint}/productlist`,
         ids,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           this.alertService.success('Product succesvol toegevoegd.');
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -182,19 +163,17 @@ export class MealService {
   removeProductFromMeal(productIds: string[], id: string) {
     const params = new HttpParams().set('productIds', [productIds].join(','));
     return this.http
-      .delete<RemoveProductIds>(
-        `${this.configService.getConfig().apiEndpoint}api/productlist/${id}`,
-        { ...this.httpOptions, params }
-      )
+      .delete<RemoveProductIds>(`${this.siteEndpoint}/productlist/${id}`, {
+        ...this.httpOptions,
+        params,
+      })
       .pipe(
-        tap(console.log),
         map((data: any) => {
           this.alertService.success('Product succesvol eruit gehaald.');
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -202,18 +181,13 @@ export class MealService {
 
   deleteMeal(id: string) {
     return this.http
-      .delete<Meal>(
-        `${this.configService.getConfig().apiEndpoint}api/meal/${id}`,
-        this.httpOptions
-      )
+      .delete<Meal>(`${this.siteEndpoint}/meal/${id}`, this.httpOptions)
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );

@@ -15,9 +15,16 @@ export class UserService {
   ) {}
 
   async getAll(): Promise<UserInfo[]> {
-    const neo = await this.neo4j.singleRead('MATCH (n) RETURN n');
+    const neo = await this.neo4j.singleRead(
+      'MATCH (n:User)-[o:ORDERED]->(m:Meal) RETURN n, o, m'
+    );
     neo.records.forEach((record) => {
-      console.log(record.get('n'));
+      const user = record.get('n');
+      const relationship = record.get('o');
+      const meal = record.get('m');
+      console.log(
+        `User: ${user.properties.id}, Relationship: ${relationship.type}, Meal: ${meal.properties.id}`
+      );
     });
 
     return this.userModel.find({}, { _id: 0, __v: 0 });
