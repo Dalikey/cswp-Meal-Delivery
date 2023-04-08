@@ -98,6 +98,8 @@ export class UserService {
         .catch((error) => {
           console.log(error);
         });
+      const query = `MATCH (u:User {id: '${userId}'}) DELETE u`;
+      await this.neo4j.singleWrite(query);
     } else {
       throw new HttpException('User does not exist', HttpStatus.BAD_REQUEST);
     }

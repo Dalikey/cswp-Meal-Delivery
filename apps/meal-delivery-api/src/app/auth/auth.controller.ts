@@ -45,25 +45,24 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Body() credentials: UserCredentials): Promise<LocalStorage> {
+  async login(@Body() userCredentials: UserCredentials): Promise<LocalStorage> {
     try {
-      return {
-        id: (await this.authService.getId(credentials.username)).toString(),
-        token: await this.authService.generateToken(
-          credentials.username,
-          credentials.password
-        ),
-      };
-    } catch (e) {
-      let errorMessage = 'Failed to do something exceptional';
-      if (e instanceof Error) {
-        errorMessage = e.message;
-      }
-      console.log('Login error: ' + errorMessage);
-      throw new HttpException(
-        'Ongeldige inloggegevens',
-        HttpStatus.UNAUTHORIZED
+      const userId = await this.authService.getId(userCredentials.username);
+      const token = await this.authService.generateToken(
+        userCredentials.username,
+        userCredentials.password
       );
+      return {
+        id: userId.toString(),
+        token,
+      };
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : 'Het ingevoerde wachtwoord is onjuist voor gebruikersnaam ${username}.';
+      console.log(`Login error: ${errorMessage}`);
+      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
     }
   }
 }

@@ -26,7 +26,9 @@ describe('product', () => {
 
     cy.get('meal-list > .row > .d-flex > div > .btn').click({ force: true });
 
-    cy.get('.card > .card-body > .alignEnd > .delete > .material-icons').click({
+    cy.get(
+      ':nth-child(2) > .card > .card-body > .alignEnd > .delete > .material-icons'
+    ).click({
       force: true,
     });
 

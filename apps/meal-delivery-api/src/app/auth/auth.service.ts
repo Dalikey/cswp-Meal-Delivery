@@ -6,12 +6,14 @@ import { User, UserDocument } from '../schema/user.schema';
 import { Identity, IdentityDocument } from '../schema/identity.schema';
 import { hash, compare } from 'bcrypt';
 import { UserRegistration, UserRole } from '@md/data';
+import { Neo4jService } from '../neo4j/neo4j.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(Identity.name) private identityModel: Model<IdentityDocument>,
-    @InjectModel(User.name) private userModel: Model<UserDocument>
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private neo4j: Neo4jService
   ) {}
 
   async createUser(
@@ -28,7 +30,11 @@ export class AuthService {
     });
 
     await user.save();
-    return user.id;
+    const userId = user.id;
+    await this.neo4j.singleWrite('CREATE (:User {id: $userId})', {
+      userId,
+    });
+    return userId;
   }
 
   async registerUser(credentials: UserRegistration) {
@@ -74,21 +80,31 @@ export class AuthService {
 
   async generateToken(username: string, password: string): Promise<string> {
     const identity = await this.identityModel.findOne({ username });
-    if (!identity || !(await compare(password, identity.hash)))
-      throw new Error('user not authorized');
+    const user = await this.userModel.findOne({ username });
 
-    const user = await this.userModel.findOne({ username: username });
+    if (!user) {
+      throw new Error('Gebruiker bestaat niet.');
+    }
 
-    return new Promise((resolve, reject) => {
-      sign(
-        { username, id: user?.id, role: user?.role },
-        `${process.env.JWT_SECRET}`,
-        (err, token) => {
-          if (err) reject(err);
-          else resolve(token);
-        }
+    if (!identity || !(await compare(password, identity.hash))) {
+      const errorMessage = `Het ingevoerde wachtwoord is onjuist voor gebruikersnaam ${username}.`;
+      throw new Error(errorMessage);
+    }
+
+    const { id, role } = user;
+    const tokenPayload = {
+      username,
+      id,
+      role,
+    };
+    try {
+      const token = await sign(tokenPayload, `${process.env.JWT_SECRET}`);
+      return token;
+    } catch (error: any) {
+      throw new Error(
+        `Er is een fout opgetreden bij het genereren van de token: ${error.message}`
       );
-    });
+    }
   }
 
   async verifyToken(token: string): Promise<string | JwtPayload> {
