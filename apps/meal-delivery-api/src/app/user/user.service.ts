@@ -23,7 +23,7 @@ export class UserService {
       const relationship = record.get('o');
       const meal = record.get('m');
       console.log(
-        `User: ${user.properties.id}, Relationship: ${relationship.type}, Meal: ${meal.properties.id}`
+        `User: ${user.properties.username}, Relationship: ${relationship.type}, Meal: ${meal.properties.name}`
       );
     });
 
