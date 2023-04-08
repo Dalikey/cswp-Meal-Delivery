@@ -30,6 +30,17 @@ export class OrderListService {
       { mealId, userId }
     );
 
+    const neo = await this.neo4j.singleRead(
+      `MATCH (targetUser:User {id: $userId})-[:ORDERED]->(targetMeal:Meal)<-[:ORDERED]-(otherUser:User)-[:ORDERED]->(otherMeal:Meal)
+      WHERE targetUser <> otherUser AND otherMeal <> targetMeal
+      RETURN otherMeal`,
+      { userId }
+    );
+    neo.records.forEach((record) => {
+      const meal = record.get('otherMeal');
+      console.log(`Recommended meals: ${meal.properties.id}`);
+    });
+
     await this.userModel.updateOne(
       { id: userId },
       { $addToSet: { meals: meal } }

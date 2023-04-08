@@ -15,6 +15,8 @@ export interface UserInfo extends UserIdentity {
 export interface IToken {
   id: Id;
   emailAddress: string;
+  username: string;
+  role: string;
   token: string;
 }
 
