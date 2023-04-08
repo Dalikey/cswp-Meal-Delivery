@@ -9,7 +9,7 @@ import {
   UserRegister,
 } from '@md/data';
 import { Router } from '@angular/router';
-import { map, catchError, switchMap, tap } from 'rxjs/operators';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from './../shared/moduleconfig/config.service';
 import { AlertService } from './../shared/alert/alert.service';
