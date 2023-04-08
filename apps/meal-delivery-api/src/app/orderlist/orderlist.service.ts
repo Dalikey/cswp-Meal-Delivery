@@ -38,7 +38,7 @@ export class OrderListService {
     );
     neo.records.forEach((record) => {
       const meal = record.get('otherMeal');
-      console.log(`Recommended meals: ${meal.properties.id}`);
+      console.log(`Recommended meals: ${meal.properties.name}`);
     });
 
     await this.userModel.updateOne(
