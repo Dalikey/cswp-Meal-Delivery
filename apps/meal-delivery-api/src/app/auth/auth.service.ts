@@ -31,9 +31,10 @@ export class AuthService {
 
     await user.save();
     const userId = user.id;
-    await this.neo4j.singleWrite('CREATE (:User {id: $userId})', {
-      userId,
-    });
+    await this.neo4j.singleWrite(
+      'CREATE (:User {id: $userId, username: $username})',
+      { userId, username }
+    );
     return userId;
   }
 

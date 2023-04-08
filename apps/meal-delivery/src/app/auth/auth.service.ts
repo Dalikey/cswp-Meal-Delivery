@@ -35,6 +35,10 @@ export class AuthService {
         switchMap((user: IToken | undefined) => {
           if (user) {
             this.currentUser$.next(user);
+            console.log(
+              'User from local storage:',
+              this.decodeJwtToken(this.getAuthorizationToken() || '')
+            );
             return of(user);
           } else {
             return of(undefined);
@@ -75,7 +79,6 @@ export class AuthService {
         }
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           location.reload();
           localStorage.setItem(this.CURRENT_USER, JSON.stringify(data.results));
@@ -101,7 +104,6 @@ export class AuthService {
         }
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           localStorage.setItem(this.CURRENT_USER, JSON.stringify(data.results));
           this.currentUser$.next(data);

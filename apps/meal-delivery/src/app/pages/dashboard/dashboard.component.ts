@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IToken, UserIdentity } from '@md/data';
+import { IToken } from '@md/data';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../auth/auth.service';

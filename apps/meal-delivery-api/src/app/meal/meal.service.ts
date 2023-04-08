@@ -48,9 +48,10 @@ export class MealService {
     });
     await meal.save();
     const mealId = meal.id;
-    await this.neo4j.singleWrite('CREATE (:Meal {id: $mealId})', {
-      mealId,
-    });
+    await this.neo4j.singleWrite(
+      'CREATE (:Meal {id: $mealId, name: $mealName})',
+      { mealId, mealName: mealInfo.name }
+    );
     return mealId;
   }
 
