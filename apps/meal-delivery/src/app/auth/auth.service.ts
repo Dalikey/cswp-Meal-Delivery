@@ -23,6 +23,7 @@ export class AuthService {
   private readonly headers = new HttpHeaders({
     'Content-Type': 'application/json',
   });
+  private siteEndpoint: string;
 
   constructor(
     private configService: ConfigService,
@@ -30,6 +31,10 @@ export class AuthService {
     private http: HttpClient,
     private router: Router
   ) {
+    this.siteEndpoint = `${
+      this.configService.getConfig().apiEndpoint
+    }auth-api/auth`;
+
     this.getUserFromLocalStorage()
       .pipe(
         switchMap((user: IToken | undefined) => {
@@ -49,35 +54,23 @@ export class AuthService {
   }
 
   decodeJwtToken(token: string) {
-    if (token) {
-      return jwt_decode(token);
-    }
+    return token ? jwt_decode(token) : null;
   }
 
-  checkIsOwner(): boolean {
+  checkUserRole(role: string): boolean {
     const user = this.decodeJwtToken(this.getAuthorizationToken() || '') as any;
-    return user?.role === 'owner';
+    return user?.role === role;
   }
 
-  checkIsAdmin(): boolean {
-    const user = this.decodeJwtToken(this.getAuthorizationToken() || '') as any;
-    return user?.role === 'admin';
-  }
-
-  checkIsStudent(): boolean {
-    const user = this.decodeJwtToken(this.getAuthorizationToken() || '') as any;
-    return user?.role === 'student';
-  }
+  checkIsOwner = () => this.checkUserRole('owner');
+  checkIsAdmin = () => this.checkUserRole('admin');
+  checkIsStudent = () => this.checkUserRole('student');
 
   login(formData: UserLogin): Observable<UserIdentity | undefined> {
     return this.http
-      .post<UserIdentity>(
-        `${this.configService.getConfig().apiEndpoint}auth-api/auth/login`,
-        formData,
-        {
-          headers: this.headers,
-        }
-      )
+      .post<UserIdentity>(`${this.siteEndpoint}/login`, formData, {
+        headers: this.headers,
+      })
       .pipe(
         map((data: any) => {
           location.reload();
@@ -96,13 +89,9 @@ export class AuthService {
 
   register(userData: UserRegister): Observable<UserInfo | undefined> {
     return this.http
-      .post<UserInfo>(
-        `${this.configService.getConfig().apiEndpoint}auth-api/auth/register`,
-        userData,
-        {
-          headers: this.headers,
-        }
-      )
+      .post<UserInfo>(`${this.siteEndpoint}/register`, userData, {
+        headers: this.headers,
+      })
       .pipe(
         map((data: any) => {
           localStorage.setItem(this.CURRENT_USER, JSON.stringify(data.results));
@@ -146,20 +135,12 @@ export class AuthService {
   }
 
   getAuthorizationToken(): string | undefined {
-    const user = localStorage.getItem(this.CURRENT_USER);
-    if (user) {
-      const localUser = JSON.parse(user);
-      return localUser.token;
-    }
-    return undefined;
+    const user = JSON.parse(localStorage.getItem(this.CURRENT_USER) || '{}');
+    return user.token;
   }
 
   getCurrentUserId(): string | undefined {
-    const user = localStorage.getItem(this.CURRENT_USER);
-    if (user) {
-      const localUser = JSON.parse(user);
-      return localUser.id;
-    }
-    return undefined;
+    const user = JSON.parse(localStorage.getItem(this.CURRENT_USER) || '{}');
+    return user.id;
   }
 }

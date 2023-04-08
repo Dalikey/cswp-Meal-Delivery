@@ -10,18 +10,23 @@ import { AlertService } from '../../shared/alert/alert.service';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(
-    private http: HttpClient,
-    public configService: ConfigService,
-    public alertService: AlertService
-  ) {}
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     }),
   };
 
-  private handleHttpError<T>(error: any) {
+  private siteEndpoint: string;
+
+  constructor(
+    private http: HttpClient,
+    public configService: ConfigService,
+    public alertService: AlertService
+  ) {
+    this.siteEndpoint = `${this.configService.getConfig().apiEndpoint}api`;
+  }
+
+  private handleHttpError(error: any) {
     let message = error.message;
 
     if (error?.error?.message) {
@@ -41,15 +46,11 @@ export class UserService {
     this.alertService.error(message);
   }
 
-  private siteEndpoint = `${this.configService.getConfig().apiEndpoint}api`;
-
   getAllUsers(): Observable<User[] | null | undefined> {
     return this.http
       .get<ApiResponse<User[]>>(`${this.siteEndpoint}/user`, this.httpOptions)
       .pipe(
-        map((data: any) => {
-          return data.results;
-        }),
+        map((data: any) => data.results),
         catchError((e) => {
           this.handleHttpError(e);
           return of(undefined);
@@ -61,9 +62,7 @@ export class UserService {
     return this.http
       .get<User>(`${this.siteEndpoint}/user/${id}`, this.httpOptions)
       .pipe(
-        map((data: any) => {
-          return data.results;
-        }),
+        map((data: any) => data.results),
         catchError((e) => {
           this.handleHttpError(e);
           return of(undefined);
@@ -75,9 +74,7 @@ export class UserService {
     return this.http
       .post<User>(`${this.siteEndpoint}/user`, newUser, this.httpOptions)
       .pipe(
-        map((data: any) => {
-          return data.results;
-        }),
+        map((data: any) => data.results),
         catchError((e) => {
           this.handleHttpError(e);
           return of(undefined);
@@ -93,9 +90,7 @@ export class UserService {
         this.httpOptions
       )
       .pipe(
-        map((data: any) => {
-          return data.results;
-        }),
+        map((data: any) => data.results),
         catchError((e) => {
           this.handleHttpError(e);
           return of(undefined);
@@ -107,9 +102,7 @@ export class UserService {
     return this.http
       .delete<User>(`${this.siteEndpoint}/user/${id}`, this.httpOptions)
       .pipe(
-        map((data: any) => {
-          return data.results;
-        }),
+        map((data: any) => data.results),
         catchError((e) => {
           this.handleHttpError(e);
           return of(undefined);
