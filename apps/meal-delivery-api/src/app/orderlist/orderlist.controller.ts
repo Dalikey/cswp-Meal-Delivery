@@ -11,16 +11,19 @@ export class OrderListController {
 
   @Post(':id')
   @Roles('student')
-  async addMealToUser(@InjectToken() token: Token, @Param('id') id: string) {
-    await this.orderListService.addMealToUser(id, token.id);
+  async addMealToUser(
+    @InjectToken() token: Token,
+    @Param('id') mealId: string
+  ) {
+    await this.orderListService.addMealToUser(mealId, token.id);
   }
 
   @Delete(':id')
   @Roles('student')
   async removeMealFromUser(
     @InjectToken() token: Token,
-    @Param('id') id: string
+    @Param('id') mealId: string
   ) {
-    await this.orderListService.removeMealFromUser(id, token.id);
+    await this.orderListService.removeMealFromUser(mealId, token.id);
   }
 }

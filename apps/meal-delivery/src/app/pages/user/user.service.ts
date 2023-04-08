@@ -1,9 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { ApiResponse } from '@md/data';
 import { User } from './user.model';
-import { AuthService } from '../../auth/auth.service';
 import { ConfigService } from '../../shared/moduleconfig/config.service';
 import { AlertService } from '../../shared/alert/alert.service';
 
@@ -22,20 +21,37 @@ export class UserService {
     }),
   };
 
+  private handleHttpError<T>(error: any) {
+    let message = error.message;
+
+    if (error?.error?.message) {
+      message = error.error.message;
+    }
+    console.log(message);
+
+    if (message.includes('Http failure response for')) {
+      message = 'Kan geen verbinding maken met de database.';
+    } else if (message.includes('duplicate key')) {
+      message =
+        'Gebruikersnaam of e-mailadres ongeldig omdat gebruiker al bestaat.';
+    } else if (message === 'Forbidden resource') {
+      message = 'Je hebt geen toegang om deze functie te gebruiken.';
+    }
+
+    this.alertService.error(message);
+  }
+
+  private siteEndpoint = `${this.configService.getConfig().apiEndpoint}api`;
+
   getAllUsers(): Observable<User[] | null | undefined> {
     return this.http
-      .get<ApiResponse<User[]>>(
-        `${this.configService.getConfig().apiEndpoint}api/user`,
-        this.httpOptions
-      )
+      .get<ApiResponse<User[]>>(`${this.siteEndpoint}/user`, this.httpOptions)
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -43,18 +59,13 @@ export class UserService {
 
   getUserById(id: string): Observable<User | null | undefined> {
     return this.http
-      .get<User>(
-        `${this.configService.getConfig().apiEndpoint}api/user/${id}`,
-        this.httpOptions
-      )
+      .get<User>(`${this.siteEndpoint}/user/${id}`, this.httpOptions)
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -62,19 +73,13 @@ export class UserService {
 
   addUser(newUser: User) {
     return this.http
-      .post<User>(
-        `${this.configService.getConfig().apiEndpoint}api/user`,
-        newUser,
-        this.httpOptions
-      )
+      .post<User>(`${this.siteEndpoint}/user`, newUser, this.httpOptions)
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Gebruiker bestaat al.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -83,20 +88,16 @@ export class UserService {
   updateUser(updatedUser: User) {
     return this.http
       .put<User>(
-        `${this.configService.getConfig().apiEndpoint}api/user/${
-          updatedUser.id
-        }`,
+        `${this.siteEndpoint}/user/${updatedUser.id}`,
         updatedUser,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -104,18 +105,13 @@ export class UserService {
 
   deleteUser(id: string) {
     return this.http
-      .delete<User>(
-        `${this.configService.getConfig().apiEndpoint}api/user/${id}`,
-        this.httpOptions
-      )
+      .delete<User>(`${this.siteEndpoint}/user/${id}`, this.httpOptions)
       .pipe(
-        tap(console.log),
         map((data: any) => {
           return data.results;
         }),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );

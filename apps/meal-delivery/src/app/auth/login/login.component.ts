@@ -41,16 +41,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    if (this.formData.username != '' && this.formData.password != '') {
-      this.authService
-        .login(this.formData)
-        .subscribe((user: UserIdentity | undefined) => {
-          if (user) {
-            this.router.navigate(['/']);
-          } else {
-            this.alertService.error('Het ingevoerde wachtwoord is onjuist.');
-          }
-        });
+    const { username, password } = this.formData;
+    if (!username || !password) {
+      return;
     }
+
+    this.authService
+      .login(this.formData)
+      .subscribe((user: UserIdentity | undefined) => {
+        if (user) {
+          this.router.navigate(['/']);
+        }
+      });
   }
 }

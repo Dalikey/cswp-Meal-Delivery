@@ -8,6 +8,7 @@ import {
   StudentHouse,
   StudentHouseDocument,
 } from '../schema/studentHouse.schema';
+import { Neo4jService } from '../neo4j/neo4j.service';
 
 @Injectable()
 export class MealService {
@@ -15,7 +16,8 @@ export class MealService {
     @InjectModel(MealModel.name) private mealModel: Model<MealDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     @InjectModel(StudentHouse.name)
-    private studentHouseModel: Model<StudentHouseDocument>
+    private studentHouseModel: Model<StudentHouseDocument>,
+    private neo4j: Neo4jService
   ) {}
 
   async createMeal(mealInfo: MealInfo, ownerId: string): Promise<ResourceId> {
@@ -45,7 +47,11 @@ export class MealService {
       studentHouse: studentHouse,
     });
     await meal.save();
-    return meal.id;
+    const mealId = meal.id;
+    await this.neo4j.singleWrite('CREATE (:Meal {id: $mealId})', {
+      mealId,
+    });
+    return mealId;
   }
 
   async getAll(): Promise<MealInfo[]> {
@@ -139,5 +145,7 @@ export class MealService {
     }
 
     await this.mealModel.deleteOne({ id: mealId });
+    const query = `MATCH (m:Meal {id: '${mealId}'}) DELETE m`;
+    await this.neo4j.singleWrite(query);
   }
 }
