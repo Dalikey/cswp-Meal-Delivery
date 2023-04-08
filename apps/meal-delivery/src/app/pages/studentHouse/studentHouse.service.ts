@@ -1,9 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { ApiResponse } from '@md/data';
 import { StudentHouse } from './studentHouse.model';
-import { AuthService } from '../../auth/auth.service';
 import { ConfigService } from '../../shared/moduleconfig/config.service';
 import { AlertService } from '../../shared/alert/alert.service';
 
@@ -11,32 +10,49 @@ import { AlertService } from '../../shared/alert/alert.service';
   providedIn: 'root',
 })
 export class StudentHouseService {
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService,
-    private configService: ConfigService,
-    private alertService: AlertService
-  ) {}
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     }),
   };
 
+  private siteEndpoint: string;
+
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService,
+    private alertService: AlertService
+  ) {
+    this.siteEndpoint = `${this.configService.getConfig().apiEndpoint}api`;
+  }
+
+  private handleHttpError(error: any) {
+    let message = error.message;
+
+    if (error?.error?.message) {
+      message = error.error.message;
+    }
+    console.log(message);
+
+    if (message.includes('Http failure response for')) {
+      message = 'Kan geen verbinding maken met de database.';
+    } else if (message === 'Forbidden resource') {
+      message = 'Je hebt geen toegang om deze functie te gebruiken.';
+    }
+
+    this.alertService.error(message);
+  }
+
   getAllStudentHouses(): Observable<StudentHouse[] | null | undefined> {
     return this.http
       .get<ApiResponse<StudentHouse[]>>(
-        `${this.configService.getConfig().apiEndpoint}api/studentHouse`,
+        `${this.siteEndpoint}/studentHouse`,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
-        map((data: any) => {
-          return data.results;
-        }),
+        map((data: any) => data.results),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -45,17 +61,13 @@ export class StudentHouseService {
   getStudentHouseById(id: string): Observable<StudentHouse | null | undefined> {
     return this.http
       .get<StudentHouse>(
-        `${this.configService.getConfig().apiEndpoint}api/studentHouse/${id}`,
+        `${this.siteEndpoint}/studentHouse/${id}`,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
-        map((data: any) => {
-          return data.results;
-        }),
+        map((data: any) => data.results),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -64,18 +76,14 @@ export class StudentHouseService {
   addStudentHouse(newStudentHouse: StudentHouse) {
     return this.http
       .post<StudentHouse>(
-        `${this.configService.getConfig().apiEndpoint}api/studentHouse`,
+        `${this.siteEndpoint}/studentHouse`,
         newStudentHouse,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
-        map((data: any) => {
-          return data.results;
-        }),
+        map((data: any) => data.results),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Studentenhuis bestaat al.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -84,20 +92,14 @@ export class StudentHouseService {
   updateStudentHouse(updatedStudentHouse: StudentHouse) {
     return this.http
       .put<StudentHouse>(
-        `${this.configService.getConfig().apiEndpoint}api/studentHouse/${
-          updatedStudentHouse.id
-        }`,
+        `${this.siteEndpoint}/studentHouse/${updatedStudentHouse.id}`,
         updatedStudentHouse,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
-        map((data: any) => {
-          return data.results;
-        }),
+        map((data: any) => data.results),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );
@@ -106,17 +108,13 @@ export class StudentHouseService {
   deleteStudentHouse(id: string) {
     return this.http
       .delete<StudentHouse>(
-        `${this.configService.getConfig().apiEndpoint}api/studentHouse/${id}`,
+        `${this.siteEndpoint}/studentHouse/${id}`,
         this.httpOptions
       )
       .pipe(
-        tap(console.log),
-        map((data: any) => {
-          return data.results;
-        }),
+        map((data: any) => data.results),
         catchError((e) => {
-          console.log(`Unable to connect to database. ${e.error.message}`);
-          this.alertService.error('Kan geen verbinding maken met de database.');
+          this.handleHttpError(e);
           return of(undefined);
         })
       );

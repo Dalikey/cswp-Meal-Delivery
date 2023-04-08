@@ -12,26 +12,29 @@ import { UserService } from '../user/user.service';
   providedIn: 'root',
 })
 export class MealService {
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
+  private readonly siteEndpoint: string;
+
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private configService: ConfigService,
     private alertService: AlertService,
     private userService: UserService
-  ) {}
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    }),
-  };
+  ) {
+    this.siteEndpoint = `${this.configService.getConfig().apiEndpoint}api`;
+  }
 
-  private handleHttpError<T>(error: any) {
+  private handleHttpError(error: any) {
     let message = error.message;
 
     if (error?.error?.message) {
       message = error.error.message;
     }
-    console.log(message);
 
     if (message.includes('Http failure response for')) {
       message = 'Kan geen verbinding maken met de database.';
@@ -43,8 +46,6 @@ export class MealService {
 
     this.alertService.error(message);
   }
-
-  private siteEndpoint = `${this.configService.getConfig().apiEndpoint}api`;
 
   getAllMeals() {
     return this.http
@@ -105,9 +106,7 @@ export class MealService {
         this.httpOptions
       )
       .pipe(
-        map((data: any) => {
-          return data.results;
-        }),
+        map((data: any) => data.results),
         catchError((e) => {
           this.handleHttpError(e);
           return of(undefined);
