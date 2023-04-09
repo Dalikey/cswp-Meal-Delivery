@@ -3,18 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { environment } from '../../../environments/environment';
 import { ConfigModule } from '../../shared/moduleconfig/config.module';
 import { httpInterceptorProviders } from '../../token.interceptor';
-import { Product } from './product.model';
 import { ProductService } from './product.service';
-
-// Global mock objects
-const expectedProducts: Product[] = [
-  {
-    id: '12345-123-11',
-    name: 'Banaan',
-    allergies: [],
-    containsAlcohol: false,
-  },
-];
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -35,12 +24,16 @@ describe('ProductService', () => {
   });
 
   it('should return a list of products', (done: DoneFn) => {
-    const products = service.getAllProducts();
+    const products = service.getAllProducts().subscribe((product) => {
+      expect(Array.isArray(products)).toBe(true);
+    });
     done();
   });
 
   it('should return Bier', (done: DoneFn) => {
-    const product = service.getProductById('12345-123-17');
+    service.getProductById('12345-123-17').subscribe((product) => {
+      expect(product!.name).toBe('Bier');
+    });
     done();
   });
 
@@ -52,22 +45,32 @@ describe('ProductService', () => {
       containsAlcohol: false,
     };
     service.addProduct(newProduct);
+    const products = service.getAllProducts().subscribe((product) => {
+      expect(products).toContain(newProduct);
+    });
     done();
   });
 
   it('should update a product', (done: DoneFn) => {
-    const newProduct = {
+    const updatedProduct = {
       id: '12345-123-11',
       name: 'Banaan',
       allergies: [],
       containsAlcohol: false,
     };
-    service.updateProduct(newProduct);
+    service.updateProduct(updatedProduct);
+    service.getProductById('12345-123-11').subscribe((product) => {
+      expect(product!.name).toBe('Banaan');
+    });
     done();
   });
 
   it('should delete a product', (done: DoneFn) => {
-    service.deleteProduct('12345-123-18');
+    const deletedProductId = '12345-123-18';
+    service.deleteProduct(deletedProductId);
+    service.getProductById(deletedProductId).subscribe((product) => {
+      expect(product).toBeNull();
+    });
     done();
   });
 });

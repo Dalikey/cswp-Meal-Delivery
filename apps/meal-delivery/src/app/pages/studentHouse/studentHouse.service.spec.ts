@@ -3,18 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { environment } from '../../../environments/environment';
 import { ConfigModule } from '../../shared/moduleconfig/config.module';
 import { httpInterceptorProviders } from '../../token.interceptor';
-import { StudentHouse } from './studentHouse.model';
 import { StudentHouseService } from './studentHouse.service';
-
-// Global mock objects
-const expectedStudentHouses: StudentHouse[] = [
-  {
-    id: '12345-123-11',
-    streetAndNmr: 'Lovensdijkstraat 61',
-    city: 'Breda',
-    postcode: '4818 AJ',
-  },
-];
 
 describe('StudentHouseService', () => {
   let service: StudentHouseService;
