@@ -18,6 +18,7 @@ export class RolesGuard implements CanActivate {
     const decoded = jwtDecode(token) as any;
 
     const latestUserData = await this.userService.getOne(decoded.id);
+    console.log('Current user role:', latestUserData.role);
     return roles.includes(latestUserData.role);
   }
 }
