@@ -1,5 +1,13 @@
 # MealDeliveryApp
 
+Het een individuele project dat Junhao voor clientside had
+geprogrammeerd is gemaakt in TypeScript, HTML, CSS in combinatie met
+het Angular framework in een monorepo met behulp van NX. Met als de
+backend MongoDB dat ook online is gehost. Er wordt dus een full stack
+single page webapplicatie (SPA) gemaakt met een NoSql database.
+Daarnaast wordt er gebruik gemaakt van het NestJs framework.
+https://meal-delivery.netlify.app/
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.9.
 
 ## Development server
