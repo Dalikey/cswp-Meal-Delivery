@@ -4,6 +4,8 @@ Dit project is een client-side applicatie ontwikkeld in **TypeScript** met het *
 
 Bekijk de applicatie hier: [Meal Delivery App](https://meal-delivery.netlify.app/).
 
+![Meal Delivery App Screenshot](./cswp-meal-delivery.png)
+
 Dit project is gegenereerd met [Angular CLI](https://github.com/angular/angular-cli) versie 13.3.9.
 
 ## Development server
